@@ -1,21 +1,13 @@
-
-import express, { response } from "express";
-
-import mongoose from 'mongoose';
+import express from "express";
 import employeeDetails from '../models/employeeSchema.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-
-
-
-
-
 const router = express.Router();
 
-const INVALID_EMAILrr = '10';
+const INVALID_EMAIL = '10';
 const LOGIN_SUCCESSFUL = '11';
 const INVALID_PASSWORD = '12';
 
