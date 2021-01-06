@@ -15,7 +15,7 @@ dotenv.config();
 
 const router = express.Router();
 
-const INVALID_EMAIL = '10';
+const INVALID_EMAILrr = '10';
 const LOGIN_SUCCESSFUL = '11';
 const INVALID_PASSWORD = '12';
 
