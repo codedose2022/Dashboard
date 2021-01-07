@@ -1,6 +1,6 @@
 import React from 'react';
 import useStyles from './AddEmployeeStyles';
-import {Paper,Container,Grid,TextField,Avatar,Divider,Typography,createMuiTheme,responsiveFontSizes,MuiThemeProvider} from '@material-ui/core'; 
+import {Paper,Grid,TextField,Divider,Typography} from '@material-ui/core'; 
 export default function MyProfile() {
     const classes = useStyles(); 
 return(

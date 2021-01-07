@@ -1,11 +1,10 @@
 import React,{ useState,useEffect,useRef} from 'react'
-import { AppBar,Toolbar,Typography,Button,IconButton,Hidden,Badge,MenuItem,
-  Menu, Popper,MenuList, Divider, Card, Container  } from '@material-ui/core';
+import { AppBar,Toolbar,Typography,IconButton,Hidden,Badge,MenuItem,
+  Popper,MenuList, Divider,  } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import useStyles from './NavbarStyles.js';
 import Mersatlogo from '../images/Mersatlogo.jpg';
-import { useDispatch } from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -13,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 export default function Navbar() {
-  const dispatch = useDispatch();
+  
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -51,7 +50,7 @@ export default function Navbar() {
     <div>
       <AppBar position="static" style={{ background: '#388e3c' }} className = {classes.appbar}>
         <Toolbar>
-          <img src={Mersatlogo} className={classes.logo} />
+          <img src={Mersatlogo} className={classes.logo} alt = "Mersat logo" />
           <div className={classes.root} />
           
           <div>

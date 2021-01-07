@@ -127,13 +127,10 @@ export const login = async (req,res) => {
             if(!user){
                 responseMessages.messages.message= 'No account with this email has been registered';
                 responseMessages.messages.status = INVALID_EMAIL;
-                return res.status(400).json(responseMessages);
+                return res.status(200).json(responseMessages);
             } 
             const isMatch = await bcryptjs.compare(password,user.password);
-            console.log(isMatch)
             const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
-            console.log(token)
-
             if(!isMatch){
                 responseMessages.messages.message= 'invalid Credential';
                 responseMessages.messages.status = INVALID_PASSWORD;
@@ -148,8 +145,7 @@ export const login = async (req,res) => {
                 responseMessages.messages.status = LOGIN_SUCCESSFUL;
                 responseData.token = token;
                 response = Object.assign(responseData, responseMessages);
-                return res.status(200).json(response);
-            
+                return res.status(200).json(response);   
         }
        
    catch (error) {

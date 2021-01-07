@@ -5,13 +5,11 @@ export const login = (loginData) => async (dispatch) =>{
   try {
     const {data} = await api.login(loginData);
     const loginStatus = _.get(data,'messages.status','');
-
-        if(loginStatus === '11'){
-            console.log("in")
-            dispatch ({type: 'LOGIN_STATUS', payload: 'loggedIn'});
- 
- }
     dispatch ({type: 'LOGIN', payload: data});
+    if(loginStatus === '11'){
+      dispatch ({type: 'LOGIN_STATUS', payload: 'loggedIn'});
+
+}
     
  } catch (error) {
     

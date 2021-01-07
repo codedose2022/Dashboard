@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react';
+    import React, { useState,useEffect,useContext } from 'react';
     import { AppBar, Toolbar, Typography, Button, Box, 
       createMuiTheme,ThemeProvider,Link,Grid  } from "@material-ui/core";
     import Mersatlogo from '../images/Mersatlogo.jpg'
@@ -10,10 +10,9 @@ import React, { useState,useEffect} from 'react';
     import { login } from '../actions/employees';
     import _ from 'lodash';   
     import {useHistory} from 'react-router-dom'; 
-
+    import UserContext from "../context/UserContext";
+    import Alert from '@material-ui/lab/Alert';
     
-
-
     const theme = createMuiTheme({ 
       palette: {
         primary:{
@@ -22,49 +21,62 @@ import React, { useState,useEffect} from 'react';
       },
     })
 
-  
    export default function LoginPage() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const { setEmployeeData } = useContext(UserContext);
     const [loginData, setLoginData] = useState({
       email : '', password : ''
     });
+    const [error, seterror] = useState('');
     const [emailRequired, setEmailRequired] = useState('');
     const [passwordRequired, setPasswordRequired] = useState('');
+
     const state = useSelector(state => state)
-    console.log(state)
     const loggedIn = _.get(state,'employees.loggedInStatus','');
-    console.log(loggedIn)
-
-  
+    const messageStatus = _.get(state,'employees.employee.messages.status','');
    
-
-    const dispatch = useDispatch();
-
-    
     useEffect(() => {
-console.log("in use")
       if(loggedIn === 'loggedIn'){
+        const token = _.get(state,'employees.employee.token','');
+        setEmployeeData({
+          token : token,
+          employee : _.get(state,'employees.employee','')
+        })
+        localStorage.setItem("auth-token",token)
         history.push('/dashboard');
       }
-      
-    }, [loggedIn])
+      if(messageStatus === '10' || messageStatus === '12' ){
+        let errMsg = _.get(state,'employees.employee.messages.message','')
+        seterror(errMsg)
+      }
+      if(messageStatus === '11' ){
+        //let successMsg = _.get(state,'employees.employee.messages.message','')
+        seterror('')
+      }
+    }, [loggedIn,messageStatus])
     
     
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-        if(loginData.email === ''){
-          setEmailRequired("Please enter the email address");     
+
+        try {
+          if(loginData.email === ''){
+            setEmailRequired("Please enter the email address");     
+          }
+          if(loginData.password === ''){
+            setPasswordRequired( "Please enter the password");
+          }
+          if(loginData.email !== '' && loginData.password !== ''){
+            dispatch( login(loginData));
+            clearFieldError();
+          } 
+        } catch (error) {
+          console.log(error);
         }
-        if(loginData.password === ''){
-          setPasswordRequired( "Please enter the password");
-        }
-        if(loginData.email !== '' && loginData.password !== ''){
-          dispatch(login(loginData));
-          clearFieldError();
-        }
-      
-               
+            
     }
    
     useEffect(() => {
@@ -76,8 +88,6 @@ console.log("in use")
       }
       
     }, [loginData.email, loginData.password])
-
-    
 
     const clearFieldError = () =>{
       setEmailRequired("");   
@@ -99,7 +109,9 @@ console.log("in use")
               </Toolbar>
             </AppBar>
             <CssBaseline/>
-          
+          {error && 
+          <Alert severity="error"> {error} </Alert>  
+          }
           <form autoComplete="off" className={classes.form} onSubmit = {handleSubmit} >
             <TextField
               InputProps={{

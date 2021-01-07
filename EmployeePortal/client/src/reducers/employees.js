@@ -9,11 +9,10 @@ export default (state = [], action)=> {
         case 'LOGIN':
          return {
                 ...state,
-                user: action.payload,
+                employee: action.payload,
             };
         default:
             return {...state};
     }
     
- 
 }
