@@ -1,6 +1,6 @@
     import React, { useState,useEffect,useContext } from 'react';
     import { AppBar, Toolbar, Typography, Button, Box, 
-      createMuiTheme,ThemeProvider,Link,Grid  } from "@material-ui/core";
+      createMuiTheme,ThemeProvider,Link,Grid } from "@material-ui/core";
     import Mersatlogo from '../images/Mersatlogo.jpg'
     import TextField from '@material-ui/core/TextField';
     import { green} from '@material-ui/core/colors';
@@ -97,7 +97,7 @@
    
        
       return(
-      
+       
         <Box  boxShadow={3} className={classes.root}>
           <ThemeProvider theme ={theme}>
             <AppBar position="static" className={classes.appbar} elevation={0}>
@@ -118,6 +118,9 @@
                   disableUnderline: true,
                   classes: { input: classes.input } 
                 }}
+                FormHelperTextProps={{
+                  className: classes.helperTextColor
+                }}
                 variant="filled"
                 margin="normal"
                 fullWidth
@@ -126,7 +129,6 @@
                 name="email"       
                 size="small"
                 value={loginData.email}
-                
                 helperText = {emailRequired}  
                 onChange={(e) => (setLoginData({ ...loginData, email : e.target.value}))}
         
@@ -137,7 +139,9 @@
                   classes: { input: classes.input } 
                 }}    
                 variant="filled"
-               
+                FormHelperTextProps={{
+                  className: classes.helperTextColor
+                }}
                 fullWidth
                 size="small"
                 margin="normal"
@@ -171,9 +175,9 @@
               
           </form>
          
-         
           </ThemeProvider>
         </Box>
+      
       )
     }
   

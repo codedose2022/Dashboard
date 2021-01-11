@@ -27,8 +27,17 @@ export default function Navbar() {
       return;
     }
     setOpen(false);
+   
+  };
+  const handleCloseForProfile = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
     history.push('/profile');
   };
+
+
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -90,7 +99,7 @@ export default function Navbar() {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                 
-                    <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                    <MenuItem onClick={handleCloseForProfile}>My Profile</MenuItem>
                     <Divider/>
                     <MenuItem onClick={handleClose}>Change password</MenuItem>
                     <Divider/>

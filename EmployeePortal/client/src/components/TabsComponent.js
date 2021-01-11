@@ -1,12 +1,14 @@
-import React,{useState} from 'react';
+import React,{ useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import {Typography, createMuiTheme,ThemeProvider} from '@material-ui/core';
+import { createMuiTheme,ThemeProvider} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { green} from '@material-ui/core/colors';
+import ListEmployees from './ListEmployees';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -20,8 +22,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
+        <Box >
+         {children}
         </Box>
       )}
     </div>
@@ -48,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
   
   },
   itemSize :{
-    fontSize: '0.65rem'
+    fontSize: '0.7rem',
+    fontWeight : 'bold'
   }
 }));
 
@@ -60,13 +63,18 @@ const theme = createMuiTheme({
   },
 })
 
+
+
+
 export default function TabsComponent() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    
   };
+  
 
   return (
     <div className={classes.root}>
@@ -101,7 +109,7 @@ export default function TabsComponent() {
         Item Three
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <ListEmployees/>
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Five

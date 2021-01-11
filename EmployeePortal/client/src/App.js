@@ -11,9 +11,6 @@ import UserContext from './context/UserContext';
 import { isTokenValid, getProfile } from './api/index';
  
 
-
-
-
 const App = () =>{
  
   const state = useSelector(state => state);
@@ -25,6 +22,7 @@ const App = () =>{
  
 
   useEffect(() => {
+  
     const checkloggedIn = async() =>{
       let token = localStorage.getItem("auth-token");
       if(token === null){

@@ -11,6 +11,11 @@ export default (state = [], action)=> {
                 ...state,
                 employee: action.payload,
             };
+        case 'GET_EMPLOYEES':
+          return {
+            ...state,
+            employeesData: action.payload
+          }
         default:
             return {...state};
     }

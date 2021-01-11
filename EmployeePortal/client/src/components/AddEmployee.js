@@ -17,7 +17,7 @@ return(
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
                 <TextField
-					fullWidth
+					          fullWidth
                     id="outlined-read-only-input"
                     label="First Name"
                     defaultValue="Alice"
@@ -26,7 +26,7 @@ return(
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6} >
                  <TextField
-				 fullWidth
+				            fullWidth
                     id="outlined-read-only-input"
                     label="Last Name"
                     defaultValue="Wonderland"
@@ -38,7 +38,7 @@ return(
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
-				fullWidth
+				            fullWidth
                     id="outlined-read-only-input"
                     label="Email"
                     defaultValue="demo@gmail.com"
@@ -47,7 +47,7 @@ return(
                 </Grid>
 				<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
-				fullWidth
+				            fullWidth
                     id="outlined-read-only-input"
                     label="Employee Code"
                     defaultValue="E1234"
@@ -56,7 +56,7 @@ return(
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
-				fullWidth
+				            fullWidth
                     id="outlined-read-only-input"
                     label="Employee Code"
                     defaultValue="E1234"
@@ -65,7 +65,7 @@ return(
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
-				fullWidth
+				            fullWidth
                     id="outlined-read-only-input"
                     label="Employee Code"
                     defaultValue="E1234"

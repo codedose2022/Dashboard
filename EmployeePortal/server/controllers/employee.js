@@ -13,8 +13,7 @@ const INVALID_PASSWORD = '12';
 
 export const getEmployees = async (req,res) => { 
      try {
-         const employees = await employeeDetails.find({"disableInd" : 'N'});
-        
+        const employees = await employeeDetails.find({"disableInd" : 'N'},{password:0});
         res.status(200).json(employees);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -132,7 +131,7 @@ export const login = async (req,res) => {
             const isMatch = await bcryptjs.compare(password,user.password);
             const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
             if(!isMatch){
-                responseMessages.messages.message= 'invalid Credential';
+                responseMessages.messages.message= 'Invalid Credentials';
                 responseMessages.messages.status = INVALID_PASSWORD;
                 return res.status(200).json(responseMessages);
             }
@@ -141,7 +140,7 @@ export const login = async (req,res) => {
                 responseData.userData.lastName = user.lastName;
                 responseData.userData.id = user._id;
                 responseData.userData.division =user.division;
-                responseMessages.messages.message= 'login success';
+                responseMessages.messages.message= 'Login Success';
                 responseMessages.messages.status = LOGIN_SUCCESSFUL;
                 responseData.token = token;
                 response = Object.assign(responseData, responseMessages);
