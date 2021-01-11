@@ -5,23 +5,22 @@ import {Paper,Container,Grid,TextField,Avatar,Divider,
 import  profile from '../images/profile.jfif';
 import useStyle from './CommonStyles';
 import {Link} from 'react-router-dom';
+import _ from 'lodash';
+import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 export default function MyProfile() {
 
     const classes = useStyles(); 
     const classStyle = useStyle(); 
 	let theme = createMuiTheme();
-	theme = responsiveFontSizes(theme);
-
-	const displayName = "Dummy Name";
-	const displayEmpCode = "ABC124";
-	const displayDesignation = "Software Developer";
-	const displayDepartment = "IT Department";
-	  
-
+    theme = responsiveFontSizes(theme);
+    const state = useSelector(state => state);
+    const profileData = _.get(state,'employees.profile','');
+    let dateOfHire = moment(profileData.dateOfHire).format('Do MMMM YYYY');
+    let dob = moment(profileData.dob).format('Do MMMM YYYY');
 	return (
 		<div>
-
         <div className={classStyle.topPadding}/>
         <Button><Link to = "/Dashboard"><h5>Go to Dashboard</h5></Link></Button>
         <div className={classStyle.topPadding}/>
@@ -39,22 +38,22 @@ export default function MyProfile() {
 							<Grid container spacing={0}>
 								<Grid item xs={12}> 
 									<Typography variant="h6"  className={classes.typography} >
-									{displayName}
+									{profileData.firstName + " " + profileData.lastName}
 									</Typography>
 								</Grid>
 								<Grid item xs={12}>
 									<Typography  variant="subtitle1" className={classes.typography1} >
-									{displayEmpCode}
+									{profileData.employeeCode}
 									</Typography>
 								</Grid>
 								<Grid item xs={12}>
 									<Typography variant="subtitle1" className={classes.typography1}>
-									{displayDesignation}
+									{profileData.designation}
 									</Typography>
 								</Grid>
 								<Grid item xs={12}>	
 									<Typography variant="subtitle1" className={classes.typography1}>
-									{displayDepartment}
+									{profileData.department}
 									</Typography>
 								</Grid>
 							</Grid>
@@ -80,50 +79,54 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
 					fullWidth
-                    id="outlined-read-only-input"
+                    id="firstName"
                     label="First Name"
-                    defaultValue="Alice"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.firstName}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                  <TextField
 				    fullWidth
-                    id="outlined-read-only-input"
+                    id="lastName"
                     label="Last Name"
-                    defaultValue="Wonderland"
+                    
                     InputProps={{
                     readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.lastName}
                 />
                 </Grid>
              
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="email"
                     label="Email"
-                    defaultValue="demo@gmail.com"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.email}
                 />
                 </Grid>
 				<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="employeeCode"
                     label="Employee Code"
-                    defaultValue="E1234"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.employeeCode}
                 />
                 </Grid>
                 </Grid>
@@ -143,74 +146,80 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="designation"
                     label="Designation"
-                    defaultValue="Software Developer"
+                 
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.designation}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                  <TextField
 				 fullWidth
-                    id="outlined-read-only-input"
+                    id="department"
                     label="Department"
-                    defaultValue="IT Department"
+                  
                     InputProps={{
                     readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.department}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dateOfHire"
                     label="Date of Hire"
-                    defaultValue="12-12-2020"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={dateOfHire}
                 />
                 </Grid>
                
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="deskPhone"
                     label="Desk Phone"
-                    defaultValue="5521"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.deskPhone}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="workMobile"
                     label="Work Mobile"
-                    defaultValue="05061165265"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.workMobile}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="employeeStatus"
                     label="Employee Status"
-                    defaultValue="Active"
+                   
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.employeeStatus}
                 />
                 </Grid>
                 
@@ -230,74 +239,80 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="phoneNumber"
                     label="Phone Number"
-                    defaultValue="+971 508011945"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.phoneNumber}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                  <TextField
 				 fullWidth
-                    id="outlined-read-only-input"
+                    id="dob"
                     label="Date of Birth"
-                    defaultValue="2017-05-24"
+                    
                     InputProps={{
                     readOnly: true,
                     }}
                     variant="filled"
+                    value={dob}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="nationality"
                     label="Nationality"
-                    defaultValue="Indian"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.nationality}
                 />
                 </Grid>
              
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="gender"
                     label="Gender"
-                    defaultValue="Male"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.gender}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="maritalStatus"
                     label="Marital Status"
-                    defaultValue="Married"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.maritalStatus}
                 />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="hobbies"
                     label="Hobbies"
-                    defaultValue="Dancing"
+                    
                     InputProps={{
                         readOnly: true,
                     }}
                     variant="filled"
+                    value={profileData.hobbies}
                 />
                 </Grid>
                 
@@ -318,7 +333,7 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                  <TextField
 				 fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceName"
                     label="Name"
                     defaultValue="Ben"
                     InputProps={{
@@ -330,7 +345,7 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceRelationship"
                     label="Relationship"
                     defaultValue="Dog"
                     InputProps={{
@@ -342,7 +357,7 @@ export default function MyProfile() {
 				<Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceDob"
                     label="Date of Birth"
                     defaultValue="12-12-2020"
                     InputProps={{
@@ -356,7 +371,7 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceName1"
                     label="Name"
                     defaultValue="Lucy"
                     InputProps={{
@@ -368,7 +383,7 @@ export default function MyProfile() {
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceRelationship1"
                     label="Relationship"
                     defaultValue="Cat"
                     InputProps={{
@@ -380,7 +395,7 @@ export default function MyProfile() {
 				<Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
 				fullWidth
-                    id="outlined-read-only-input"
+                    id="dependenceDob1"
                     label="Date of Birth"
                     defaultValue="12-12-2020"
                     InputProps={{

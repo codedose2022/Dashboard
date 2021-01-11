@@ -14,7 +14,14 @@ const employeeSchema = mongoose.Schema({
     department:String,
     designation: String,
     division: String,
+    dateOfHire:Date,
+    deskPhone:Number,
+    workMobile:Number,
+    employeeStatus:String,
     phoneNumber:Number,
+    nationality:String,
+    gender:String,
+    maritalStatus:String,
     dob:Date,
     email:String,
     password:{
@@ -23,7 +30,6 @@ const employeeSchema = mongoose.Schema({
     },
     dependance:Object,
     hobbies :[String],
-    otherSkills : [String],
     dietPath:String,  
     disableInd:{
         type: String,

@@ -9,6 +9,8 @@ import {useHistory} from 'react-router-dom';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
+import {useDispatch} from 'react-redux';
+import { getProfile } from '../actions/employees';
 
 
 export default function Navbar() {
@@ -16,8 +18,9 @@ export default function Navbar() {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const anchorRef = useRef(null);
+  let token = localStorage.getItem("auth-token");
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -34,6 +37,7 @@ export default function Navbar() {
       return;
     }
     setOpen(false);
+    dispatch(getProfile(token));
     history.push('/profile');
   };
 

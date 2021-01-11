@@ -22,9 +22,9 @@ export const login = (loginData) => async (dispatch) =>{
  }
 }
 
-export const getProfile = () => async (dispatch) => {
+export const getProfile = (token) => async (dispatch) => {
   try {
-      const { data } = await api.getProfile();
+      const { data } = await api.getProfile(token);
       console.log(data);
       dispatch({ type: 'GET_PROFILE', payload: data });
     } catch (error) {
