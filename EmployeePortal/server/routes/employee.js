@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.post('/getEmployees',auth,getEmployees);
-router.post('/createEmployee',createEmployee);
+router.post('/createEmployee',auth,createEmployee);
 router.post('/login',login);
 router.post('/profile',auth,getProfile);
 router.post('/editProfile',editProfile);

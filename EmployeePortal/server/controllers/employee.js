@@ -10,11 +10,13 @@ const router = express.Router();
 const INVALID_EMAIL = '10';
 const LOGIN_SUCCESSFUL = '11';
 const INVALID_PASSWORD = '12';
+const USER_EXISTING = '13';
+const USER_CREATION_SUCCESS = '14';
 
 export const getEmployees = async (req,res) => { 
      try {
         const employees = await employeeDetails.find({"disableInd" : 'N'},{password:0});
-        res.status(200).json(employees);
+        return res.status(200).json(employees);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -22,20 +24,33 @@ export const getEmployees = async (req,res) => {
 
 export const createEmployee = async (req,res) => { 
     const employee = new employeeDetails(req.body);
-
     const {email} = req.body;
+    let responseMessages = {
+        messages:{
+            status:'',
+            message:''
+        },
+        employees:{}
+    }
     
     try {
         const existingUser = await employeeDetails.findOne({email : email})
         if(existingUser){
-            res.status(400).json("An account with this email exists");
+            responseMessages.messages.message= 'An account with this email exists';
+            responseMessages.messages.status = USER_EXISTING;
+            return res.status(200).json(responseMessages);
         }
         else{
             await employee.save();
-            res.status(200).json(employee);
+            const employees = await employeeDetails.find({"disableInd" : 'N'},{password:0});
+            responseMessages.messages.message= 'User Creation Successful';
+            responseMessages.messages.status = USER_CREATION_SUCCESS;
+            responseMessages.employees = employees;
+            return res.status(200).json(responseMessages);
         }
       
    } catch (error) {
+       console.log('in error');
        res.status(404).json({ message: error.message });
    }
 }
@@ -44,7 +59,7 @@ export const getProfile = async (req,res) => {
     
     try {
         const employee = await employeeDetails.findOne({"_id" : req.id},{password:0});
-        res.status(200).json(employee);
+        return res.status(200).json(employee);
    } catch (error) {
        res.status(404).json({ message: error.message });
    }

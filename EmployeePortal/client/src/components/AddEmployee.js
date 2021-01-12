@@ -2,9 +2,18 @@ import React,{useState} from 'react';
 import useStyles from './AddEmployeeStyles';
 import FileBase from 'react-file-base64';
 import { green,grey} from '@material-ui/core/colors';
-import {Paper,Grid,TextField,Divider,createMuiTheme,ThemeProvider,InputLabel,FormControl,Typography,MenuItem,Button,Select} from '@material-ui/core'; 
+import {useDispatch} from 'react-redux';
+import { CountryDropdown } from 'react-country-region-selector';
+import { createEmployee } from '../actions/employees';
+import {useHistory} from 'react-router-dom';
+import * as api from '../api';
+import Alert from '@material-ui/lab/Alert';
+import {Paper,Grid,TextField,Divider,createMuiTheme,ThemeProvider,InputLabel,FormControl,Typography,MenuItem,Button,Select, ClickAwayListener} from '@material-ui/core'; 
 export default function MyProfile() {
 
+    let token = localStorage.getItem("auth-token");
+    const history = useHistory();
+    const dispatch = useDispatch();
     const theme = createMuiTheme({ 
         palette: {
           primary:{
@@ -15,6 +24,80 @@ export default function MyProfile() {
           },
         },
       })
+
+    const departments = [
+    {
+        departmentName: "IT Department",
+        department: "IT",
+        designationList: [
+        {
+            designationName: "Software Developer",
+            designation: "IT1"
+        },
+        {
+            designationName: "Database Administrator",
+            designation: "IT2"
+        }
+        ]
+    },
+    {
+        departmentName: "ESP Operations",
+        department: "ESP",
+        designationList: [
+            {
+                designationName: "Associate",
+                designation: "ESP1"
+            },
+            {
+                designationName: "Lead",
+                designation: "ESP2"
+            }
+        ]
+    },
+    {
+        departmentName: "Client Relations",
+        department: "CR",
+        designationList: [
+            {
+                designationName: "Junior",
+                designation: "CR1"
+            },
+            {
+                designationName: "Senior",
+                designation: "CR2"
+            }
+        ]
+    },
+    {
+        departmentName: "Technical",
+        department: "TE",
+        designationList: [
+            {
+                designationName: "Manager",
+                designation: "TE1"
+            },
+            {
+                designationName: "Data Entry",
+                designation: "TE2"
+            }
+        ]
+    },
+    {
+        departmentName: "Support Staff",
+        department: "SS",
+        designationList: [
+            {
+                designationName: "House Keeping",
+                designation: "SS1"
+            },
+            {
+                designationName: "Office Assistant",
+                designation: "SS2"
+            }
+        ]
+    }
+    ];
+  
     const classes = useStyles(); 
     const [addEmployee, setAddEmployee] = useState({
         firstName:'',
@@ -30,8 +113,8 @@ export default function MyProfile() {
         gender:'',
         dietPath:'',
         maritalStatus:'',
-        employeeStatus:'',
         designation:'',
+        department:'',
         division:'',
         nationality:'',
 
@@ -40,31 +123,63 @@ export default function MyProfile() {
 
     const clear = () => {
         setAddEmployee({
-            
-            
-        // firstName:'',
-        // lastName:'',
-        // email:'',
-        // employeeCode:'',
-        // dateOfHire:'',
-        // deskPhone:'',
-        // workMobile:'',
-        // phoneNumber:'',
-        // dob:'',
-        // hobbies:'',
-        // gender:'',
-        // dietPath:'',
-        // maritalStatus:'',
-        // employeeStatus:'',
-        // designation:'',
-        // division:'',
-        // nationality:'',
- });
+            firstName:'',
+            lastName:'',
+            email:'',
+            employeeCode:'',
+            dateOfHire:'',
+            deskPhone:'',
+            workMobile:'',
+            phoneNumber:'',
+            dob:'',
+            hobbies:'',
+            gender:'',
+            dietPath:'',
+            maritalStatus:'',
+            designation:'',
+            division:'',
+            nationality:'',
+            department:'',
+        });
       };
+
+    const [status, setStatus] = useState('');
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+
+    try {
+     
+        await api.createEmployee(token,addEmployee).then(data =>{
+            console.log(data.data);
+            if(data.data.messages.status === '14')
+            {
+                dispatch ({type: 'CREATE_EMPLOYEE', payload: data.data.employees}) 
+                setStatus(data.data.messages.message);
+                history.push('/dashboard');
+            }
+            if(data.data.messages.status ==='13')
+            {
+                setStatus(data.data.messages.message);
+            }
+
+
+        })
+     
+        
+        } 
+    catch (error) {
+        console.log(error);
+    }
+            
+    }
 
 return(
     <div>
+        <form className={classes.form} noValidate autoComplete="off" onSubmit = {handleSubmit}>
         <Paper className={classes.root}  elevation={10}> 
+        {status && 
+          <Alert severity="error"> {status} </Alert>  
+          }
         <ThemeProvider theme={theme}>
         <Paper className={classes.paper} elevation={5}>
         <Typography variant="h6" align="center" className={classes.typography} >ADD EMPLOYEE</Typography>
@@ -78,15 +193,14 @@ return(
 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                    <TextField
-                        fullWidth
-                        required
-                        id="firstName"
-                        label="First Name"
-                        variant="outlined"
-                        value={addEmployee.firstName} 
-                        onChange={(e) => (setAddEmployee({ ...addEmployee, firstName : e.target.value}))}
-                    />
+                        <TextField
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            variant="outlined"
+                            value={addEmployee.firstName} 
+                            onChange={(e) => (setAddEmployee({ ...addEmployee, firstName : e.target.value}))}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
                         <TextField
@@ -124,15 +238,13 @@ return(
                        
                     </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                        <TextField
-                            fullWidth
-                            required
-                            id="nationality"
-                            label="Nationality"
-                            variant="outlined"
-                            value={addEmployee.nationality} 
-                            onChange={(e) => (setAddEmployee({ ...addEmployee, nationality : e.target.value}))}
-                        />
+                       
+                         <CountryDropdown  
+                         required
+                         value={addEmployee.nationality} 
+                         onChange={(e) => setAddEmployee({ ...addEmployee, nationality : e})}
+                         className={classes.country} />
+                        
                        
                     </Grid>
                     <Grid item xs={12}>
@@ -140,40 +252,46 @@ return(
                         <Divider />
 				    </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                        {/* <FormControl className={classes.formControl}> */}
-                        {/* <InputLabel  htmlFor="designation">Designation</InputLabel> */}
-                        <FormControl variant="outlined" fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="designation">Designation</InputLabel>
-   
-                            <Select  
-                            native 
+                        <FormControl  variant="outlined" fullWidth className={classes.formControl}>
+                            <InputLabel required id="department">Department</InputLabel>
+                            <Select 
                             fullWidth
-                            id="designation"
-                            value={addEmployee.designation} 
-                            label="Designation"
-                            onChange={(e) => (setAddEmployee({ ...addEmployee, designation : e.target.value}))}
+                            label="department"
+                            id="department"
+                            value={addEmployee.department}
+                            onChange={(e) => (setAddEmployee({ ...addEmployee, department : e.target.value}))}
                             >
-                            <option aria-label="Designation" value="" />
-                            <optgroup label="IT Department">
-                                <option value={1}>Software Developer</option>
-                                <option value={2}>Database Administrator</option>
-                            </optgroup>
-                            <optgroup label="ESP Operations">
-                                <option value={3}>Associate</option>
-                                <option value={4}>Lead</option>
-                            </optgroup>
-                            <optgroup label="Client Relations">
-                                <option value={5}>Junior</option>
-                                <option value={6}>Senior</option>
-                            </optgroup>
-                            <optgroup label="Technical">
-                                <option value={7}>Manager</option>
-                                <option value={8}>Data Entry</option>
-                            </optgroup>
-                            <optgroup label="Support Staff">
-                                <option value={9}>House Keeping</option>
-                                <option value={10}>Office Assisstant</option>
-                            </optgroup>
+                            {departments.map((department) => (
+                                <MenuItem
+                                value={department.departmentName}
+                                key={department.department}
+                                >
+                                {department.departmentName}
+                                </MenuItem>
+                            ))}
+                            </Select>
+                        </FormControl>
+                        </Grid>
+                    <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >  
+                        <FormControl  variant="outlined" fullWidth className={classes.formControl}>
+                            <InputLabel required id="designation">Designation</InputLabel>
+                            <Select 
+                            fullWidth
+                            label="designation"
+                            id="designation"
+                            value={addEmployee.designation}
+                            onChange={(e) => (setAddEmployee({ ...addEmployee, designation : e.target.value}))}
+                            disabled={!addEmployee.department}
+                            >
+                            {addEmployee.department
+                                ? departments
+                                    .find(({ departmentName }) => departmentName === addEmployee.department)
+                                    .designationList.map((designation) => (
+                                    <MenuItem value={designation.designationName} key={designation.designation}>
+                                        {designation.designationName}
+                                    </MenuItem>
+                                    ))
+                                : []}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -181,7 +299,8 @@ return(
                                         
                     <TextField 
                             fullWidth
-                            id="divsion" 
+                            id="division" 
+                            required
                             label="Division" 
                             value={addEmployee.division} 
                             onChange={(e) => (setAddEmployee({ ...addEmployee, division : e.target.value}))}
@@ -211,9 +330,9 @@ return(
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
-                            required
                             id="deskPhone"
                             label="Desk Phone"
+                            type="number"
                             variant="outlined"
                             value={addEmployee.deskPhone} 
                             onChange={(e) => (setAddEmployee({ ...addEmployee, deskPhone : e.target.value}))}
@@ -223,9 +342,9 @@ return(
                      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
-                            required
                             id="workMobile"
                             label="Work Mobile"
+                            type="number"
                             variant="outlined"
                             value={addEmployee.workMobile} 
                             onChange={(e) => (setAddEmployee({ ...addEmployee, workMobile : e.target.value}))}
@@ -271,6 +390,7 @@ return(
                             id="phoneNumber"
                             label="Personal Mobile Number"
                             variant="outlined"
+                            type="number"
                             value={addEmployee.phoneNumber} 
                             onChange={(e) => (setAddEmployee({ ...addEmployee, phoneNumber : e.target.value}))}
                             />
@@ -295,7 +415,6 @@ return(
                      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
-                            required
                             id="hobbies"
                             label="Hobbies"
                             variant="outlined"
@@ -328,7 +447,7 @@ return(
                     
                         
                         <FileBase  
-                    
+                            className={classes.country}
                             type="file" 
                             multiple={false} 
                             onDone={({ base64 }) => setAddEmployee({ ...addEmployee, selectedFile: base64 })} 
@@ -343,12 +462,7 @@ return(
 		</Paper>
        
 
-        <TextField
-    id="standard-name"
-    label="Name"
-    value="hello"
-    InputProps={{endAdornment: <Button />}}
-  />
+       
 
         <Grid>   
         <Grid container spacing={6}>
@@ -362,7 +476,7 @@ return(
               fullWidth 
               disableElevation
               color={'secondary'}
-              onClick={(e) => (setAddEmployee({ ...addEmployee, addEmployee : e.target.reset}))}
+              onClick={clear}
               >
                            Reset
                         </Button>
@@ -383,6 +497,7 @@ return(
         
         </ThemeProvider>
 		</Paper> 	
+        </form>
     </div>
     
     );

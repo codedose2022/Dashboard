@@ -10,14 +10,23 @@ export default makeStyles((theme) => ({
       root: {
             margin: theme.spacing(1),
             padding:'20px',
-            background  :'#c8e6c9'
-          },
-          buttonStyle:{
+            background  :'#a5d6a7'
+      },
+      buttonStyle:{
             marginTop:'5px',
             marginBottom:'15px'
-          },
-          typography:{
-            // padding:'10px',
+      },
+      typography:{
             marginLeft:'20px',
-          },
+      },
+      country:{
+            background:'#e8f5e9',
+            height:'60px',
+            width:'100%',
+            borderRadius:'5px'
+      },
+      dialog:{
+            maxWidth:'100%',
+            maxHeight: '100%',
+      }
 }));
