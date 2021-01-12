@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root:{ 
-    padding:'10px',
+   // padding:'10px',
   },
   firstPaper:{
     padding:'10px',
@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
   },
   paper:{
     padding:'10px',
-     background: '#e8f5e9',
+    // background: '#e8f5e9',
   },
   typography:{
     padding:'3px',
@@ -45,5 +45,11 @@ export default makeStyles((theme) => ({
     },
     
   },
+
+  linkStyle : {
+    color : '#1b5e20',
+    paddingLeft : '30px',
+   
+  }
  
 }));

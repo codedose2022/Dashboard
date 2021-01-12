@@ -34,5 +34,9 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
       },
 
+      fontSizeStyle :{
+        fontSize : '0.8rem'
+      }
+
 })
 )

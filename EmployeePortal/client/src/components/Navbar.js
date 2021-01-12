@@ -11,7 +11,8 @@ import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import {useDispatch} from 'react-redux';
 import { getProfile } from '../actions/employees';
-
+import {useSelector} from 'react-redux';
+import _ from 'lodash';
 
 export default function Navbar() {
   
@@ -20,6 +21,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const anchorRef = useRef(null);
+  const state = useSelector(state => state);
+  const employeeName = _.get(state,'employees.employee.userData.firstName','');
+
+
   let token = localStorage.getItem("auth-token");
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -55,7 +60,6 @@ export default function Navbar() {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
 
@@ -81,16 +85,14 @@ export default function Navbar() {
               onClick={handleToggle}
               color="inherit"
             >
-            
           <Hidden smDown>
             
-          <Typography>  user &nbsp; </Typography>
+          <Typography className = {classes.fontSizeStyle}> Welcome {employeeName} </Typography>
         </Hidden>
               <AccountCircle />
             </IconButton>  
           </div>
          
-        
         </Toolbar>
       </AppBar>
       <Popper open={open} anchorEl={anchorRef.current} transition >
@@ -99,15 +101,18 @@ export default function Navbar() {
               {...TransitionProps}
               style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
-              <Paper elevation={10} >
+              <Paper elevation={1} >
                 <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                
-                    <MenuItem onClick={handleCloseForProfile}>My Profile</MenuItem>
+                  <MenuList
+                   style ={{padding: "0px", fontSize:'0.9rem'}}
+                   autoFocusItem={open}
+                   id="menu-list-grow"
+                   onKeyDown={handleListKeyDown} >
+                    <MenuItem   style ={{fontSize:'0.95rem'}} onClick={handleCloseForProfile}>My Profile</MenuItem>
                     <Divider/>
-                    <MenuItem onClick={handleClose}>Change password</MenuItem>
+                    <MenuItem style ={{fontSize:'0.95rem'}} onClick={handleClose}>Change password</MenuItem>
                     <Divider/>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem style ={{fontSize:'0.95rem'}} onClick={handleClose}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

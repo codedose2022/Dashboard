@@ -9,23 +9,23 @@ import _ from 'lodash';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 
-export default function MyProfile() {
-
+export default function MyProfile(props) {
     const classes = useStyles(); 
     const classStyle = useStyle(); 
-	let theme = createMuiTheme();
+	  let theme = createMuiTheme();
     theme = responsiveFontSizes(theme);
     const state = useSelector(state => state);
-    const profileData = _.get(state,'employees.profile','');
+    const employeeProfile = _.get(state,'employees.profile','');
+    const profileData = props.employee ? props.employee : employeeProfile;
     let dateOfHire = moment(profileData.dateOfHire).format('Do MMMM YYYY');
     let dob = moment(profileData.dob).format('Do MMMM YYYY');
-	return (
+	  return (
 		<div>
-        <div className={classStyle.topPadding}/>
-        <Button><Link to = "/Dashboard"><h5>Go to Dashboard</h5></Link></Button>
+        <div className={!props.employee ? classStyle.topPadding : ''}/>
+        { !props.employee && <Link style = {{ textDecoration: 'none'}} to = "/Dashboard"><h6 className = {classes.linkStyle} >GO TO DASHBOARD</h6></Link> }
         <div className={classStyle.topPadding}/>
 			<Container fixed >
-			<Paper className={classes.root}  elevation={9}>
+			<Paper className={classes.root}  elevation={2}>
 			<Grid>
 				<Grid container spacing={3}>
 					<Grid item xs={12} container>
@@ -78,14 +78,17 @@ export default function MyProfile() {
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
-					fullWidth
+					      fullWidth
                     id="firstName"
                     label="First Name"
                    
                     InputProps={{
                         readOnly: true,
+                    
+                        disableUnderline: true
+                        
                     }}
-                    variant="filled"
+                    variant='filled'
                     value={profileData.firstName}
                 />
                 </Grid>
@@ -97,6 +100,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                     readOnly: true,
+                    disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.lastName}
@@ -111,6 +115,7 @@ export default function MyProfile() {
                    
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.email}
@@ -124,6 +129,7 @@ export default function MyProfile() {
                    
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.employeeCode}
@@ -151,6 +157,7 @@ export default function MyProfile() {
                  
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.designation}
@@ -164,6 +171,7 @@ export default function MyProfile() {
                   
                     InputProps={{
                     readOnly: true,
+                    disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.department}
@@ -177,6 +185,7 @@ export default function MyProfile() {
                    
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={dateOfHire}
@@ -191,6 +200,7 @@ export default function MyProfile() {
                    
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.deskPhone}
@@ -204,6 +214,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.workMobile}
@@ -217,6 +228,7 @@ export default function MyProfile() {
                    
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.employeeStatus}
@@ -244,6 +256,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.phoneNumber}
@@ -257,6 +270,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                     readOnly: true,
+                    disableUnderline: true
                     }}
                     variant="filled"
                     value={dob}
@@ -270,6 +284,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.nationality}
@@ -284,6 +299,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.gender}
@@ -297,6 +313,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.maritalStatus}
@@ -310,6 +327,7 @@ export default function MyProfile() {
                     
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                     value={profileData.hobbies}
@@ -338,6 +356,7 @@ export default function MyProfile() {
                     defaultValue="Ben"
                     InputProps={{
                     readOnly: true,
+                    disableUnderline: true
                     }}
                     variant="filled"
                 />
@@ -350,6 +369,7 @@ export default function MyProfile() {
                     defaultValue="Dog"
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                 />
@@ -362,6 +382,7 @@ export default function MyProfile() {
                     defaultValue="12-12-2020"
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                 />
@@ -376,6 +397,7 @@ export default function MyProfile() {
                     defaultValue="Lucy"
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                 />
@@ -388,6 +410,7 @@ export default function MyProfile() {
                     defaultValue="Cat"
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                 />
@@ -400,6 +423,7 @@ export default function MyProfile() {
                     defaultValue="12-12-2020"
                     InputProps={{
                         readOnly: true,
+                        disableUnderline: true
                     }}
                     variant="filled"
                 />
