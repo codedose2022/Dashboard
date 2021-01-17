@@ -8,7 +8,7 @@ import { createMuiTheme,ThemeProvider} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { green} from '@material-ui/core/colors';
 import ListEmployees from './ListEmployees';
-
+import EventsPage from './EventsPage';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -98,9 +98,10 @@ export default function TabsComponent() {
           <Tab className={classes.itemSize} label="MESSAGES" {...a11yProps(5)} />
         
         </Tabs>
+        
       </AppBar>
       <TabPanel  value={value} index={0}>
-        Item One1
+      <EventsPage/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

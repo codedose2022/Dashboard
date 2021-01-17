@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/employeeDetails/';
+const employeeDetailsUrl = 'http://localhost:5000/employeeDetails/';
+const eventsUrl =  'http://localhost:5000/events/'
+
+export const login = (loginData) => axios.post(`${employeeDetailsUrl}login`,loginData);
+export const getProfile = (token) => axios.post(`${employeeDetailsUrl}profile`,null,{headers : {"x-auth-token": token}}); 
+export const isTokenValid = (token) => axios.post(`${employeeDetailsUrl}isTokenValid`,null,{headers : {"x-auth-token": token}}); 
+export const getEmployees = (token) => axios.post(`${employeeDetailsUrl}getEmployees`,null,{headers : {"x-auth-token": token}}); 
+export const createEmployee = (token,employeeData) => axios.post(`${employeeDetailsUrl}createEmployee`,employeeData,{headers : {"x-auth-token": token}}); 
+
+export const getEvents = (token,division) => axios.post(`${eventsUrl}getEvents`,null,{headers : {"x-auth-token": token,"division":division}}); 
+export const addEvent = (token,event) => axios.post(`${eventsUrl}createEvents`,event,{headers : {"x-auth-token": token}}); 
 
 
-export const login = (loginData) => axios.post(`${url}login`,loginData);
-export const getProfile = (token) => axios.post(`${url}profile`,null,{headers : {"x-auth-token": token}}); 
-export const isTokenValid = (token) => axios.post(`${url}isTokenValid`,null,{headers : {"x-auth-token": token}}); 
-export const getEmployees = (token) => axios.post(`${url}getEmployees`,null,{headers : {"x-auth-token": token}}); 
-export const createEmployee = (token,employeeData) => axios.post(`${url}createEmployee`,employeeData,{headers : {"x-auth-token": token}}); 
 

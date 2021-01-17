@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
  
-import getEmployees from './routes/employee.js';
+import Employees from './routes/employee.js';
+import Events from './routes/events.js';
 
 
 
@@ -13,7 +14,8 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
-app.use('/employeeDetails',getEmployees)
+app.use('/employeeDetails',Employees)
+app.use('/Events',Events)
 
 const CONNECTION_URL = 'mongodb+srv://sftdev16:mersat123@maincluster.4woyg.mongodb.net/portal?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
