@@ -31,12 +31,12 @@ const App = () =>{
       }
       const tokenRes = await isTokenValid(token);
       //on logout set it to empty
-      if(tokenRes){
-        const employeeDetail = await getProfile(token);
-        setEmployeeData({
-          token,
-          employee : employeeDetail.data});        
-      }
+      // if(tokenRes){
+      //   const employeeDetail = await getProfile(token);
+      //   setEmployeeData({
+      //     token,
+      //     employee : employeeDetail.data});        
+      // }
     }
     checkloggedIn();
   }, []);

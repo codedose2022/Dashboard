@@ -12,6 +12,7 @@ const LOGIN_SUCCESSFUL = '11';
 const INVALID_PASSWORD = '12';
 const USER_EXISTING = '13';
 const USER_CREATION_SUCCESS = '14';
+const USER_UPDATE_SUCCESS = '15';
 
 export const getEmployees = async (req,res) => { 
      try {
@@ -89,10 +90,15 @@ export const isTokenValid = async (req,res) => {
 
 
  export const editProfile = async (req,res) => { 
-    
+    let responseMessages = {
+        messages:{
+            status:'',
+            message:''
+        },
+        employees:{}
+    }
     try {
         const entries = Object.keys(req.body)
-        console.log(entries)
         const updates = {}
             for (let i = 0; i < entries.length; i++) {
             updates[entries[i]] = Object.values(req.body)[i]
@@ -101,16 +107,19 @@ export const isTokenValid = async (req,res) => {
             "_id": req.body._id
             } , {
             $set: updates
-            } ,
-            function (err , success) {
-            if (err) throw (err);
-            else {
-               
-            res.send({
-            msg: "update success"
-            })
-            }
-            })
+            } )
+            // function (err , success) {
+            // if (err) throw (err);
+            // else {
+                const employees = await employeeDetails.find({"disableInd" : 'N'},{password:0});
+                responseMessages.messages.message= 'Details Successfully Updated';
+                responseMessages.messages.status = USER_UPDATE_SUCCESS;
+                responseMessages.employees = employees;
+                return res.status(200).json(responseMessages);
+          
+            // }
+            // }
+           
 
    } catch (error) {
        res.status(404).json({ message: error.message });

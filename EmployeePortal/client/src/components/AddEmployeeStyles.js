@@ -28,5 +28,15 @@ export default makeStyles((theme) => ({
       dialog:{
             maxWidth:'100%',
             maxHeight: '100%',
-      }
+      },
+      switch:{
+            display:'flex-end',
+      },
+      fileInput: {
+            width: '97%',
+            margin: '10px 0',
+      },
+      div:{
+            padding:'5px',
+      },
 }));

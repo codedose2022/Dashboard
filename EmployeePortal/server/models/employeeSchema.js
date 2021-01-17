@@ -28,9 +28,10 @@ const employeeSchema = mongoose.Schema({
         type: String,
         default: passwordHash,
     },
-    dependance:Object,
+    dependenceDetails:Object,
     hobbies :[String],
     dietPath:String,  
+    selectedFile: String,
     disableInd:{
         type: String,
         default: 'N',

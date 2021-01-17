@@ -8,7 +8,7 @@ import ViewEmployeeModel from './ViewEmployeeModal';
 import useStyles from './ListEmployeeStyles';
 import AddEmployee from './AddEmployee';
 import _ from 'lodash';
-
+import EditEmployeeModel from './EditEmployeeModel';
 
 const columns = [
         { id: 'firstName', label: 'First Name', minWidth: 170},
@@ -50,6 +50,7 @@ export default function ListEmployees() {
       let employeeInfo  =_.get(state,'employees.employeesData',[]);
       const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("xs"));
       const [showViewModel, setShowViewModel] = useState({"index" : {}});
+      const [showEditModel, setEditViewModel] = useState({"index" : {}});
       const handleChangePage = (event, newPage) => {
         setPage(newPage);
       };
@@ -74,8 +75,11 @@ export default function ListEmployees() {
         setOpen(false);
       };
 
-      function editProfile(employee){
-
+      function editProfile(employee,index){
+        setEditViewModel({"index" : {
+          [index] : true
+        }})
+      
       }
 
   return (
@@ -141,18 +145,22 @@ export default function ListEmployees() {
                         {column.id === 'actions' ? 
                         <div>
                           <Link 
-                            key={ `${employeeIndex}_link`} 
-                            id={ `${employeeIndex}_link`} 
+                            key={ `${employeeIndex}_viewlink`} 
+                            id={ `${employeeIndex}_viewlink`} 
                             href = "#" 
                             style = {{color: 'green'}} 
                             onClick={() => viewProfile(employee,employeeIndex)}>
                           View 
                             </Link> &nbsp; 
                             <Link 
+                            key={ `${employeeIndex}_editlink`} 
+                            id={ `${employeeIndex}_editlink`} 
                             style = {{color: 'green'}}
-                            href="#" onClick={() => editProfile(employee)}>
+                            href="#" 
+                            onClick={() => editProfile(employee,employeeIndex)}>
                             Edit </Link>
                             {_.get(showViewModel,`index.${employeeIndex}`, false) &&  <ViewEmployeeModel setShowViewModel = {setShowViewModel} employee = {employee}/>}
+                            {_.get(showEditModel,`index.${employeeIndex}`, false) &&  <EditEmployeeModel setEditViewModel = {setEditViewModel} employee = {employee}/>}
                           </div>
                         : value 
                         }

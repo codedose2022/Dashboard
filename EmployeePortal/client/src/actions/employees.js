@@ -26,7 +26,6 @@ export const login = (loginData) => async (dispatch) =>{
 export const getProfile = (token) => async (dispatch) => {
   try {
       const { data } = await api.getProfile(token);
-      console.log(data);
       dispatch({ type: 'GET_PROFILE', payload: data });
     } catch (error) {
       console.log(error.message);
@@ -39,7 +38,6 @@ export const isTokenValid = (token) => async () => {
   try {
    
       const isValid = await api.isTokenValid(token);
-      console.log(isValid)
       return isValid;
     
     } catch (error) {

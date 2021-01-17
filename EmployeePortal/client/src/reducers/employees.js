@@ -17,14 +17,6 @@ export default (state = [], action)=> {
                 profile: action.payload,
                
             };
-
-        case 'CREATE_EMPLOYEE':
-        return {
-                ...state,
-                employeesData: action.payload
-               
-                      
-             };
         case 'GET_EMPLOYEES':
           return {
             ...state,

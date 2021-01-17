@@ -1,5 +1,4 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,10 +10,6 @@ import useStyles from './ListEmployeeStyles';
 export default function ViewEmployeeModel(props) {
   const classes = useStyles();
 const [open, setOpen] = React.useState(true);
-
-const handleClickOpen = () => {
-  setOpen(true);
-};
 
 const handleClose = () => {
   setOpen(false);
