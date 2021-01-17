@@ -1,7 +1,6 @@
 import express from "express";
 import Events from '../models/eventsSchema.js';
 import mongoose from 'mongoose';
-import _ from 'lodash';
 const router = express.Router();
 
 

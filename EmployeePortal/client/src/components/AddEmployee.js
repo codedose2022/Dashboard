@@ -643,6 +643,7 @@ return(
                             name="dependenceDob"
                             label="Date of Birth"
                             variant="outlined"
+                            type="date"
                             disabled={disableProfile.disableInd}
                             value={inputField.dependenceDob} 
                             onChange={(e) => handleChangeInput(index,e)}/>

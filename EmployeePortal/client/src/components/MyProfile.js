@@ -377,8 +377,7 @@ export default function MyProfile(props) {
                     size="small"
                     id="dependenceDob"
                     label="Date of Birth"
-                    type="date"
-                    defaultValue={dependence?dependence.dependenceDob:""}
+                    defaultValue={dependence?moment(dependence.dependenceDob).format('Do MMMM YYYY'):""}
                     InputProps={{
                         readOnly: true,
                         disableUnderline: true
