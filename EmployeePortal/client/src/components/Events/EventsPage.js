@@ -72,15 +72,15 @@ const handleAddEventModelOpen = () => {
        <Grid className = {classes.header}>
        <Chip className = {classes.chip}  key = {`status_${event._id}`}
        size="small" label={event.status} color = {event.status === "Approved" ? "primary" : ''}  />
-         <span>
-        <IconButton style = {{ "background": "none","padding" : "0px"}} key = {`iconEditButton${event._id}`} className = {classes.iconVertical}   onClick={()=>setEditButton(eventIndex) }>
+           {isEventsMember &&  <span>
+         <IconButton style = {{ "background": "none","padding" : "0px"}} key = {`iconEditButton${event._id}`} className = {classes.iconVertical}   onClick={()=>setEditButton(eventIndex) }>
      
        <EditIcon color="primary" size="small" />
        </IconButton>
        <IconButton style = {{ "background": "none"}}  key = {`iconDeleteButton${event._id}`} className = {classes.iconVertical}   onClick={()=>setDeleteButton(eventIndex)}>
        <DeleteIcon color="primary" size="small"  />
        </IconButton>
-       </span>
+       </span> }
   		{_.get(editButton,`index.${eventIndex}`, false) && 
         <AddEvents setEdit = {setEdit} event = {event} />}
      </Grid>
