@@ -11,18 +11,3 @@ export const getEvents = (token,division) => async (dispatch) =>{
   console.log(error.message);
  }
 }
-
-export const addEvents = (token,event) => async () =>{
- 
-  try {
-    console.log(event)
-    const {data} = await api.addEvent(token,event);
-    console.log(data)
-   // setServiceError(data.responseData.events);
-   // dispatch ({type: 'ADD_EVENTS', payload: data.responseData.events});
-}
- catch (error) {  
-  console.log(error.message);
-  //setServiceError("hi");
- }
-}

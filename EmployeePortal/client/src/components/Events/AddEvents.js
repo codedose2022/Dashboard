@@ -8,6 +8,7 @@ import Alert from '@material-ui/lab/Alert';
 import * as api from '../../api'; 
 import _ from 'lodash'; 
 import FileBase from 'react-file-base64';
+import moment from 'moment';
 
 import { Button,TextareaAutosize,Grid, TextField  } from "@material-ui/core";
 export default function AddEvents(props) {
@@ -15,20 +16,22 @@ export default function AddEvents(props) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   let token = localStorage.getItem("auth-token");
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [venue, setVenue] = useState('');
-  const [desc, setDesc] = useState('');
-
-  const [img, setImg] = useState('');
+  const [title, setTitle] = useState(props.event ? props.event.title: '');
+  const [date, setDate] = useState(props.event ?  props.event.date.substring(0,10) : '');
+  const [time, setTime] = useState(props.event ?  props.event.time : '');
+  const [venue, setVenue] = useState(props.event ? props.event.venue: '');
+  const [desc, setDesc] = useState(props.event ? props.event.desc: '');
+  const [img, setImg] = useState(props.event ?  props.event.img: '');
   const [flag, setShowRequired] = useState(false);
   const [error, setError] = useState('');
   
- // const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const today = moment();
+  const todayDate = today.format('YYYY-MM-DD').toString();
+  console.log(todayDate)
+ 
   const handleCancel = () => {
     setOpen(false);
-    props.setOpenModel(false);
+    props.event ? props.setEdit(false) :props.setOpenModel(false);
    
   };
   
@@ -36,12 +39,13 @@ export default function AddEvents(props) {
    // setOpen(false);
     //props.setOpenModel(false);
     setShowRequired(true);
-    const isFieldEmpty = [title,date,time,desc].includes("")
+ 
+ const isFieldEmpty = [title,date,venue,time,desc].includes("")
     if(!isFieldEmpty){
-      let event = {title,date,venue,desc,img,desc,time};
+           let event = {title,date,venue,desc,img,time};
      try {
       await api.addEvent(token,event).then(response =>{
-          console.log(response);
+         
           const responseData = _.get(response, 'data.responseData','')
           if(responseData.messages.status === '21'){
           dispatch ({type: 'ADD_EVENTS', payload: responseData.events});
@@ -59,10 +63,31 @@ export default function AddEvents(props) {
   };
   }
 
+  const handleEdit = async () =>{
+    setShowRequired(true);
+    const isFieldEmpty = [title,date,time,desc].includes("");
+    if(!isFieldEmpty){
+      let id = {
+        _id: props.event._id
+      }
+      let event = {title,date,venue,desc,img,time,_id:props.event._id};
+     try {
+
+      const response= await api.editEvent(token,event);
+      console.log(response)
+        const responseData = _.get(response, 'data.responseData','')
+            if(responseData.messages.status === '21'){
+             dispatch ({type: 'ADD_EVENTS', payload: responseData.events});
+            }     
+     } catch (error) {
+      setError('something went wrong, please try again.')
+     }
+  };
+  }
 
   const handleClose = () => {
     setOpen(false);
-    props.setOpenModel(false);
+props.event ? props.setEdit(false) :props.setOpenModel(false);
    
   };
   return (
@@ -76,7 +101,7 @@ export default function AddEvents(props) {
      <DialogTitle 
      id="form-dialog-title" 
      style = {{alignSelf:  'center' }}>
-     ADD NEW EVENT
+    {props.event ? 'EDIT EVENT' :'ADD NEW EVENT'}
      </DialogTitle>
      <div>
     
@@ -111,13 +136,17 @@ export default function AddEvents(props) {
         FormHelperTextProps={{
           className: classes.helperTextColor
         }}
+  	 inputProps = {{
+          min : `${todayDate}`
+        }
+        }
         id="Date" 
         helperText = {flag && validateRequired(date)}
         onChange={(e) => setDate( e.target.value)}
         value = {date}
         type="date" 
        
-        InputProps={{ inputProps: { max: "2021-05-29" }}}
+  
         label="Event Date" />
    
       </Grid> 
@@ -163,17 +192,6 @@ export default function AddEvents(props) {
        </Grid>
      </Grid>
      <Grid container>
-
-  {/* <div className = {classes.textEditor} >
-     <Editor
-   
-    editorState={editorState}
-    toolbarClassName="toolbarClassName"
-    wrapperClassName="wrapperClassName"
-    editorClassName="editorClassName"
-    onEditorStateChange={(editorState) => setEditorState(editorState)}
-    />
-  </div> */}
     <Grid  className="editor">
     <TextareaAutosize 
      onChange={(e) => setDesc( e.target.value)}
@@ -192,8 +210,8 @@ export default function AddEvents(props) {
           <Button size = "small" variant= "contained" onClick={handleCancel} color="primary">
             cancel
           </Button>
-          <Button size = "small" variant= "contained" onClick={handleAdd} color="primary" autoFocus>
-            Add 
+          <Button size = "small" variant= "contained" onClick={props.event ? handleEdit :handleAdd} color="primary" autoFocus>
+            {props.event ? 'Done' : 'Add' } 
           </Button>
         </DialogActions>
       </Dialog>

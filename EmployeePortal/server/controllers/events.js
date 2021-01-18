@@ -1,6 +1,7 @@
 import express from "express";
 import Events from '../models/eventsSchema.js';
 import mongoose from 'mongoose';
+import _ from 'lodash';
 const router = express.Router();
 
 
@@ -26,6 +27,7 @@ export const getEvents = async (req,res) => {
 
 export const createEvents = async (req,res) => { 
   const event = new Events(req.body);
+  console.log(req.body)
 //let currentDate = event.postedDate.getFullYear() + '-' + (event.postedDate.getMonth() + 1) + '-' + event.postedDate.getDate();
 const todayDate = new Date()
 let responseData = {   
@@ -36,14 +38,9 @@ let responseData = {
     message:''
 }   
 }
-  
   try {
-    console.log( event.date.getMonth());
-    console.log( todayDate.getMonth());
-  
-      if(event.date.getFullYear() >= todayDate.getFullYear() && 
-      event.date.getMonth() >= todayDate.getMonth() && 
-      event.date.getDate() >= todayDate.getDate()){
+    
+    
         await event.save();  
         responseData.messages.message = 'Event Added.';
         responseData.messages.status = '21';
@@ -52,15 +49,7 @@ let responseData = {
         res.status(200).send({
           responseData
           });
-      }
-      else{
-        responseData.messages.message = 'Please select the future date';
-        responseData.messages.status = '22';
-        res.status(422).send({
-          responseData
-          });
-      }
-
+      
     
  } catch (error) {
      res.status(404).json({ message: error.message });
@@ -77,39 +66,59 @@ export const editEvents = async (req,res) => {
         message:''
     }   
   }
- 
   try {
+
+    console.log("in edit events ")
+      const todayDate = new Date();
+      const event = new Events(req.body);
       const entries = Object.keys(req.body);
+      console.log(!mongoose.Types.ObjectId.isValid(req.body._id))
       if (!mongoose.Types.ObjectId.isValid(req.body._id)) {
-        responseData.messages.message = 'Update failed due to invalid employee id';
+        responseData.messages.message = 'Update failed due to invalid post id';
         responseData.messages.status = '20';
         return res.status(404).send({
           responseData
+          });    
+      }
+      if(event.date.getFullYear() >= todayDate.getFullYear() && 
+      event.date.getMonth() >= todayDate.getMonth()){ 
+        
+        const updates = {}
+        for (let i = 0; i < entries.length; i++) {
+        updates[entries[i]] = Object.values(req.body)[i]
+        }
+        await Events.updateOne({
+        "_id": req.body._id
+        } , {
+        $set: updates
+        } )
+        //function (err , success) {
+        // if (err) throw (err);
+        // else {
+          responseData.messages.message = 'Updated Successfully';
+          responseData.messages.status = '21';
+          console.log("hi in response");
+        if(responseData.messages.status = '21'){
+          const events = await Events.find();
+          responseData.events = events;
+          return res.status(200).send({
+            responseData
+            });
+        }
+        
+        // }
+       // })
+        
+          
+      }
+      else{
+        responseData.messages.message = 'Please select the future date';
+        responseData.messages.status = '22';
+        res.status(422).send({
+          responseData
           });
       }
-      const updates = {}
-          for (let i = 0; i < entries.length; i++) {
-          updates[entries[i]] = Object.values(req.body)[i]
-          }
-          await Events.updateOne({
-          "_id": req.body._id
-          } , {
-          $set: updates
-          } ,
-          function (err , success) {
-          if (err) throw (err);
-          else {
-            responseData.messages.message = 'Updated Successfully';
-            responseData.messages.status = '21';
-          }
-          })
-          if( responseData.messages.status === '21'){
-            const events = await Events.find();
-            responseData.events = events;
-            return res.status(200).send({
-              responseData
-              });
-          }
+       
 
  } catch (error) {
      res.status(404).json({ message: error.message });

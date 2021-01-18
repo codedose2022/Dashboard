@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import _ from 'lodash';
 import AddEvents from './AddEvents';
+import * as helper from '../../helper';
 
 
 export default function EventsPage() {
@@ -18,6 +19,7 @@ const classes = useStyles();
 const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("xs"));
 const state = useSelector(state => state);
 let events  =_.get(state,'events.events',[]);
+const isEventsMember  = helper.isEventMember( _.get(state,'employees.employee.userData.division',''));
 const [editButton, setEdit] = useState({"index" : {}});
 const [deleteButton, setDelete] = useState({"index" : {}});
 const [open, setOpenModel] = useState(false)
@@ -44,7 +46,7 @@ const handleAddEventModelOpen = () => {
   return (
     <div className = {classes.root}>
       <Grid container justify="flex-end" >
-      <Button
+       {isEventsMember && <Button
       id= 'Add-events-button'
       key= 'Add-events-button_'
       className ={classes.addButtonStyle}
@@ -56,7 +58,7 @@ const handleAddEventModelOpen = () => {
      onClick = {handleAddEventModelOpen}
       startIcon={<AddIcon className={classes.tableCellStyle}/>}> 
      Add events
-      </Button>
+      </Button>}
      {open && <AddEvents setOpenModel = {setOpenModel}/>}
     </Grid>
     {events.map((event,eventIndex) => {
@@ -79,6 +81,8 @@ const handleAddEventModelOpen = () => {
        <DeleteIcon color="primary" size="small"  />
        </IconButton>
        </span>
+  		{_.get(editButton,`index.${eventIndex}`, false) && 
+        <AddEvents setEdit = {setEdit} event = {event} />}
      </Grid>
      <div >
        <Typography key = {`title${event._id}`} className = {classes.marginStyle}>{event.title}
