@@ -1,17 +1,14 @@
 import React,{ useState,useEffect,useRef} from 'react'
-import { AppBar,Toolbar,Typography,IconButton,Hidden,Badge,MenuItem,
-  Popper,MenuList, Divider,  } from '@material-ui/core';
+import { AppBar,Toolbar,Typography,IconButton,Hidden,Badge,
+         MenuItem,Popper,MenuList, Divider, Grow,
+         Paper,ClickAwayListener } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import useStyles from './NavbarStyles.js';
-import Mersatlogo from '../images/Mersatlogo.jpg';
+import Mersatlogo from '../../images/Mersatlogo.jpg';
 import {useHistory} from 'react-router-dom';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import {useDispatch} from 'react-redux';
-import { getProfile } from '../actions/employees';
-import {useSelector} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
+import { getProfile } from '../../actions/employees';
 import _ from 'lodash';
 
 export default function Navbar() {

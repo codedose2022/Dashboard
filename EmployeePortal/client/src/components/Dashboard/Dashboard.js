@@ -1,6 +1,6 @@
 import React from 'react';
 import TabsComponent from './TabsComponent'
-import useStyles from './CommonStyles';
+import useStyles from '../CommonStyles';
 
 
 

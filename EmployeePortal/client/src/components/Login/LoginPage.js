@@ -1,16 +1,15 @@
     import React, { useState,useEffect,useContext } from 'react';
     import { AppBar, Toolbar, Typography, Button, Box, 
-      createMuiTheme,ThemeProvider,Link,Grid } from "@material-ui/core";
-    import Mersatlogo from '../images/Mersatlogo.jpg'
-    import TextField from '@material-ui/core/TextField';
+            createMuiTheme,ThemeProvider,Link,
+            Grid,TextField,CssBaseline } from "@material-ui/core";
+    import Mersatlogo from '../../images/Mersatlogo.jpg'
     import { green} from '@material-ui/core/colors';
     import useStyles from './LoginPageStyles';
-    import CssBaseline from '@material-ui/core/CssBaseline';
     import {useDispatch,useSelector} from 'react-redux';
-    import { login } from '../actions/employees';
+    import { login } from '../../actions/employees';
     import _ from 'lodash';   
     import {useHistory} from 'react-router-dom'; 
-    import UserContext from "../context/UserContext";
+    import UserContext from "../../context/UserContext";
     import Alert from '@material-ui/lab/Alert';
     
     const theme = createMuiTheme({ 

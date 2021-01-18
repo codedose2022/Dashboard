@@ -1,14 +1,11 @@
 import React,{ useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { createMuiTheme,ThemeProvider} from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import {AppBar,Tabs,Tab,createMuiTheme,
+        ThemeProvider,Box} from '@material-ui/core';
 import { green} from '@material-ui/core/colors';
-import ListEmployees from './ListEmployees';
-import EventsPage from './EventsPage';
+import ListEmployees from '../Employees/ListEmployees';
+import EventsPage from '../Events/EventsPage';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

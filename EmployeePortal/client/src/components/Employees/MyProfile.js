@@ -1,8 +1,9 @@
 import React from 'react';
 import useStyles from './MyProfileStyles';
 import {Paper,Container,Grid,TextField,Avatar,Divider,
-    Typography,createMuiTheme,responsiveFontSizes,MuiThemeProvider} from '@material-ui/core'; 
-import useStyle from './CommonStyles';
+        Typography,createMuiTheme,responsiveFontSizes,
+        MuiThemeProvider} from '@material-ui/core'; 
+import useStyle from '../CommonStyles';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
 import {useSelector} from 'react-redux';
@@ -23,12 +24,10 @@ export default function MyProfile(props) {
         const value =  _.get(profileData,field,"");
         if(value) {
             return value;
-        }
-       
+        }   
     }
-	  return (
-       
-		<div>
+return (
+	<div>
           {profileData ?  <div>
         <div className={!props.employee ? classStyle.topPadding : ''}/>
         { !props.employee && <Link style = {{ textDecoration: 'none'}} to = "/Dashboard"><h6 className = {classes.linkStyle} >GO TO DASHBOARD</h6></Link> }
@@ -393,8 +392,8 @@ export default function MyProfile(props) {
 			</Grid>
 			</Paper>
 			</Container> </div> : "loading" }
-		</div>
-	  );
-  };
+	</div>
+	);
+};
   
 

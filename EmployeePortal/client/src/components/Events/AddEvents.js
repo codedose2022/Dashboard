@@ -1,20 +1,13 @@
 import React,{useState} from 'react'
 import useStyles from './EventPageStyles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {Dialog,DialogActions,DialogContent,
+      DialogTitle} from '@material-ui/core';
 import {useDispatch} from 'react-redux';
-import {addEvents} from '../actions/events';
-import {validateRequired} from '../helper';
+import {validateRequired} from '../../helper';
 import Alert from '@material-ui/lab/Alert';
-import * as api from '../api'; 
+import * as api from '../../api'; 
 import _ from 'lodash'; 
 import FileBase from 'react-file-base64';
-//import { Editor } from 'react-draft-wysiwyg';
-//import {EditorState,convertToRaw ,convertFromRaw} from 'draft-js';
-
-//import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import { Button,TextareaAutosize,Grid, TextField  } from "@material-ui/core";
 export default function AddEvents(props) {

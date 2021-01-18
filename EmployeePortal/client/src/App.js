@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import LoginPage from './components/LoginPage';
-import Dashboard from './components/Dashboard';
+import LoginPage from './components/Login/LoginPage';
+import Dashboard from './components/Dashboard/Dashboard';
 import {BrowserRouter as Router, Route,Switch,Redirect} from 'react-router-dom';
-import MyProfile from './components/MyProfile';
-import AddEmployee from './components/AddEmployee';
-import Navbar from './components/Navbar';
+import MyProfile from './components/Employees/MyProfile';
+import AddEmployee from './components/Employees/AddEmployee';
+import Navbar from './components/Dashboard/Navbar';
 import _ from 'lodash'; 
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';

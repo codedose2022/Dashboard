@@ -1,9 +1,7 @@
-import React from 'react'
-import AddEmployee from './AddEmployee'
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import {Button} from '@material-ui/core';
+import React from 'react';
+import AddEmployee from './AddEmployee';
+import {DialogActions,DialogContent,
+        Dialog,Button} from '@material-ui/core';
 import useStyles from './ListEmployeeStyles';
 
 export default function EditEmployeeModel(props) {

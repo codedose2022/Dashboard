@@ -1,9 +1,8 @@
 import React,{ useState,useEffect,useRef} from 'react'
 import useStyles from './EventPageStyles';
-
 import {Paper,Chip,Box,Typography, 
   Grid,IconButton} from '@material-ui/core';
-import wall from '../images/wall.jpg';
+import wall from '../../images/wall.jpg';
 import LikeDislikeCommentComponent from './LikeDislikeCommentComponent';
 import AddIcon from '@material-ui/icons/Add';
 import { useMediaQuery,Button } from "@material-ui/core";

@@ -97,6 +97,7 @@ export const isTokenValid = async (req,res) => {
         },
         employees:{}
     }
+    console.log(req.body);
     try {
         const entries = Object.keys(req.body)
         const updates = {}

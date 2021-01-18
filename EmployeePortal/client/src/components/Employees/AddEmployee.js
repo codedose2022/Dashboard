@@ -4,15 +4,16 @@ import FileBase from 'react-file-base64';
 import { green,grey} from '@material-ui/core/colors';
 import {useDispatch} from 'react-redux';
 import { CountryDropdown } from 'react-country-region-selector';
-import * as api from '../api';
+import * as api from '../../api';
 import Alert from '@material-ui/lab/Alert';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import {Paper,IconButton ,FormGroup,Switch,FormHelperText,FormControlLabel,
-    Grid,TextField,Divider,createMuiTheme,ThemeProvider,InputLabel,
-    FormControl,Typography,MenuItem,Button,Select} from '@material-ui/core'; 
+import {Paper,IconButton ,FormGroup,Switch,FormHelperText,
+    FormControlLabel,Grid,TextField,Divider,createMuiTheme,
+    ThemeProvider,InputLabel,FormControl,Typography,MenuItem,
+    Button,Select} from '@material-ui/core'; 
 import moment from 'moment';
-
+import {departments} from './Constants/departmentList';
 export default function AddEmployee(props) {
 
     let token = localStorage.getItem("auth-token");
@@ -28,79 +29,6 @@ export default function AddEmployee(props) {
         },
       })
 
-    const departments = [
-    {
-        departmentName: "IT Department",
-        department: "IT",
-        designationList: [
-        {
-            designationName: "Software Developer",
-            designation: "IT1"
-        },
-        {
-            designationName: "Database Administrator",
-            designation: "IT2"
-        }
-        ]
-    },
-    {
-        departmentName: "ESP Operations",
-        department: "ESP",
-        designationList: [
-            {
-                designationName: "Associate",
-                designation: "ESP1"
-            },
-            {
-                designationName: "Lead",
-                designation: "ESP2"
-            }
-        ]
-    },
-    {
-        departmentName: "Client Relations",
-        department: "CR",
-        designationList: [
-            {
-                designationName: "Junior",
-                designation: "CR1"
-            },
-            {
-                designationName: "Senior",
-                designation: "CR2"
-            }
-        ]
-    },
-    {
-        departmentName: "Technical",
-        department: "TE",
-        designationList: [
-            {
-                designationName: "Manager",
-                designation: "TE1"
-            },
-            {
-                designationName: "Data Entry",
-                designation: "TE2"
-            }
-        ]
-    },
-    {
-        departmentName: "Support Staff",
-        department: "SS",
-        designationList: [
-            {
-                designationName: "House Keeping",
-                designation: "SS1"
-            },
-            {
-                designationName: "Office Assistant",
-                designation: "SS2"
-            }
-        ]
-    }
-    ];
-  
     const classes = useStyles(); 
     const [addEmployee, setAddEmployee] = useState({
         firstName:props.employee ? props.employee.firstName : '',
@@ -120,9 +48,7 @@ export default function AddEmployee(props) {
         department:props.employee ? props.employee.department : '',
         division:props.employee ? props.employee.division : '',
         nationality:props.employee ? props.employee.nationality : '',
-        selectedFile:props.employee ? props.employee.selectedFile : '',
-       
-
+        selectedFile:props.employee ? props.employee.selectedFile : '',   
     });
     let [dependence, setDependence] = useState(
         props.employee ? props.employee.dependenceDetails : [
@@ -181,13 +107,13 @@ export default function AddEmployee(props) {
             if('dob' in fieldValues){
             temp.dob = fieldValues.dob ? "": "This field is required.";}
             if('phoneNumber' in fieldValues){
-            temp.phoneNumber = fieldValues.phoneNumber.length===10 ? "": "10-digits required.";}
+                console.log(fieldValues.phoneNumber)
+            temp.phoneNumber = fieldValues.phoneNumber?fieldValues.phoneNumber.length===10 ? "": "10-digits required.":""}
             if('dietPath' in fieldValues){
             temp.dietPath = fieldValues.dietPath ? "": "This field is required.";}
             setErrors({
                ...temp
            })
-           console.log("1"+temp);
            return Object.values(temp).every(x=>x === "");
       }
     const [status, setStatus] = useState('');
@@ -224,8 +150,7 @@ export default function AddEmployee(props) {
                 if(response.data.messages.status ==='13')
             {
                 setStatus(response.data.messages.message);
-            }
-               
+            } 
             }
             
         )
@@ -325,7 +250,7 @@ return(
                             error={errors.firstName?true:false}
                             helperText={errors.firstName}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.firstName : addEmployee.firstName } 
+                            value={addEmployee.firstName} 
                             onChange={(e) => onChangeFields(e)}
                         />
                     </Grid>
@@ -340,7 +265,7 @@ return(
                             error={errors.lastName?true:false}
                             helperText={errors.lastName}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.lastName : addEmployee.lastName} 
+                            value={addEmployee.lastName} 
                             onChange={(e) => onChangeFields(e)}
                          />
                     </Grid>
@@ -355,7 +280,7 @@ return(
                             error={errors.email?true:false}
                             helperText={errors.email}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.email : addEmployee.email} 
+                            value={addEmployee.email} 
                             onChange={(e) => onChangeFields(e)}
                         />
                     </Grid>  
@@ -370,7 +295,7 @@ return(
                             error={errors.employeeCode?true:false}
                             helperText={errors.employeeCode}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.employeeCode : addEmployee.employeeCode} 
+                            value={addEmployee.employeeCode} 
                             onChange={(e) => onChangeFields(e)}
                         />                    
                     </Grid>
@@ -378,7 +303,7 @@ return(
                          <CountryDropdown  
                          required
                          disabled={disableProfile.disableInd}
-                         value={props.employee ? props.employee.nationality : addEmployee.nationality} 
+                         value={ addEmployee.nationality} 
                          onChange={(e) => setAddEmployee({ ...addEmployee, nationality : e})}
                          className={classes.country} />                       
                     </Grid>
@@ -395,7 +320,7 @@ return(
                             label="department"
                             id="department"
                             name="department"
-                            defaultValue={props.employee ? props.employee.department : addEmployee.department}
+                            value={ addEmployee.department}
                             onChange={(e) => onChangeFields(e)}
                             >
                                 <MenuItem value="">Select</MenuItem>
@@ -420,7 +345,7 @@ return(
                             label="designation"
                             id="designation"
                             name="designation"
-                            defaultValue={props.employee ? props.employee.designation : addEmployee.designation}
+                            value={ addEmployee.designation}
                             onChange={(e) => onChangeFields(e)}
                             disabled={!addEmployee.department || disableProfile.disableInd}
                             >
@@ -447,7 +372,7 @@ return(
                             error={errors.division?true:false}
                             helperText={errors.division}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.division : addEmployee.division} 
+                            value={ addEmployee.division} 
                             onChange={(e) => onChangeFields(e)}
                             variant="outlined" select>
                             <MenuItem value="EV">Events Committe</MenuItem>
@@ -469,6 +394,9 @@ return(
                             disabled={disableProfile.disableInd}
                             defaultValue={props.employee ? moment(props.employee.dateOfHire).format('YYYY-MM-DD') : addEmployee.dateOfHire} 
                             variant="outlined"
+                            inputProps={{
+                                min: "2021-01-18"
+                              }}
                             InputLabelProps={{
                                 shrink: true,
                               }}
@@ -486,7 +414,7 @@ return(
                             error={errors.deskPhone?true:false}
                             helperText={errors.deskPhone}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.deskPhone : addEmployee.deskPhone} 
+                            value={ addEmployee.deskPhone} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -501,7 +429,7 @@ return(
                             error={errors.workMobile?true:false}
                             helperText={errors.workMobile}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.workMobile : addEmployee.workMobile} 
+                            value={ addEmployee.workMobile} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -519,7 +447,7 @@ return(
                             disabled={disableProfile.disableInd}
                             error={errors.gender?true:false}
                             helperText={errors.gender}
-                            defaultValue={props.employee ? props.employee.gender : addEmployee.gender} 
+                            value={ addEmployee.gender} 
                             onChange={(e) => onChangeFields(e)}
                             variant="outlined" select>
                             <MenuItem value="Male">Male</MenuItem>
@@ -536,7 +464,7 @@ return(
                             label="Marital Status" 
                             error={errors.maritalStatus?true:false}
                             helperText={errors.maritalStatus}
-                            defaultValue={props.employee ? props.employee.maritalStatus : addEmployee.maritalStatus} 
+                            value={ addEmployee.maritalStatus} 
                             onChange={(e) => onChangeFields(e)}
                             variant="outlined" select>
                             <MenuItem value="Married">Married</MenuItem>
@@ -555,7 +483,7 @@ return(
                             error={errors.phoneNumber?true:false}
                             helperText={errors.phoneNumber}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.phoneNumber : addEmployee.phoneNumber} 
+                            value={ addEmployee.phoneNumber} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -588,7 +516,7 @@ return(
                             error={errors.hobbies?true:false}
                             helperText={errors.hobbies}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? props.employee.hobbies : addEmployee.hobbies} 
+                            value={ addEmployee.hobbies} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -602,7 +530,7 @@ return(
                             disabled={disableProfile.disableInd}
                             error={errors.dietPath?true:false}
                             helperText={errors.dietPath}
-                            defaultValue={props.employee ? props.employee.dietPath : addEmployee.dietPath } 
+                            value={addEmployee.dietPath } 
                             onChange={(e) => onChangeFields(e)}
                             variant="outlined" select>
                             <MenuItem value="Vegetarian">Vegetarian</MenuItem>
