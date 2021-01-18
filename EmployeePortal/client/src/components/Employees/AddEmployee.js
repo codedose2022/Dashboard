@@ -18,6 +18,7 @@ export default function AddEmployee(props) {
 
     let token = localStorage.getItem("auth-token");
     const dispatch = useDispatch();
+    const classes = useStyles(); 
     const theme = createMuiTheme({ 
         palette: {
           primary:{
@@ -28,18 +29,16 @@ export default function AddEmployee(props) {
           },
         },
       })
-
-    const classes = useStyles(); 
     const [addEmployee, setAddEmployee] = useState({
         firstName:props.employee ? props.employee.firstName : '',
         lastName:props.employee ? props.employee.lastName : '',
         email:props.employee ? props.employee.email : '',
         employeeCode:props.employee ? props.employee.employeeCode : '',
-        dateOfHire:props.employee ? props.employee.dateOfHire : '',
+        dateOfHire:props.employee ?  moment(props.employee.dateOfHire).format('YYYY-MM-DD')  : '',
         deskPhone:props.employee ? props.employee.deskPhone : '',
         workMobile:props.employee ? props.employee.workMobile : '',
         phoneNumber:props.employee ? props.employee.phoneNumber : '',
-        dob:props.employee ? props.employee.dob : '',
+        dob:props.employee ?  moment(props.employee.dob).format('YYYY-MM-DD')  : '',
         hobbies:props.employee ? props.employee.hobbies : '',
         gender:props.employee ? props.employee.gender : '',
         dietPath: props.employee ? props.employee.dietPath : '',
@@ -57,6 +56,10 @@ export default function AddEmployee(props) {
         dependenceDob: '',
         },
     ]);
+    const [errors, setErrors] = useState('');
+    const [status, setStatus] = useState('');
+
+
     const handleChangeInput = (index,e) => {
             const values = [...dependence];
             values[index][e.target.name] = e.target.value;
@@ -72,116 +75,116 @@ export default function AddEmployee(props) {
         values.splice(index,1);
         setDependence(values);
     }
-    const [errors, setErrors] = useState('');
    
-      const validate = (fieldValues = addEmployee) => {
-            let temp = {...errors}
-            if('firstName' in fieldValues){
-            temp.firstName = fieldValues.firstName ? "": "This field is required.";}
-            if('lastName' in fieldValues){
-            temp.lastName = fieldValues.lastName ? "": "This field is required.";}
-            if('email' in fieldValues){
-            temp.email = (/.+@.+..+/).test(fieldValues.email) ? "": "Invalid Email.";}
-            if('employeeCode' in fieldValues){
-            temp.employeeCode = fieldValues.employeeCode ? "": "This field is required.";}
-            if('deskPhone' in fieldValues){
-            temp.deskPhone = fieldValues.deskPhone.length===4 ? "": "4-digits required.";}
-            if('workMobile' in fieldValues){
-            temp.workMobile = fieldValues.workMobile.length===10 ? "": "10-digits required.";}
-            if('hobbies' in fieldValues){
-            temp.hobbies = fieldValues.hobbies ? "": "This field is required.";}
-            if('dateOfHire' in fieldValues){
-            temp.dateOfHire = fieldValues.dateOfHire ? "": "This field is required.";}
-            if('nationality' in fieldValues){
-            temp.nationality = fieldValues.nationality ? "": "This field is required.";}
-            if('department' in fieldValues){
-            temp.department = fieldValues.department ? "": "This field is required.";}
-            if('designation' in fieldValues){
-            temp.designation = fieldValues.designation ? "": "This field is required.";}
-            if('division' in fieldValues){
-            temp.division = fieldValues.division ? "": "This field is required.";}
-            if('gender' in fieldValues){
-            temp.gender = fieldValues.gender ? "": "This field is required.";}
-            if('maritalStatus' in fieldValues){
-            temp.maritalStatus = fieldValues.maritalStatus ? "": "This field is required.";}
-            if('dob' in fieldValues){
-            temp.dob = fieldValues.dob ? "": "This field is required.";}
-            if('phoneNumber' in fieldValues){
-                console.log(fieldValues.phoneNumber)
-            temp.phoneNumber = fieldValues.phoneNumber?fieldValues.phoneNumber.length===10 ? "": "10-digits required.":""}
-            if('dietPath' in fieldValues){
-            temp.dietPath = fieldValues.dietPath ? "": "This field is required.";}
-            setErrors({
-               ...temp
-           })
-           return Object.values(temp).every(x=>x === "");
-      }
-    const [status, setStatus] = useState('');
+   
+    const validate = (fieldValues = addEmployee) => {
+        let temp = {...errors}
+        if('firstName' in fieldValues){
+        temp.firstName = fieldValues.firstName ? "": "This field is required.";}
+        if('lastName' in fieldValues){
+        temp.lastName = fieldValues.lastName ? "": "This field is required.";}
+        if('email' in fieldValues){
+        temp.email = (/.+@.+..+/).test(fieldValues.email) ? "": "Invalid Email.";}
+        if('employeeCode' in fieldValues){
+        temp.employeeCode = fieldValues.employeeCode ? "": "This field is required.";}
+        if('deskPhone' in fieldValues){
+        temp.deskPhone = fieldValues.deskPhone?"":fieldValues.deskPhone.length===4 ? "": "4-digits required."; }
+        if('workMobile' in fieldValues){
+        temp.workMobile = fieldValues.workMobile?"":fieldValues.workMobile.length===10 ? "": "10-digits required.";}
+        if('hobbies' in fieldValues){
+        temp.hobbies = fieldValues.hobbies ? "": "This field is required.";}
+        if('dateOfHire' in fieldValues){
+        temp.dateOfHire = fieldValues.dateOfHire ? "": "This field is required.";}
+        if('nationality' in fieldValues){
+        temp.nationality = fieldValues.nationality ? "": "This field is required.";}
+        if('department' in fieldValues){
+        temp.department = fieldValues.department ? "": "This field is required.";}
+        if('designation' in fieldValues){
+        temp.designation = fieldValues.designation ? "": "This field is required.";}
+        if('division' in fieldValues){
+        temp.division = fieldValues.division ? "": "This field is required.";}
+        if('gender' in fieldValues){
+        temp.gender = fieldValues.gender ? "": "This field is required.";}
+        if('maritalStatus' in fieldValues){
+        temp.maritalStatus = fieldValues.maritalStatus ? "": "This field is required.";}
+        if('dob' in fieldValues){
+        temp.dob = fieldValues.dob ? "": "This field is required.";}
+        if('phoneNumber' in fieldValues){
+        temp.phoneNumber = fieldValues.phoneNumber?"":fieldValues.phoneNumber.length===10 ? "": "10-digits required.";}
+        if('dietPath' in fieldValues){
+        temp.dietPath = fieldValues.dietPath ? "": "This field is required.";}
+        setErrors({
+            ...temp
+        })
+        console.log(errors.deskPhone);
+        return Object.values(temp).every(x=>x === "");
+    }
+    
     const [disableProfile, setDisableProfile] = React.useState({
         disableInd: false,
       });
     
-      const handleChange = (event) => {
+    const handleChange = (event) => {
         setDisableProfile({ ...disableProfile, disableInd: event.target.checked });
-      };
+    };
 
     const onChangeFields = (e) => {
-            setAddEmployee(
-                {
-                    ...addEmployee,
-                    [e.target.name]:e.target.value
-                }
-            )
-            validate({[e.target.name]:e.target.value});
+        setAddEmployee(
+            {
+                ...addEmployee,
+                [e.target.name]:e.target.value
+            }
+        )
+        validate({[e.target.name]:e.target.value});
     }
     
     const handleSubmit = async (e) =>{
         e.preventDefault();
-   if(validate()){
-    if(!props.employee){
-        try{
-       addEmployee.dependenceDetails = dependence;
-        await api.createEmployee(token,addEmployee).then(
-            response => {
-                if(response.data.messages.status === '14'){
-                setStatus(response.data.messages.message);
-                dispatch ({type: 'GET_EMPLOYEES', payload: response.data.employees}); 
-            }
-                if(response.data.messages.status ==='13')
+        if(validate()){
+        if(!props.employee){
+            try{
+            addEmployee.dependenceDetails = dependence;
+            await api.createEmployee(token,addEmployee).then(
+                response => {
+                    if(response.data.messages.status === '14'){
+                    setStatus(response.data.messages.message);
+                    dispatch ({type: 'GET_EMPLOYEES', payload: response.data.employees}); 
+                }
+                    if(response.data.messages.status ==='13')
+                {
+                    setStatus(response.data.messages.message);
+                } 
+                }
+                
+            )
+        }catch(error)
+        {
+            console.log("Error");
+        }
+        }
+        if(props.employee)
+        {   
+            try{
+            addEmployee.dependenceDetails = dependence;    
+            addEmployee._id=props.employee._id;
+            if(disableProfile.disableInd)
             {
-                setStatus(response.data.messages.message);
-            } 
+            addEmployee.disableInd="Y";
             }
-            
-        )
-    }catch(error)
-    {
-        console.log("Error");
-    }
-    }
-    if(props.employee)
-    {   
-        try{
-        addEmployee.dependenceDetails = dependence;    
-        addEmployee._id=props.employee._id;
-        if(disableProfile.disableInd)
-        {
-        addEmployee.disableInd="Y";
-        }
-        const data = await api.editEmployee(token,addEmployee);
+            const data = await api.editEmployee(token,addEmployee);
 
-        if(data.data.messages.status === '15')
+            if(data.data.messages.status === '15')
+            {
+                setStatus(data.data.messages.message);
+                dispatch ({type: 'GET_EMPLOYEES', payload: data.data.employees}) 
+            }
+        }catch(error)
         {
-            setStatus(data.data.messages.message);
-            dispatch ({type: 'GET_EMPLOYEES', payload: data.data.employees}) 
+            console.log("Error");
         }
-    }catch(error)
-    {
-        console.log("Error");
-    }
-    }
-}         
-} 
+        }
+        }         
+    } 
     const clear = () => {
         setAddEmployee({
             firstName:'',
@@ -203,8 +206,11 @@ export default function AddEmployee(props) {
             department:'',
             selectedFile:'',
         });
+        setDependence([{dependenceName:'',
+                dependenceRelationship:'',
+                dependenceDob:''}])
         setErrors('');
-      };
+    };
     
 return(
     <div>
@@ -392,7 +398,7 @@ return(
                             error={errors.dateOfHire?true:false}
                             helperText={errors.dateOfHire}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? moment(props.employee.dateOfHire).format('YYYY-MM-DD') : addEmployee.dateOfHire} 
+                            value={ addEmployee.dateOfHire} 
                             variant="outlined"
                             inputProps={{
                                 min: "2021-01-18"
@@ -414,7 +420,7 @@ return(
                             error={errors.deskPhone?true:false}
                             helperText={errors.deskPhone}
                             disabled={disableProfile.disableInd}
-                            value={ addEmployee.deskPhone} 
+                            value={addEmployee.deskPhone} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -429,7 +435,7 @@ return(
                             error={errors.workMobile?true:false}
                             helperText={errors.workMobile}
                             disabled={disableProfile.disableInd}
-                            value={ addEmployee.workMobile} 
+                            value={addEmployee.workMobile} 
                             onChange={(e) => onChangeFields(e)}
                             />
                      </Grid>
@@ -447,7 +453,7 @@ return(
                             disabled={disableProfile.disableInd}
                             error={errors.gender?true:false}
                             helperText={errors.gender}
-                            value={ addEmployee.gender} 
+                            value={addEmployee.gender} 
                             onChange={(e) => onChangeFields(e)}
                             variant="outlined" select>
                             <MenuItem value="Male">Male</MenuItem>
@@ -499,7 +505,7 @@ return(
                             error={errors.dob?true:false}
                             helperText={errors.dob}
                             disabled={disableProfile.disableInd}
-                            defaultValue={props.employee ? moment(props.employee.dob).format('YYYY-MM-DD') : addEmployee.dob} 
+                            value={ addEmployee.dob} 
                             InputLabelProps={{
                                 shrink: true,
                               }}
@@ -546,44 +552,48 @@ return(
                     <div  key={index}>
                    
                     <TextField
-                    className={classes.div}
-                            id="dependenceName"
-                            name="dependenceName"
-                            label="Name"
-                            variant="outlined"
-                            disabled={disableProfile.disableInd}
-                            value={ inputField.dependenceName} 
-                            onChange={(e) => handleChangeInput(index,e)}
-                            />
-                            <TextField
-                            className={classes.div}
-                            id="dependenceRelationship"
-                            name="dependenceRelationship"
-                            label="Relationship"
-                            variant="outlined"
-                            disabled={disableProfile.disableInd}
-                            value={ inputField.dependenceRelationship} 
-                            onChange={(e) => handleChangeInput(index,e)}
-                            />
-                            <TextField
-                            className={classes.div}
-                            id="dependenceDob"
-                            name="dependenceDob"
-                            label="Date of Birth"
-                            variant="outlined"
-                            type="date"
-                            disabled={disableProfile.disableInd}
-                            value={inputField.dependenceDob} 
-                            onChange={(e) => handleChangeInput(index,e)}/>
-                        <IconButton
-                            disabled={index===0}
-                           onClick={() => handleRemoveFields(index)}> 
-                            <RemoveIcon />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => handleAddFields()}>
-                            <AddIcon />
-                        </IconButton>
+                        className={classes.div}
+                        id="dependenceName"
+                        name="dependenceName"
+                        label="Name"
+                        variant="outlined"
+                        disabled={disableProfile.disableInd}
+                        value={ inputField.dependenceName} 
+                        onChange={(e) => handleChangeInput(index,e)}
+                    />
+                    <TextField
+                        className={classes.div}
+                        id="dependenceRelationship"
+                        name="dependenceRelationship"
+                        label="Relationship"
+                        variant="outlined"
+                        disabled={disableProfile.disableInd}
+                        value={ inputField.dependenceRelationship} 
+                        onChange={(e) => handleChangeInput(index,e)}
+                    />
+                    <TextField
+                        className={classes.div}
+                        id="dependenceDob"
+                        name="dependenceDob"
+                        label="Date of Birth"
+                        variant="outlined"
+                        type="date"
+                        InputLabelProps={{
+                            shrink: true,
+                            }}
+                        disabled={disableProfile.disableInd}
+                        value={inputField.dependenceDob} 
+                        onChange={(e) => handleChangeInput(index,e)}
+                    />
+                    <IconButton
+                        disabled={index===0}
+                        onClick={() => handleRemoveFields(index)}> 
+                        <RemoveIcon />
+                    </IconButton>
+                    <IconButton
+                        onClick={() => handleAddFields()}>
+                        <AddIcon />
+                    </IconButton>
                      </div>
                     )) }    
                     <Grid item xs={12}>

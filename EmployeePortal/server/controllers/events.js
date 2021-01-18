@@ -1,7 +1,6 @@
 import express from "express";
 import Events from '../models/eventsSchema.js';
 import mongoose from 'mongoose';
-import _ from 'lodash';
 const router = express.Router();
 
 
@@ -11,11 +10,11 @@ export const getEvents = async (req,res) => {
     const division = req.header("division");
     if(division === 'EE'){
       events = await Events.find();
-      console.log(events)
+
     }
     else{
      events = await Events.find({"status":"Approved"});
-     console.log(events)
+
     }
 
      res.status(200).json(events);
@@ -27,7 +26,7 @@ export const getEvents = async (req,res) => {
 
 export const createEvents = async (req,res) => { 
   const event = new Events(req.body);
-  console.log(req.body)
+
 //let currentDate = event.postedDate.getFullYear() + '-' + (event.postedDate.getMonth() + 1) + '-' + event.postedDate.getDate();
 const todayDate = new Date()
 let responseData = {   
@@ -53,7 +52,7 @@ let responseData = {
     
  } catch (error) {
      res.status(404).json({ message: error.message });
-     console.log(error.message)
+
  }
 }
 
@@ -68,11 +67,11 @@ export const editEvents = async (req,res) => {
   }
   try {
 
-    console.log("in edit events ")
+
       const todayDate = new Date();
       const event = new Events(req.body);
       const entries = Object.keys(req.body);
-      console.log(!mongoose.Types.ObjectId.isValid(req.body._id))
+
       if (!mongoose.Types.ObjectId.isValid(req.body._id)) {
         responseData.messages.message = 'Update failed due to invalid post id';
         responseData.messages.status = '20';
@@ -97,7 +96,7 @@ export const editEvents = async (req,res) => {
         // else {
           responseData.messages.message = 'Updated Successfully';
           responseData.messages.status = '21';
-          console.log("hi in response");
+
         if(responseData.messages.status = '21'){
           const events = await Events.find();
           responseData.events = events;

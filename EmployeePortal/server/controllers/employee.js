@@ -51,7 +51,6 @@ export const createEmployee = async (req,res) => {
         }
       
    } catch (error) {
-       console.log('in error');
        res.status(404).json({ message: error.message });
    }
 }
@@ -75,7 +74,6 @@ export const isTokenValid = async (req,res) => {
 
         const verified = jwt.verify(token,process.env.JWT_SECRET);
         if(!verified) return res.json(false);
-        console.log(verified)
 
         const user = await employeeDetails.findById(verified.id);
         if(!user) return res.json(false);
@@ -97,7 +95,6 @@ export const isTokenValid = async (req,res) => {
         },
         employees:{}
     }
-    console.log(req.body);
     try {
         const entries = Object.keys(req.body)
         const updates = {}

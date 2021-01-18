@@ -12,14 +12,13 @@ import moment from 'moment';
 export default function MyProfile(props) {
     const classes = useStyles(); 
     const classStyle = useStyle(); 
-	  let theme = createMuiTheme();
+	let theme = createMuiTheme();
     theme = responsiveFontSizes(theme);
     const state = useSelector(state => state);
     const employeeProfile = _.get(state,'employees.profile','');
     const profileData = props.employee ? props.employee : employeeProfile;
     let dateOfHire = moment(profileData.dateOfHire).format('Do MMMM YYYY');
     let dob = moment(profileData.dob).format('Do MMMM YYYY');
-
     function getValue (field) {
         const value =  _.get(profileData,field,"");
         if(value) {
@@ -28,61 +27,60 @@ export default function MyProfile(props) {
     }
 return (
 	<div>
-          {profileData ?  <div>
+        {profileData ?  <div>
         <div className={!props.employee ? classStyle.topPadding : ''}/>
         { !props.employee && <Link style = {{ textDecoration: 'none'}} to = "/Dashboard"><h6 className = {classes.linkStyle} >GO TO DASHBOARD</h6></Link> }
         <div className={classStyle.topPadding}/>
 			<Container fixed fullwidth="true" maxWidth="md">
 			<Paper className={classes.root}  elevation={2}>
 			<Grid>
-				<Grid container spacing={3}>
-					<Grid item xs={12} container>
-						<Grid  item xs={12}>
-					 	<Paper className={classes.firstPaper} elevation={5}>
-						<Container className={classes.container}> 
-                    		<Avatar src={profileData.selectedFile}  className={classes.image} />
-							<MuiThemeProvider theme={theme}>
-							<Grid>
-							<Grid container spacing={0}>
-								<Grid item xs={12}> 
-									<Typography variant="h6"  className={classes.typography} >
-									{profileData.firstName + " " + profileData.lastName}
-									</Typography>
-								</Grid>
-								<Grid item xs={12}>
-									<Typography  variant="subtitle1" className={classes.typography1} >
-									{profileData.employeeCode}
-									</Typography>
-								</Grid>
-								<Grid item xs={12}>
-									<Typography variant="subtitle1" className={classes.typography1}>
-									{profileData.designation}
-									</Typography>
-								</Grid>
-								<Grid item xs={12}>	
-									<Typography variant="subtitle1" className={classes.typography1}>
-									{profileData.department}
-									</Typography>
-								</Grid>
-							</Grid>
-							</Grid>
-							</MuiThemeProvider>
-						</Container>
-						</Paper>
-						</Grid>
-						
-					</Grid>
-					
-					<Grid item xs={12}>
-						<Paper className={classes.paper} elevation={5}>
-						<Grid container spacing={2}>
+				<Grid container spacing={1}>
+                <Grid item xs={12} container>
+                    <Grid  item xs={12}>
+                    <Paper className={classes.firstPaper} elevation={5}>
+                    <Container className={classes.container}> 
+                    <Avatar src={profileData.selectedFile}  className={classes.image} />
+                    <MuiThemeProvider theme={theme}>
+                    <Grid>
+                    <Grid container spacing={0}>
+                        <Grid item xs={12}> 
+                            <Typography variant="h6"  className={classes.typography} >
+                            {profileData.firstName + " " + profileData.lastName}
+                            </Typography>
+                        </Grid>
                         <Grid item xs={12}>
-                        <Typography variant="h6" >Basic Info</Typography>
-                        <Divider />
+                            <Typography  variant="subtitle1" className={classes.typography1} >
+                            {profileData.employeeCode}
+                            </Typography>
                         </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle1" className={classes.typography1}>
+                            {profileData.designation}
+                            </Typography>
                         </Grid>
-                <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Grid item xs={12}>	
+                            <Typography variant="subtitle1" className={classes.typography1}>
+                            {profileData.department}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    </Grid>
+                    </MuiThemeProvider>
+                    </Container>
+                    </Paper>
+                    </Grid>
+                </Grid>
+					
+                <Grid item xs={12}>
+                <Paper className={classes.paper} elevation={5}>
+                <Grid container spacing={1}>
+                <Grid item xs={12}>
+                <Typography variant="subtitle1" >Basic Info</Typography>
+                <Divider />
+                </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
                 <TextField
                     size="small"
 					fullWidth
@@ -96,7 +94,7 @@ return (
                     value={getValue('firstName')}
                 />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
                  <TextField
                     size="small"
 				    fullWidth
@@ -110,7 +108,7 @@ return (
                     value={getValue('lastName')}
                 />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
                 <TextField
                     fullWidth
                     size="small"
@@ -124,7 +122,7 @@ return (
                     value={getValue('email')}
                 />
                 </Grid>
-				<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+				<Grid item xs={12} sm={12} md={6} lg={3} xl={3}>
                 <TextField
                     fullWidth
                     size="small"
@@ -139,17 +137,17 @@ return (
                 />
                 </Grid>
                 </Grid>
-						</Paper>
-					</Grid>
-					<Grid item xs={12}>
-						<Paper className={classes.paper}>
-						<Grid container spacing={2}>
+				</Paper>
+				</Grid>
+				<Grid item xs={12}>
+					<Paper className={classes.paper} elevation={5}>
+					<Grid container spacing={1}>
                 <Grid item sm={12}>
-					<Typography variant="h6" >Work</Typography>
+					<Typography variant="subtitle1" >Work</Typography>
 					<Divider  />
 					</Grid>
 					</Grid>
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
                     fullWidth
@@ -238,14 +236,14 @@ return (
 					</Paper>
 					</Grid>
 					<Grid item sm={12}>
-						<Paper className={classes.paper}>
-						<Grid container spacing={2}>
+						<Paper className={classes.paper} elevation={5}>
+						<Grid container spacing={1}>
                 <Grid item sm={12}>
-					<Typography variant="h6" >Personal Details</Typography>
+					<Typography variant="subtitle1" >Personal Details</Typography>
 					<Divider  />
 					</Grid>
 					</Grid>
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                 <TextField
                     fullWidth
@@ -334,17 +332,13 @@ return (
 				</Paper>
 				</Grid>
 				<Grid item sm={12}>
-				<Paper className={classes.paper}>
+				<Paper className={classes.paper} elevation ={5}>
 				
                 <Grid item sm={12}>
-					<Typography variant="h6"  >Dependence</Typography>
+					<Typography variant="subtitle1"  >Dependence</Typography>
 					<Divider />
 				</Grid>
-				
-              
-                
                 {profileData.dependenceDetails ? profileData.dependenceDetails.map((dependence,index)=>(<div key={index}>
-                
                  <TextField
                     className={classes.div}
                     size="small"
@@ -357,7 +351,6 @@ return (
                     }}
                     variant="filled"
                 />
-                
                 <TextField
                     className={classes.div}
                     size="small"
@@ -370,7 +363,6 @@ return (
                     }}
                     variant="filled"
                 />
-               
                 <TextField
                     className={classes.div}
                     size="small"
@@ -383,15 +375,13 @@ return (
                     }}
                     variant="filled"
                 />
-                
-                </div>)): ""}
-               
-						</Paper>
-					</Grid>
+                </div>)): ""} 
+				</Paper>
 				</Grid>
 			</Grid>
-			</Paper>
-			</Container> </div> : "loading" }
+		</Grid>
+		</Paper>
+		</Container> </div> : "loading" }
 	</div>
 	);
 };

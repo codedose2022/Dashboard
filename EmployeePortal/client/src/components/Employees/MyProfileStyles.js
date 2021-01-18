@@ -10,7 +10,6 @@ export default makeStyles((theme) => ({
   },
   paper:{
     padding:'10px',
-    // background: '#e8f5e9',
   },
   typography:{
     padding:'3px',
