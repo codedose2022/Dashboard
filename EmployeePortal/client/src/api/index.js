@@ -12,6 +12,5 @@ export const editEmployee = (token,employeeData) => axios.post(`${employeeDetail
 
 export const getEvents = (token,division) => axios.post(`${eventsUrl}getEvents`,null,{headers : {"x-auth-token": token,"division":division}}); 
 export const addEvent = (token,event) => axios.post(`${eventsUrl}createEvents`,event,{headers : {"x-auth-token": token}}); 
-
 export const editEvent = (token,event) => axios.post(`${eventsUrl}editEvents`,event,{headers : {"x-auth-token": token}}); 
-
+export const deleteEvent = (token,event) => axios.post(`${eventsUrl}deleteEvents`,event,{headers : {"x-auth-token": token}}); 
