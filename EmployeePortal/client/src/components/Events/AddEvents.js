@@ -13,16 +13,13 @@ import * as api from "../../api";
 import _ from "lodash";
 import FileBase from "react-file-base64";
 import moment from "moment";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
+
 
 import { Button, TextareaAutosize, Grid, TextField } from "@material-ui/core";
 
 export default function AddEvents(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(true);
   let token = localStorage.getItem("auth-token");
   const [title, setTitle] = useState(props.event ? props.event.title : "");
@@ -77,9 +74,6 @@ export default function AddEvents(props) {
     setShowRequired(true);
     const isFieldEmpty = [title, date, time, desc, venue].includes("");
     if (!isFieldEmpty) {
-      let id = {
-        _id: props.event._id,
-      };
       let event = { title, date, venue, desc, img, time, _id: props.event._id };
       try {
         const response = await api.editEvent(token, event);
@@ -180,7 +174,7 @@ export default function AddEvents(props) {
                 />
               </Grid>
 
-              <Grid xs={12}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -213,7 +207,6 @@ export default function AddEvents(props) {
                   className={classes.textAreaStyle}
                   aria-label='minimum height'
                   rowsMin={10}
-                  fullWidth
                   placeholder='Description'
                 />
               </Grid>

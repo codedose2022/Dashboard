@@ -8,7 +8,7 @@ import Navbar from './components/Dashboard/Navbar';
 import _ from 'lodash'; 
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';
-import { isTokenValid, getProfile } from './api/index';
+import { isTokenValid } from './api/index';
 
 const App = () =>{
  

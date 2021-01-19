@@ -2,29 +2,21 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
   Button,
 } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
+
 import * as api from "../../api";
 import { useDispatch } from "react-redux";
 import _ from "lodash";
-
+import Alert from "@material-ui/lab/Alert";
 export default function DeleteEvent(props) {
-  const theme = useTheme();
+  
   let token = localStorage.getItem("auth-token");
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  console.log(props.event);
-
-  const handleClose = () => {
-    setOpen(false);
-    props.setDelete(false);
-  };
 
   const handleCancel = () => {
     setOpen(false);
@@ -51,6 +43,7 @@ export default function DeleteEvent(props) {
       aria-labelledby='form-dialog-title'
       disableBackdropClick
     >
+       {error && <Alert severity='error'> {error} </Alert>}
       <DialogTitle
         id='form-dialog-title-delete'
         style={{ alignSelf: "center" }}

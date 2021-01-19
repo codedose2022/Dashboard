@@ -9,7 +9,7 @@ import {
   ThemeProvider,
   Box,
 } from "@material-ui/core";
-import { green, pink, orange } from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
 import ListEmployees from "../Employees/ListEmployees";
 import EventsPage from "../Events/EventsPage";
 

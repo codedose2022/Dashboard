@@ -1,5 +1,4 @@
 import * as api from '../api';
-import _ from 'lodash';
 
 
 export const getEvents = (token,division) => async (dispatch) =>{
