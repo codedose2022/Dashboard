@@ -9,7 +9,6 @@ import _ from 'lodash';
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';
 import { isTokenValid, getProfile } from './api/index';
- 
 
 const App = () =>{
  
@@ -59,7 +58,6 @@ const App = () =>{
       { loggedIn && employeeData.employee && <Navbar/>}
     
       <Route  path="/login" component={LoginPage} />
-     
       <main>
       
       <Switch>

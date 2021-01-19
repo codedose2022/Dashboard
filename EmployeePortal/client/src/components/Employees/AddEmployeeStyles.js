@@ -21,9 +21,9 @@ export default makeStyles((theme) => ({
       },
       country:{
             background:'#e8f5e9',
-            height:'60px',
+            height:'40px',
             width:'100%',
-            borderRadius:'5px'
+            borderRadius:'5px',
       },
       dialog:{
             maxWidth:'100%',

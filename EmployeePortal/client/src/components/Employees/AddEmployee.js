@@ -238,21 +238,23 @@ return(
         </Grid> }
       
             <Grid>			
-				<Grid container spacing={2}>
+				<Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1" >Employee Details</Typography>
                         <Divider />
 				    </Grid>
 				</Grid>
 
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
                         <TextField
                             fullWidth
+                            required
                             id="firstName"
                             name="firstName"
                             label="First Name"
                             variant="outlined"
+                            size="small"
                             error={errors.firstName?true:false}
                             helperText={errors.firstName}
                             disabled={disableProfile.disableInd}
@@ -268,6 +270,7 @@ return(
                             name="lastName"
                             label="Last Name"
                             variant="outlined"
+                            size="small"
                             error={errors.lastName?true:false}
                             helperText={errors.lastName}
                             disabled={disableProfile.disableInd}
@@ -283,6 +286,7 @@ return(
                             name="email"
                             label="Email"
                             variant="outlined"
+                            size="small"
                             error={errors.email?true:false}
                             helperText={errors.email}
                             disabled={disableProfile.disableInd}
@@ -298,6 +302,7 @@ return(
                             name="employeeCode"
                             label="Employee Code"
                             variant="outlined"
+                            size="small"
                             error={errors.employeeCode?true:false}
                             helperText={errors.employeeCode}
                             disabled={disableProfile.disableInd}
@@ -318,7 +323,7 @@ return(
                         <Divider />
 				    </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                        <FormControl  variant="outlined" fullWidth className={classes.formControl} error={errors.department?true:false}>
+                        <FormControl  variant="outlined" fullWidth size="small" className={classes.formControl} error={errors.department?true:false}>
                             <InputLabel  required id="department">Department</InputLabel>
                             <Select 
                             fullWidth
@@ -343,10 +348,11 @@ return(
                         </FormControl>
                         </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >  
-                        <FormControl  variant="outlined" fullWidth className={classes.formControl} error={errors.designation?true:false}>
+                        <FormControl  variant="outlined" fullWidth size="small" className={classes.formControl} error={errors.designation?true:false}>
                             <InputLabel required id="designation">Designation</InputLabel>
                             <Select 
                             fullWidth
+                            size="small"
                             displayEmpty
                             label="designation"
                             id="designation"
@@ -372,6 +378,7 @@ return(
                     <TextField 
                             fullWidth
                             id="division" 
+                            size="small"
                             required
                             name="division"
                             label="Division" 
@@ -392,6 +399,7 @@ return(
                             fullWidth
                             required
                             id="dateOfHire"
+                            size="small"
                             type="date"
                             name="dateOfHire"
                             label="Date of Hire"
@@ -412,11 +420,13 @@ return(
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
+                            required
                             id="deskPhone"
                             name="deskPhone"
                             label="Desk Phone"
                             type="number"
                             variant="outlined"
+                            size="small"
                             error={errors.deskPhone?true:false}
                             helperText={errors.deskPhone}
                             disabled={disableProfile.disableInd}
@@ -427,11 +437,13 @@ return(
                      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
+                            required
                             id="workMobile"
                             name="workMobile"
                             label="Work Mobile"
                             type="number"
                             variant="outlined"
+                            size="small"
                             error={errors.workMobile?true:false}
                             helperText={errors.workMobile}
                             disabled={disableProfile.disableInd}
@@ -450,6 +462,7 @@ return(
                             id="gender"
                             name="gender"  
                             label="Gender" 
+                            size="small"
                             disabled={disableProfile.disableInd}
                             error={errors.gender?true:false}
                             helperText={errors.gender}
@@ -466,6 +479,7 @@ return(
                             required
                             id="maritalStatus" 
                             name="maritalStatus" 
+                            size="small"
                             disabled={disableProfile.disableInd}
                             label="Marital Status" 
                             error={errors.maritalStatus?true:false}
@@ -484,6 +498,7 @@ return(
                             id="phoneNumber"
                             name="phoneNumber"
                             label="Personal Mobile Number"
+                            size="small"
                             variant="outlined"
                             type="number"
                             error={errors.phoneNumber?true:false}
@@ -502,6 +517,7 @@ return(
                             type="date"
                             label="Date of Birth"
                             variant="outlined"
+                            size="small"
                             error={errors.dob?true:false}
                             helperText={errors.dob}
                             disabled={disableProfile.disableInd}
@@ -515,10 +531,12 @@ return(
                      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                         <TextField
                             fullWidth
+                            required
                             id="hobbies"
                             name="hobbies"
                             label="Hobbies"
                             variant="outlined"
+                            size="small"
                             error={errors.hobbies?true:false}
                             helperText={errors.hobbies}
                             disabled={disableProfile.disableInd}
@@ -533,6 +551,7 @@ return(
                             id="dietPath" 
                             name="dietPath" 
                             label="Diet Path" 
+                            size="small"
                             disabled={disableProfile.disableInd}
                             error={errors.dietPath?true:false}
                             helperText={errors.dietPath}
@@ -557,6 +576,7 @@ return(
                         name="dependenceName"
                         label="Name"
                         variant="outlined"
+                        size="small"
                         disabled={disableProfile.disableInd}
                         value={ inputField.dependenceName} 
                         onChange={(e) => handleChangeInput(index,e)}
@@ -567,6 +587,7 @@ return(
                         name="dependenceRelationship"
                         label="Relationship"
                         variant="outlined"
+                        size="small"
                         disabled={disableProfile.disableInd}
                         value={ inputField.dependenceRelationship} 
                         onChange={(e) => handleChangeInput(index,e)}
@@ -578,6 +599,7 @@ return(
                         label="Date of Birth"
                         variant="outlined"
                         type="date"
+                        size="small"
                         InputLabelProps={{
                             shrink: true,
                             }}
