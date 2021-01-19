@@ -17,6 +17,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 
 import { Button, TextareaAutosize, Grid, TextField } from "@material-ui/core";
+
 export default function AddEvents(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ export default function AddEvents(props) {
 
   const handleEdit = async () => {
     setShowRequired(true);
-    const isFieldEmpty = [title, date, time, desc,venue].includes("");
+    const isFieldEmpty = [title, date, time, desc, venue].includes("");
     if (!isFieldEmpty) {
       let id = {
         _id: props.event._id,
@@ -103,10 +104,17 @@ export default function AddEvents(props) {
       onClose={handleClose}
       aria-labelledby='form-dialog-title-add-events'
       disableBackdropClick
+      PaperProps={{
+        style: {
+          backgroundColor: 'blanchedalmond',
+          boxShadow: 'none',
+        },
+      }}
     >
       <DialogTitle
         id='form-dialog-title-Addevents'
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: "center",color:'darkgreen' }}
+      
       >
         {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}
       </DialogTitle>
@@ -114,26 +122,24 @@ export default function AddEvents(props) {
         <div className={classes.marginStyle}>
           {error && <Alert severity='error'> {error} </Alert>}
           <form autoComplete='off'>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
+                  fullWidth
                   required
                   FormHelperTextProps={{
                     className: classes.helperTextColor,
                   }}
                   type='text'
                   id='Title'
-                  className={classes.textAreaStyle}
                   helperText={flag && validateRequired(title)}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   label='Title'
                 />
               </Grid>
-            </Grid>
 
-            <Grid container spacing={2}>
-              <Grid item md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   fullWidth
@@ -148,11 +154,14 @@ export default function AddEvents(props) {
                   onChange={(e) => setDate(e.target.value)}
                   value={date}
                   type='date'
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   label='Event Date'
                 />
               </Grid>
 
-              <Grid item md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   fullWidth
@@ -165,11 +174,13 @@ export default function AddEvents(props) {
                   onChange={(e) => setTime(e.target.value)}
                   value={time}
                   label='Event Time'
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
-            </Grid>
-            <Grid container>
-              <Grid>
+
+              <Grid xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -184,26 +195,25 @@ export default function AddEvents(props) {
                   label='Venue'
                 />
               </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <div className={classes.fileInput}>
-                    <FileBase
-                      type='file'
-                      multiple={false}
-                      onDone={({ base64 }) => setImg({ base64 })}
-                    />
-                  </div>
-                </Grid>
+
+              <Grid item xs={12}>
+                <div className={classes.fileInputStyle}>
+                  <FileBase
+                    type='file'
+                    multiple={false}
+                    onDone={({ base64 }) => setImg({ base64 })}
+                  />
+                </div>
               </Grid>
-            </Grid>
-            <Grid container>
-              <Grid className='editor'>
+
+              <Grid className={classes.textEditor}>
                 <TextareaAutosize
                   onChange={(e) => setDesc(e.target.value)}
                   value={desc}
                   className={classes.textAreaStyle}
                   aria-label='minimum height'
                   rowsMin={10}
+                  fullWidth
                   placeholder='Description'
                 />
               </Grid>

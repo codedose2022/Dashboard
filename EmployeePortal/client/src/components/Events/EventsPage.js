@@ -125,6 +125,7 @@ export default function EventsPage() {
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
+                style = {{color:'darkgreen',fontWeight:'600'}}
               >
                 {event.title}
               </Typography>
@@ -150,8 +151,8 @@ export default function EventsPage() {
                     title='Contemplative Reptile'
                   />
                 </div>
-                <div style={{ margin: "12px" }}>
-                  <Typography variant='caption' key={`desc${event._id}`}>
+                <div style={{ margin: "12px",wordWrap: "break-word" }}>
+                  <Typography variant='caption' key={`desc${event._id}`} className = {classes.box}>
                     {event.desc}
                   </Typography>
                 </div>

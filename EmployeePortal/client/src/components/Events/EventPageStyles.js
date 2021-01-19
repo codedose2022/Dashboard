@@ -1,127 +1,122 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-
- 
-  addButtonStyle : {
+  addButtonStyle: {
     marginTop: theme.spacing(1),
-    fontSize: '0.59rem',
-    [theme.breakpoints.up('md')]: {
-      marginRight: theme.spacing(15)
+    fontSize: "0.59rem",
+    [theme.breakpoints.up("md")]: {
+      marginRight: theme.spacing(15),
     },
-    
   },
 
-    paper : {
-      margin: '0px auto',
-    
-      [theme.breakpoints.down('md')]: {
-        maxWidth:"100%",
-        marginTop: theme.spacing(5)
-      
-      },
-      [theme.breakpoints.up('md')]: {
-        maxWidth:"80%",
-        marginTop: theme.spacing(4),
-      
-      },
+  paper: {
+    margin: "0px auto",
+    borderRadius: "10px",
+    background: "#9acd326b",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "100%",
+      marginTop: theme.spacing(5),
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "80%",
+      marginTop: theme.spacing(4),
+    },
+  },
+
+  header: {
+    display: "flex",
+    height: "5vh",
+    justifyContent: "space-between",
+  },
+  chip: {
+    borderRadius: "0",
+    width: "100px",
+  },
+
+  marginStyle: {
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "8px",
+      marginRight: "8px",
+    },
+    [theme.breakpoints.up("md")]: {
+      marginLeft: "15px",
+      marginRight: "15px",
+    },
+  },
+  box: {
+    fontSize: "0.85rem",
+    color: "#7b0000",
+    //  fontWeight: "bold",
+    fontFamily: "cursive",
+  },
+  iconVertical: { background: "none", paddingRight: "30px", color: "black" },
+
+  img: {
+    [theme.breakpoints.down("xs")]: {
+      width: "200px",
+    },
+    [theme.breakpoints.between("xs", "sm")]: {
+      width: "250px",
     },
 
-    header :{
-      display: 'flex',
-      height: '5vh',
-      justifyContent: 'space-between'
+    [theme.breakpoints.up("sm", "md")]: {
+      width: "600px",
+      objectFit: "contain",
     },
-    chip:{
-      borderRadius: '0',
-      width: '100px'
+  },
+  tableCellStyle: {
+    fontSize: "0.7rem",
+  },
+
+  CaptionPadding: {
+    [theme.breakpoints.down("md")]: {
+      paddingTop: "10px",
+      paddingBottom: "10px",
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingTop: "20px",
+      paddingBottom: "20px",
+    },
+  },
+
+  textEditor: {
+    [theme.breakpoints.down("xs")]: {
+      width: "200px",
+      marginTop: "30px"
+    },
+    [theme.breakpoints.between("xs", "sm")]: {
+      width: "230px",
+      marginTop: "30px"
     },
 
-    marginStyle : {
+    [theme.breakpoints.up("sm", "md")]: {
+      width: "500px",
+      objectFit: "contain",
+    },
+  },
 
-      [theme.breakpoints.down('md')]: {
-      
-      marginLeft : "8px",
-      marginRight : "8px"
-      
-      },
-      [theme.breakpoints.up('md')]: {
-        marginLeft : "15px",
-        marginRight : "15px"
-      },
+  textAreaStyle: {
+    backgroundColor: 'blanchedalmond',
+    [theme.breakpoints.down("xs")]: {
+      width: "200px",
     },
-    box : {
-      fontSize : '0.85rem',
-      color : 'grey'
-    },
-    iconVertical : {"background":"none" ,paddingRight:"30px",color : 'black'},
-
-    img:{
-      
-      [theme.breakpoints.down('xs')]: {
-        width: "200px"
-        },
-        [theme.breakpoints.between('xs','sm')]: {
-          width: "250px"
-          },
-          
-        [theme.breakpoints.up('sm','md')]: 
-          {width: "600px",objectFit: 'contain'},
-        
-    },
-    tableCellStyle:{
-      fontSize: '0.7rem'
+    [theme.breakpoints.between("xs", "sm")]: {
+      width: "250px",
     },
 
-    CaptionPadding : {
-
-      [theme.breakpoints.down('md')]: {
-
-        paddingTop : "10px",
-        paddingBottom : "10px"
-        
-        },
-        [theme.breakpoints.up('md')]: {
-          paddingTop : "20px",
-          paddingBottom : "20px"
-        },
-   
-    },
-
-
-      textEditor:{
-      
-      [theme.breakpoints.down('xs')]: {
-        width: "200px"
-        },
-        [theme.breakpoints.between('xs','sm')]: {
-          width: "250px"
-          },
-          
-        [theme.breakpoints.up('sm','md')]: 
-          {width: "500px",objectFit: 'contain'},
-        
-    },
-
-    textAreaStyle : {
-      [theme.breakpoints.down('xs')]: {
-        width: "200px"
-        },
-        [theme.breakpoints.between('xs','sm')]: {
-          width: "250px"
-          },
-          
-        [theme.breakpoints.up('sm','md')]: 
-          {width: "500px", marginTop:"20px"},
-    },
-    helperTextColor:{
-      color:'#d50000',
-    },
-    tooltip: {
+    [theme.breakpoints.up("sm", "md")]:
+     { width: "500px", marginTop: "20px" },
+  },
+  helperTextColor: {
+    color: "#d50000",
+  },
+  tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: 11,
-  }
-  
-}))
+  },
+  fileInputStyle: {
+    marginTop: "30px",
+  },
+}));
