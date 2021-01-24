@@ -61,7 +61,6 @@ export default function ListEmployees() {
       };
 
       function viewProfile(employee,index){
-        console.log(index)
         setShowViewModel({"index" : {
           [index] : true
         }})

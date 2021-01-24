@@ -82,11 +82,11 @@ export default makeStyles((theme) => ({
   textEditor: {
     [theme.breakpoints.down("xs")]: {
       width: "200px",
-      marginTop: "30px"
+      marginTop: "30px",
     },
     [theme.breakpoints.between("xs", "sm")]: {
       width: "230px",
-      marginTop: "30px"
+      marginTop: "30px",
     },
 
     [theme.breakpoints.up("sm", "md")]: {
@@ -96,7 +96,7 @@ export default makeStyles((theme) => ({
   },
 
   textAreaStyle: {
-    backgroundColor: 'blanchedalmond',
+    backgroundColor: "blanchedalmond",
     [theme.breakpoints.down("xs")]: {
       width: "200px",
     },
@@ -104,8 +104,7 @@ export default makeStyles((theme) => ({
       width: "250px",
     },
 
-    [theme.breakpoints.up("sm", "md")]:
-     { width: "500px", marginTop: "20px" },
+    [theme.breakpoints.up("sm", "md")]: { width: "500px", marginTop: "20px" },
   },
   helperTextColor: {
     color: "#d50000",

@@ -5,6 +5,7 @@ import cors from 'cors';
  
 import Employees from './routes/employee.js';
 import Events from './routes/events.js';
+import likesDislikes from './routes/likeDislike.js';
 
 
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use('/employeeDetails',Employees)
 app.use('/Events',Events)
+app.use('/likesDislikes',likesDislikes)
 
 const CONNECTION_URL = 'mongodb+srv://sftdev16:mersat123@maincluster.4woyg.mongodb.net/portal?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;

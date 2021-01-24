@@ -12,6 +12,7 @@ import {
 import { green } from "@material-ui/core/colors";
 import ListEmployees from "../Employees/ListEmployees";
 import EventsPage from "../Events/EventsPage";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,12 +46,13 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "100%",
+
+    marginTop: "50px",
   },
   itemSize: {
     fontSize: "0.75rem",
     fontWeight: "bold",
-    color : 'rgb(0 0 0)'
+    color: "rgb(0 0 0)",
   },
 }));
 
@@ -59,14 +61,14 @@ const theme = createMuiTheme({
     primary: {
       main: green[900],
     },
-
-  }
+  },
 });
 
-export default function TabsComponent() {
+export default function TabsComponent(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -85,10 +87,9 @@ export default function TabsComponent() {
             onChange={handleChange}
             indicatorColor='primary'
             textColor='primary'
-            
-            variant='scrollable'
+            variant={smallScreen ? "scrollable" : "fullWidth"}
             scrollButtons='auto'
-            aria-label='scrollable auto tabs example'
+            aria-label='scrollable tabs'
           >
             <Tab
               className={classes.itemSize}
@@ -101,17 +102,27 @@ export default function TabsComponent() {
               label='GALLERY'
               {...a11yProps(2)}
             />
-            <Tab
-              className={classes.itemSize}
-              label='EMPLOYEES'
-              {...a11yProps(3)}
-            />
-            <Tab className={classes.itemSize} label='POSTS' {...a11yProps(4)} />
-            <Tab
-              className={classes.itemSize}
-              label='MESSAGES'
-              {...a11yProps(5)}
-            />
+            {props.isEventsMember && (
+              <Tab
+                className={classes.itemSize}
+                label='EMPLOYEES'
+                {...a11yProps(3)}
+              />
+            )}
+            {props.isEventsMember && (
+              <Tab
+                className={classes.itemSize}
+                label='POSTS'
+                {...a11yProps(4)}
+              />
+            )}
+            {props.isEventsMember && (
+              <Tab
+                className={classes.itemSize}
+                label='MESSAGES'
+                {...a11yProps(5)}
+              />
+            )}
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>

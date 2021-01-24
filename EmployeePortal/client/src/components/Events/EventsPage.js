@@ -25,6 +25,7 @@ export default function EventsPage() {
   const classes = useStyles();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const state = useSelector((state) => state);
+  const userData = _.get(state, "employees.employee.userData", "");
   let events = _.get(state, "events.events", []);
   const isEventsMember = helper.isEventMember(
     _.get(state, "employees.employee.userData.division", "")
@@ -77,7 +78,8 @@ export default function EventsPage() {
         return (
           <Paper
             className={classes.paper}
-            variant='outlined'
+            // variant='outlined'
+            elevation={3}
             key={`event${event._id}`}
           >
             <Grid className={classes.header}>
@@ -125,7 +127,7 @@ export default function EventsPage() {
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
-                style = {{color:'darkgreen',fontWeight:'600'}}
+                style={{ color: "darkgreen", fontWeight: "600" }}
               >
                 {event.title}
               </Typography>
@@ -151,12 +153,18 @@ export default function EventsPage() {
                     title='Contemplative Reptile'
                   />
                 </div>
-                <div style={{ margin: "12px",wordWrap: "break-word" }}>
-                  <Typography variant='caption' key={`desc${event._id}`} className = {classes.box}>
+                <div style={{ margin: "12px", wordWrap: "break-word" }}>
+                  <Typography
+                    variant='caption'
+                    key={`desc${event._id}`}
+                    className={classes.box}
+                  >
                     {event.desc}
                   </Typography>
                 </div>
-                <LikeDislikeCommentComponent />
+                {event.status === "Approved" && (
+                  <LikeDislikeCommentComponent event={event} userData = {userData} />
+                )}
               </div>
             </div>
           </Paper>
