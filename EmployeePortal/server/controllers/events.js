@@ -2,6 +2,7 @@ import express from "express";
 import Events from "../models/eventsSchema.js";
 import Dislike from "../models/dislikeSchema.js";
 import Like from "../models/likeSchema.js";
+import commentsSchema from "../models/commentsSchema.js";
 import mongoose from "mongoose";
 import _ from "lodash";
 const router = express.Router();
@@ -27,6 +28,11 @@ export const getEvents = async (req, res) => {
           eventId: event._id,
         }).then((dislike) => {
           event._doc.dislikes = dislike;
+        });
+        await commentsSchema.find({
+          eventId: event._id,
+        }).then((comment) => {
+          event._doc.comments = comment;
         });
         return event;
       } catch (error) {

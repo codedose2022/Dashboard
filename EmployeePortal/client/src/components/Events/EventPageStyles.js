@@ -118,4 +118,18 @@ export default makeStyles((theme) => ({
   fileInputStyle: {
     marginTop: "30px",
   },
+  paddingZero: {
+    padding: "0px",
+  },
+  fontSizeSmall: {
+    fontSize: "small",
+  },
+  fontSizeSmaller: {
+    fontSize: "x-small",
+  },
+  alignment: {
+    paddingLeft: "10px",
+    fontSize: "smaller",
+    color: 'rgb(0 0 0 / 63%)'
+  },
 }));

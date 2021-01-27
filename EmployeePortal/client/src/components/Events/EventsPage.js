@@ -18,8 +18,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import _ from "lodash";
 import AddEvents from "./AddEvents";
 import DeleteEvent from "./DeleteEvent";
-
+import moment from 'moment';
 import * as helper from "../../helper";
+import CommentsComponent from "./CommentsComponent";
+import CommentList from "./CommentList";
 
 export default function EventsPage() {
   const classes = useStyles();
@@ -27,9 +29,11 @@ export default function EventsPage() {
   const state = useSelector((state) => state);
   const userData = _.get(state, "employees.employee.userData", "");
   let events = _.get(state, "events.events", []);
+  console.log(events)
   const isEventsMember = helper.isEventMember(
     _.get(state, "employees.employee.userData.division", "")
   );
+  let token = localStorage.getItem("auth-token");
   const [editButton, setEdit] = useState({ index: {} });
   const [deleteButton, setDelete] = useState({ index: {} });
   const [open, setOpenModel] = useState(false);
@@ -54,6 +58,7 @@ export default function EventsPage() {
     setOpenModel(true);
   };
 
+  
   return (
     <div className={classes.root}>
       <Grid container justify='flex-end'>
@@ -74,7 +79,7 @@ export default function EventsPage() {
         )}
         {open && <AddEvents setOpenModel={setOpenModel} />}
       </Grid>
-      {events.map((event, eventIndex) => {
+      {  events.map((event, eventIndex) => {
         return (
           <Paper
             className={classes.paper}
@@ -134,7 +139,7 @@ export default function EventsPage() {
               <div style={{ width: "100%" }}>
                 <Box display='flex' p={1} className={classes.box}>
                   <Box p={1} key={`date${event._id}`}>
-                    {event.date && event.date.substring(0, 10)}
+                      {event.date && event.date.substring(0, 10)}
                   </Box>
                   <Box p={1} key={`time${event._id}`}>
                     {event.time}
@@ -162,12 +167,28 @@ export default function EventsPage() {
                     {event.desc}
                   </Typography>
                 </div>
-                {event.status === "Approved" && (
-                  <LikeDislikeCommentComponent event={event} userData = {userData} />
-                )}
+                <Box className={classes.alignment}>
+               Posted on {`${moment(event.updatedAt).format('Do MMMM YYYY')}, ${moment(event.updatedAt).format('HH:mm')}`}
+               </Box>
+               
               </div>
             </div>
-          </Paper>
+            {event.status === "Approved" && (
+              <div>
+                  <LikeDislikeCommentComponent
+                    event={event}
+                    userData={userData}
+                  />
+                  <CommentsComponent
+                  userData={userData}
+                   token={token}
+                  event={event}
+                />
+                <CommentList userData={userData} commentsList={event.comments} />
+                </div>
+                )}
+          
+          </Paper> 
         );
       })}
     </div>

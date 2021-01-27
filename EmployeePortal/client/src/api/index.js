@@ -3,6 +3,8 @@ import axios from 'axios';
 const employeeDetailsUrl = 'http://localhost:5000/employeeDetails/';
 const eventsUrl =  'http://localhost:5000/events/';
 const likeDislike = 'http://localhost:5000/likesDislikes/'; 
+const commentsForEvents = 'http://localhost:5000/comments/'; 
+
 
 export const login = (loginData) => axios.post(`${employeeDetailsUrl}login`,loginData);
 export const getProfile = (token) => axios.post(`${employeeDetailsUrl}profile`,null,{headers : {"x-auth-token": token}}); 
@@ -21,3 +23,6 @@ export const upLike = (token,likeReq) => axios.post(`${likeDislike}upLike`,likeR
 export const unLike = (token,likeReq) => axios.post(`${likeDislike}unLike`,likeReq,{headers : {"x-auth-token": token}}); 
 export const upDisLike = (token,likeReq) => axios.post(`${likeDislike}upDisLike`,likeReq,{headers : {"x-auth-token": token}}); 
 export const unDisLike = (token,likeReq) => axios.post(`${likeDislike}unDisLike`,likeReq,{headers : {"x-auth-token": token}}); 
+
+
+export const addNewComment = (token,comment) => axios.post(`${commentsForEvents}addComments`,comment,{headers : {"x-auth-token": token}}); 

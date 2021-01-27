@@ -18,7 +18,7 @@ const eventsSchema = mongoose.Schema({
     type:String,
     default: 'pending',
   }, 
-});
+},  { timestamps: true });
 
 const events = mongoose.model('events', eventsSchema);
 

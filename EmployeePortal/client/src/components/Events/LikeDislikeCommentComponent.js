@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IconButton } from "@material-ui/core/";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+
 import { useDispatch } from "react-redux";
 import _ from "lodash";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
@@ -13,11 +13,10 @@ import { getEvents } from "../../actions/events";
 export default function LikeDislikeCommentComponent(props) {
   const dispatch = useDispatch();
   let token = localStorage.getItem("auth-token");
-
   const likesArr = _.get(props.event, "likes", []);
   const dislikesArr = _.get(props.event, "dislikes", []);
-  const [Likes] = useState(props.event.likes.length);
-  const [Dislikes] = useState(props.event.dislikes.length);
+  const [Likes] = useState(likesArr.length ? props.event.likes.length : 0);
+  const [Dislikes] = useState(dislikesArr.length ? props.event.dislikes.length: 0);
   const [LikeAction, setLikeAction] = useState(null);
   const [DislikeAction, setDislikeAction] = useState(null);
 
@@ -93,9 +92,7 @@ export default function LikeDislikeCommentComponent(props) {
         )}
         <span style= {{fontSize :'1rem'}}>{Dislikes}</span>
       </IconButton>
-      <IconButton>
-        <ChatBubbleOutlineOutlinedIcon fontSize='small' />
-      </IconButton>
+    
     </span>
   );
 }
