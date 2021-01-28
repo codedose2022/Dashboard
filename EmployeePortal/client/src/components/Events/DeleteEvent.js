@@ -10,6 +10,8 @@ import * as api from "../../api";
 import { useDispatch } from "react-redux";
 import _ from "lodash";
 import Alert from "@material-ui/lab/Alert";
+import { getEvents } from "../../actions/events";
+
 export default function DeleteEvent(props) {
   
   let token = localStorage.getItem("auth-token");
@@ -29,7 +31,7 @@ export default function DeleteEvent(props) {
 
       const responseData = _.get(response, "data.responseData", "");
       if (responseData.messages.status === "21") {
-        dispatch({ type: "ADD_EVENTS", payload: responseData.events });
+        dispatch(getEvents(token, props.userData.division));
       }
     } catch (error) {
       setError("something went wrong, please try again.");

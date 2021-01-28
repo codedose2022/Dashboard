@@ -12,9 +12,9 @@ export const getEvents = async (req, res) => {
     let events = [];
     const division = req.header("division");
     if (division === "EE") {
-      events = await Events.find();
+      events = await Events.find().sort({"createdAt": -1});
     } else {
-      events = await Events.find({ status: "Approved" });
+      events = await Events.find({ status: "Approved" }).sort({"createdAt": -1});
     }
     let mappedArr = events.map(async (event) => {
       try {
@@ -31,7 +31,7 @@ export const getEvents = async (req, res) => {
         });
         await commentsSchema.find({
           eventId: event._id,
-        }).then((comment) => {
+        }).sort({"createdAt": -1}).then((comment) => {
           event._doc.comments = comment;
         });
         return event;

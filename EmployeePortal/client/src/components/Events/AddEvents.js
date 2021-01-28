@@ -13,7 +13,7 @@ import * as api from "../../api";
 import _ from "lodash";
 import FileBase from "react-file-base64";
 import moment from "moment";
-
+import { getEvents } from "../../actions/events";
 
 import { Button, TextareaAutosize, Grid, TextField } from "@material-ui/core";
 
@@ -55,7 +55,7 @@ export default function AddEvents(props) {
           .then((response) => {
             const responseData = _.get(response, "data.responseData", "");
             if (responseData.messages.status === "21") {
-              dispatch({ type: "ADD_EVENTS", payload: responseData.events });
+              dispatch(getEvents(token, props.userData.division));
             }
           })
           .catch((error) => {
@@ -80,7 +80,7 @@ export default function AddEvents(props) {
 
         const responseData = _.get(response, "data.responseData", "");
         if (responseData.messages.status === "21") {
-          dispatch({ type: "ADD_EVENTS", payload: responseData.events });
+         dispatch(getEvents(token, props.userData.division));
         }
       } catch (error) {
         setError("something went wrong, please try again.");

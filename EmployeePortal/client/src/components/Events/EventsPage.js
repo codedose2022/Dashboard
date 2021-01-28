@@ -77,7 +77,7 @@ export default function EventsPage() {
             Add events
           </Button>
         )}
-        {open && <AddEvents setOpenModel={setOpenModel} />}
+        {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
       </Grid>
       {  events.map((event, eventIndex) => {
         return (
@@ -122,10 +122,10 @@ export default function EventsPage() {
             </Grid>
 
             {_.get(editButton, `index.${eventIndex}`, false) && (
-              <AddEvents setEdit={setEdit} event={event} />
+              <AddEvents setEdit={setEdit} event={event} userData={userData}/>
             )}
             {_.get(deleteButton, `index.${eventIndex}`, false) && (
-              <DeleteEvent setDelete={setDelete} event={event} />
+              <DeleteEvent setDelete={setDelete} event={event}  userData={userData}/>
             )}
 
             <div>
@@ -168,7 +168,7 @@ export default function EventsPage() {
                   </Typography>
                 </div>
                 <Box className={classes.alignment}>
-               Posted on {`${moment(event.updatedAt).format('Do MMMM YYYY')}, ${moment(event.updatedAt).format('HH:mm')}`}
+               Posted on {`${moment(event.createdAt).format('Do MMMM YYYY')}, ${moment(event.createdAt).format('HH:mm')}`}
                </Box>
                
               </div>
