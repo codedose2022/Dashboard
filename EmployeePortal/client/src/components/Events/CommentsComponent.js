@@ -2,7 +2,7 @@ import { IconButton, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./EventPageStyles";
 import SendIcon from "@material-ui/icons/Send";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addNewComment } from "../../api/index";
 import { getEvents } from "../../actions/events";
 

@@ -13,7 +13,7 @@ import { green } from "@material-ui/core/colors";
 import ListEmployees from "../Employees/ListEmployees";
 import EventsPage from "../Events/EventsPage";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
+import Navbar from '../../components/Dashboard/Navbar';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -76,12 +76,14 @@ export default function TabsComponent(props) {
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
+
         <AppBar
-          position='static'
+          position='fixed'
           color='default'
           style={{ backgroundColor: "#ffffff" }}
           elevation={0}
         >
+          <Navbar/>
           <Tabs
             value={value}
             onChange={handleChange}

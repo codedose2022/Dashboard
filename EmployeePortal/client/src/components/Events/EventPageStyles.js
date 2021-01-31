@@ -2,24 +2,28 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   addButtonStyle: {
-    marginTop: theme.spacing(1),
+   
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(15),
+      marginTop: theme.spacing(3)
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: theme.spacing(8)
     },
   },
 
   paper: {
     margin: "0px auto",
     borderRadius: "10px",
-    background: "#9acd326b",
+    background: "#81c78429",
     [theme.breakpoints.down("md")]: {
       maxWidth: "100%",
-      marginTop: theme.spacing(5),
+      marginTop: theme.spacing(2),
     },
     [theme.breakpoints.up("md")]: {
       maxWidth: "80%",
-      marginTop: theme.spacing(4),
+      marginTop: theme.spacing(2),
     },
   },
 
@@ -96,7 +100,7 @@ export default makeStyles((theme) => ({
   },
 
   textAreaStyle: {
-    backgroundColor: "blanchedalmond",
+    backgroundColor: "#f3ede5",
     [theme.breakpoints.down("xs")]: {
       width: "200px",
     },

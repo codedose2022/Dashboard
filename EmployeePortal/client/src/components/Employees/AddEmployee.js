@@ -8,7 +8,7 @@ import * as api from '../../api';
 import Alert from '@material-ui/lab/Alert';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import {Paper,IconButton ,FormGroup,Switch,FormHelperText,
+import {IconButton ,FormGroup,Switch,FormHelperText,
     FormControlLabel,Grid,TextField,Divider,createMuiTheme,
     ThemeProvider,InputLabel,FormControl,Typography,MenuItem,
     Button,Select} from '@material-ui/core'; 
@@ -215,10 +215,10 @@ export default function AddEmployee(props) {
 return(
     <div>
         <form className={classes.form} noValidate autoComplete="off" onSubmit = {handleSubmit}>
-        <Paper className={classes.root}  elevation={10}> 
+        <div className={classes.root}> 
         {status && <Alert severity="error"> {status} </Alert> } 
         <ThemeProvider theme={theme}>
-        <Paper className={classes.paper} elevation={5}>
+        <div className={classes.paper} >
         <Typography variant="h6" align="center" className={classes.typography} >{props.employee ? "EDIT EMPLOYEE DETAILS" : "ADD EMPLOYEE"}</Typography>
         {props.employee && <Grid container justify="flex-end">
         <FormGroup row>
@@ -567,7 +567,7 @@ return(
                         <Divider />
 				    </Grid>
                     
-                    { dependence.map((inputField,index) => (
+                    { dependence && dependence.map((inputField,index) => (
                     <div  key={index}>
                    
                     <TextField
@@ -632,7 +632,7 @@ return(
                     </Grid>
                 </Grid>
             </Grid>   
-		</Paper>
+		</div>
         <Grid>   
         <Grid container spacing={6}>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6} > 
@@ -663,7 +663,7 @@ return(
         </Grid>
         </Grid>
         </ThemeProvider>
-		</Paper> 	
+		</div> 	
         </form>
     </div>
     );

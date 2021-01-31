@@ -7,6 +7,7 @@ import {
   Typography,
   Grid,
   IconButton,
+  Link,
 } from "@material-ui/core";
 import wall from "../../images/wall.jpg";
 import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
@@ -18,19 +19,27 @@ import EditIcon from "@material-ui/icons/Edit";
 import _ from "lodash";
 import AddEvents from "./AddEvents";
 import DeleteEvent from "./DeleteEvent";
-import moment from 'moment';
+import moment from "moment";
 import * as helper from "../../helper";
 import CommentsComponent from "./CommentsComponent";
 import CommentList from "./CommentList";
+import { useDispatch } from "react-redux";
+import * as api from "../../api";
+import { getEvents } from "../../actions/events";
+import DoneIcon from "@material-ui/icons/Done";
 
 export default function EventsPage() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const state = useSelector((state) => state);
   const userData = _.get(state, "employees.employee.userData", "");
   let events = _.get(state, "events.events", []);
-  console.log(events)
+  console.log(events);
   const isEventsMember = helper.isEventMember(
+    _.get(state, "employees.employee.userData.division", "")
+  );
+  const isSuperAdmin = helper.isSuperAdmin(
     _.get(state, "employees.employee.userData.division", "")
   );
   let token = localStorage.getItem("auth-token");
@@ -58,7 +67,32 @@ export default function EventsPage() {
     setOpenModel(true);
   };
 
-  
+  const approveEvent = async (event, eventIndex) => {
+    try {
+      const response = await api.editEvent(token, {
+        status: "Approved",
+        _id: event._id,
+      });
+      const responseData = _.get(response, "data.responseData", "");
+      if (responseData.messages.status === "21") {
+        dispatch(getEvents(token, userData.division));
+      }
+    } catch (error) {}
+  };
+
+  const disApproveEvent = async (event, eventIndex) => {
+    try {
+      const response = await api.editEvent(token, {
+        status: "Disapproved",
+        _id: event._id,
+      });
+      const responseData = _.get(response, "data.responseData", "");
+      if (responseData.messages.status === "21") {
+        dispatch(getEvents(token, userData.division));
+      }
+    } catch (error) {}
+  };
+
   return (
     <div className={classes.root}>
       <Grid container justify='flex-end'>
@@ -79,7 +113,7 @@ export default function EventsPage() {
         )}
         {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
       </Grid>
-      {  events.map((event, eventIndex) => {
+      {events.map((event, eventIndex) => {
         return (
           <Paper
             className={classes.paper}
@@ -119,27 +153,62 @@ export default function EventsPage() {
                   </Tooltip>
                 </span>
               )}
+              {isSuperAdmin &&
+                ["pending", "Disapproved"].includes(event.status) && (
+                  <span>
+                    {["pending", "Disapproved"].includes(event.status) && (
+                      <Chip
+                        size='small'
+                        label='Approve'
+                        clickable
+                        color='primary'
+                        onDelete={() => approveEvent(event, eventIndex)}
+                        deleteIcon={<DoneIcon />}
+                        variant='outlined'
+                      />
+                    )}
+                    &nbsp;
+                    {["pending", "Approved"].includes(event.status) && (
+                      <Chip
+                        size='small'
+                        clickable
+                        label='disapprove'
+                        onDelete={() => disApproveEvent(event, eventIndex)}
+                        color='primary'
+                        variant='outlined'
+                      />
+                    )}
+                  </span>
+                )}
             </Grid>
 
             {_.get(editButton, `index.${eventIndex}`, false) && (
-              <AddEvents setEdit={setEdit} event={event} userData={userData}/>
+              <AddEvents setEdit={setEdit} event={event} userData={userData} />
             )}
             {_.get(deleteButton, `index.${eventIndex}`, false) && (
-              <DeleteEvent setDelete={setDelete} event={event}  userData={userData}/>
+              <DeleteEvent
+                setDelete={setDelete}
+                event={event}
+                userData={userData}
+              />
             )}
 
             <div>
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
-                style={{ color: "darkgreen", fontWeight: "600" }}
+                style={{
+                  color: "darkgreen",
+                  fontWeight: "600",
+                  wordWrap: "break-word",
+                }}
               >
                 {event.title}
               </Typography>
               <div style={{ width: "100%" }}>
                 <Box display='flex' p={1} className={classes.box}>
                   <Box p={1} key={`date${event._id}`}>
-                      {event.date && event.date.substring(0, 10)}
+                    {event.date && event.date.substring(0, 10)}
                   </Box>
                   <Box p={1} key={`time${event._id}`}>
                     {event.time}
@@ -168,27 +237,31 @@ export default function EventsPage() {
                   </Typography>
                 </div>
                 <Box className={classes.alignment}>
-               Posted on {`${moment(event.createdAt).format('Do MMMM YYYY')}, ${moment(event.createdAt).format('HH:mm')}`}
-               </Box>
-               
+                  Posted on{" "}
+                  {`${moment(event.createdAt).format("Do MMMM YYYY")}, ${moment(
+                    event.createdAt
+                  ).format("HH:mm")}`}
+                </Box>
               </div>
             </div>
             {event.status === "Approved" && (
               <div>
-                  <LikeDislikeCommentComponent
-                    event={event}
-                    userData={userData}
-                  />
-                  <CommentsComponent
+                <LikeDislikeCommentComponent
+                  event={event}
                   userData={userData}
-                   token={token}
+                />
+                <CommentsComponent
+                  userData={userData}
+                  token={token}
                   event={event}
                 />
-                <CommentList userData={userData} commentsList={event.comments} />
-                </div>
-                )}
-          
-          </Paper> 
+                <CommentList
+                  userData={userData}
+                  commentsList={event.comments}
+                />
+              </div>
+            )}
+          </Paper>
         );
       })}
     </div>

@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
     logo: {
          [theme.breakpoints.up('sm')]: {
             maxWidth:"70px",
-             maxHeight:"90px",
+             maxHeight:"70px",
         },
         [theme.breakpoints.down('sm')]: {
             maxWidth:"50px",
@@ -29,6 +29,7 @@ export default makeStyles((theme) => ({
       },
       menuButton: {
         marginRight: theme.spacing(2),
+       
       },
       title: {
         flexGrow: 1,
@@ -39,6 +40,9 @@ export default makeStyles((theme) => ({
       },
     backGroundColorStyle:{
       //backgroundColor: "#9acd326b"
+    },
+    menuStyleNav : {
+      top: '35px',
     }
 })
 )

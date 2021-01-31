@@ -11,10 +11,10 @@ export const getEvents = async (req, res) => {
   try {
     let events = [];
     const division = req.header("division");
-    if (division === "EE") {
-      events = await Events.find().sort({"createdAt": -1});
+    if (division === "EE" || division === "SA") {
+      events = await Events.find().sort({"updatedAt": -1});
     } else {
-      events = await Events.find({ status: "Approved" }).sort({"createdAt": -1});
+      events = await Events.find({ status: "Approved" }).sort({"updatedAt": -1});
     }
     let mappedArr = events.map(async (event) => {
       try {

@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
   },
   firstPaper:{
     padding:'10px',
-    background: '#81c784',
+    background: '#81c78429',
   },
   paper:{
     padding:'10px',

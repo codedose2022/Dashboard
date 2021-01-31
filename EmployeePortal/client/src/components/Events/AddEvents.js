@@ -74,7 +74,7 @@ export default function AddEvents(props) {
     setShowRequired(true);
     const isFieldEmpty = [title, date, time, desc, venue].includes("");
     if (!isFieldEmpty) {
-      let event = { title, date, venue, desc, img, time, _id: props.event._id };
+      let event = { title, date, venue, desc, img, time, _id: props.event._id, status: 'pending' };
       try {
         const response = await api.editEvent(token, event);
 
@@ -100,7 +100,7 @@ export default function AddEvents(props) {
       disableBackdropClick
       PaperProps={{
         style: {
-          backgroundColor: 'blanchedalmond',
+          backgroundColor: '#f3ede5',
           boxShadow: 'none',
         },
       }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,12 +7,8 @@ import {
   Hidden,
   Badge,
   MenuItem,
-  Popper,
-  MenuList,
+  Menu,
   Divider,
-  Grow,
-  Paper,
-  ClickAwayListener,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -26,9 +22,15 @@ import _ from "lodash";
 export default function Navbar() {
   const history = useHistory();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const anchorRef = useRef(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const state = useSelector((state) => state);
   const employeeName = _.get(
     state,
@@ -37,45 +39,18 @@ export default function Navbar() {
   );
 
   let token = localStorage.getItem("auth-token");
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
   const handleCloseForProfile = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
+ 
     dispatch(getProfile(token));
     history.push("/profile");
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
 
   return (
     <div>
       <AppBar
-        position='fixed'
+        position='relative'
         style={{ background: "#388e3c" }}
         className={classes.appbar}
       >
@@ -91,11 +66,10 @@ export default function Navbar() {
             </IconButton>
             <IconButton
               edge='end'
-              ref={anchorRef}
               aria-label='account of current user'
               aria-controls='menu_id'
               aria-haspopup='true'
-              onClick={handleToggle}
+              onClick={handleClick}
               color='inherit'
             >
               <Hidden smDown>
@@ -108,50 +82,33 @@ export default function Navbar() {
             </IconButton>
           </div>
         </Toolbar>
-      </AppBar>
-      <Popper open={open} anchorEl={anchorRef.current} transition>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
-            }}
+        <Menu
+          id='simple-menu'
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          variant = 'selectedMenu'
+          style = {{ top: '35px', marginLeft: '5px'}}
+          
+        >
+          <MenuItem
+         
+            style={{ fontSize: "0.95rem" }}
+            onClick={handleCloseForProfile}
           >
-            <Paper elevation={1} className={classes.backGroundColorStyle}>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  style={{ padding: "0px", fontSize: "0.9rem" }}
-                  autoFocusItem={open}
-                  id='menu-list-grow'
-                  onKeyDown={handleListKeyDown}
-                >
-                  <MenuItem
-                    style={{ fontSize: "0.95rem" }}
-                    onClick={handleCloseForProfile}
-                  >
-                    My Profile
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    style={{ fontSize: "0.95rem" }}
-                    onClick={handleClose}
-                  >
-                    Change password
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    style={{ fontSize: "0.95rem" }}
-                    onClick={handleClose}
-                  >
-                    Logout
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+            My Profile
+          </MenuItem>
+          <Divider />
+          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleClose}>
+            Change password
+          </MenuItem>
+          <Divider />
+          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleClose}>
+            Logout
+          </MenuItem>
+        </Menu>
+      </AppBar>
     </div>
   );
 }

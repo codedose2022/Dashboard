@@ -5,3 +5,7 @@ export const validateRequired = (field) => {
 export const isEventMember = (division) => {
   return  division === 'EE';
 }
+
+export const isSuperAdmin = (division) => {
+  return  division === 'SA';
+}

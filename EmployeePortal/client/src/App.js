@@ -55,7 +55,7 @@ const App = () =>{
     
     <Router>
       <UserContext.Provider value ={{employeeData, setEmployeeData}}>
-      { loggedIn && employeeData.employee && <Navbar/>}
+      {/* { loggedIn && employeeData.employee && <Navbar/>} */}
     
       <Route  path="/login" component={LoginPage} />
       <main>
