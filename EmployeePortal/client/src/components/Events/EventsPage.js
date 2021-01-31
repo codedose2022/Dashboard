@@ -35,7 +35,6 @@ export default function EventsPage() {
   const state = useSelector((state) => state);
   const userData = _.get(state, "employees.employee.userData", "");
   let events = _.get(state, "events.events", []);
-  console.log(events);
   const isEventsMember = helper.isEventMember(
     _.get(state, "employees.employee.userData.division", "")
   );

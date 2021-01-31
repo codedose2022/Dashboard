@@ -41,12 +41,15 @@ export default function Navbar() {
   let token = localStorage.getItem("auth-token");
 
   const handleCloseForProfile = (event) => {
- 
     dispatch(getProfile(token));
     history.push("/profile");
   };
 
-
+const handleCloseForLogOut = () =>{
+  localStorage.setItem("auth-token",'');
+  dispatch ({type: 'RESET_STORE'});
+  history.push('/login');
+}
   return (
     <div>
       <AppBar
@@ -104,7 +107,7 @@ export default function Navbar() {
             Change password
           </MenuItem>
           <Divider />
-          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleClose}>
+          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleCloseForLogOut}>
             Logout
           </MenuItem>
         </Menu>

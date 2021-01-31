@@ -4,7 +4,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import {BrowserRouter as Router, Route,Switch,Redirect} from 'react-router-dom';
 import MyProfile from './components/Employees/MyProfile';
 import AddEmployee from './components/Employees/AddEmployee';
-import Navbar from './components/Dashboard/Navbar';
 import _ from 'lodash'; 
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';
@@ -52,14 +51,10 @@ const App = () =>{
   }
 
   return(
-    
     <Router>
       <UserContext.Provider value ={{employeeData, setEmployeeData}}>
-      {/* { loggedIn && employeeData.employee && <Navbar/>} */}
-    
       <Route  path="/login" component={LoginPage} />
       <main>
-      
       <Switch>
           <PrivateRoute exact path="/dashboard"  > 
           <Dashboard/>
