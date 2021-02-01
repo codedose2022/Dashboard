@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     logo: {
-        maxWidth: '30%',
+        maxWidth: '20%',
         maxHeight: '80%',
 
       },

@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import employees from "./employees";
 import events from "./events";
+import tabs from "./tabs";
 
 const appReducer = combineReducers({
   employees,
   events,
+  tabs
 });
 
 // reset the state of a redux store

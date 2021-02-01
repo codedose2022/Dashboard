@@ -14,6 +14,8 @@ import ListEmployees from "../Employees/ListEmployees";
 import EventsPage from "../Events/EventsPage";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Navbar from '../../components/Dashboard/Navbar';
+import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -66,17 +68,18 @@ const theme = createMuiTheme({
 
 export default function TabsComponent(props) {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const [value, setValue] = useState(_.get(state, 'tabs.selectedTab',0))
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    dispatch ({type: 'TABS_CHANGE', payload: newValue});
   };
 
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
-
         <AppBar
           position='fixed'
           color='default'
@@ -126,6 +129,7 @@ export default function TabsComponent(props) {
               />
             )}
           </Tabs>
+      
         </AppBar>
         <TabPanel value={value} index={0}>
           <EventsPage />

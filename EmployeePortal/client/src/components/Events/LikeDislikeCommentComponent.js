@@ -35,6 +35,7 @@ export default function LikeDislikeCommentComponent(props) {
 
   const onLike = async () => {
     let likeReq = { eventId: props.event._id, employeeId: props.userData.id };
+    //if user has already liked then unlike else uplike 
     if (LikeAction === null) {
       const response = await api.upLike(token, likeReq);
           response.data.message.forEach((data) => {
@@ -56,7 +57,7 @@ export default function LikeDislikeCommentComponent(props) {
       eventId: props.event._id,
       employeeId: props.userData.id,
     };
-
+ //if user has already disliked then undislike else updislike 
     if (DislikeAction !== null) {
       const response = await api.unDisLike(token, dislikeReq);
        response.data.message.forEach((data) => {

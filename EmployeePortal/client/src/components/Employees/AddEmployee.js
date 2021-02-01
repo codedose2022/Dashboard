@@ -116,7 +116,6 @@ export default function AddEmployee(props) {
         setErrors({
             ...temp
         })
-        console.log(errors.deskPhone);
         return Object.values(temp).every(x=>x === "");
     }
     

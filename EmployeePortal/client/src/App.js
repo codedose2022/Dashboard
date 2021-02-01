@@ -64,10 +64,6 @@ const App = () =>{
           <MyProfile/>
           </PrivateRoute>
 
-          <PrivateRoute exact path="/addEmployee"  > 
-          <AddEmployee/>
-          </PrivateRoute>
-
         </Switch> 
       </main>
        

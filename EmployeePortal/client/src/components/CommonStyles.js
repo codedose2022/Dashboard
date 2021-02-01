@@ -4,9 +4,15 @@ export default makeStyles((theme) => ({
 
     [theme.breakpoints.up('md')]: {
         topPadding : {
-            paddingTop:'25px'
+            paddingTop:'50px'
         }
+      },
+      
+    [theme.breakpoints.down('md')]: {
+      topPadding : {
+          paddingTop:'40px'
       }
+    }
 
    
     
