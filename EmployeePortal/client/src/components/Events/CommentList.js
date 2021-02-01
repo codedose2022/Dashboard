@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./EventPageStyles";
 import moment from "moment";
-import { List, Tooltip } from "@material-ui/core";
+import { List, Tooltip, Link } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -10,9 +10,27 @@ import ImageIcon from "@material-ui/icons/Image";
 
 export default function CommentList(props) {
   const classes = useStyles();
+  const [showComments, setShowComments] = useState(false);
+  const showCommentList = () => {
+    showComments ? setShowComments(false) : setShowComments(true);
+  };
+
   return (
     <div className={classes.marginStyle}>
-      {props.commentsList &&
+      {props.commentsList?.length ? (
+        <Link
+          style={{ textDecoration: "none" }}
+          id={`${props.event._id}showReplies`}
+          key={`${props.event._id}showReplies`}
+          onClick={showCommentList}
+        >
+          <div className={classes.repliesStyle}>
+            view all {props.commentsList.length} comments
+          </div>
+        </Link>
+      ) : ''}
+      {showComments && 
+        props.commentsList && 
         props.commentsList.map((comment) => {
           let postedDate = moment(comment.createdAt).format("Do MMMM YYYY");
           let postedTime = moment(comment.createdAt).format("HH:mm");

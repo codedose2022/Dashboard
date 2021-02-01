@@ -94,8 +94,9 @@ export default function EventsPage() {
 
   return (
     <div className={classes.root}>
+
       <Grid container justify='flex-end'>
-        {isEventsMember && (
+        {isEventsMember ? (
           <Button
             id='Add-events-button'
             key='Add-events-button_'
@@ -109,7 +110,7 @@ export default function EventsPage() {
           >
             Add events
           </Button>
-        )}
+        ) : <div className = {classes.topMargin}></div>}
         {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
       </Grid>
       {events.map((event, eventIndex) => {
@@ -155,6 +156,7 @@ export default function EventsPage() {
               {isSuperAdmin &&
                 ["pending", "Disapproved"].includes(event.status) && (
                   <span>
+                    
                     {["pending", "Disapproved"].includes(event.status) && (
                       <Chip
                         size='small'
@@ -213,7 +215,7 @@ export default function EventsPage() {
                     {event.time}
                   </Box>
                   <Box p={1} key={`venue${event._id}`}>
-                    {event.venue}
+                  {event.venue}
                   </Box>
                 </Box>
 
@@ -257,6 +259,7 @@ export default function EventsPage() {
                 <CommentList
                   userData={userData}
                   commentsList={event.comments}
+                  event={event}
                 />
               </div>
             )}

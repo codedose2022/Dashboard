@@ -34,7 +34,6 @@ export default function CommentsComponent(props) {
   };
   return (
     <div className={classes.marginStyle}>
-      <Typography variant='caption'>{props.event.comments && props.event.comments.length} Replies</Typography>
       <form style={{ display: "flex" }} onSubmit={handleSubmit}>
         <TextField
           key={`${props.userData.id}_CommentBox`}

@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(8),
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(8),
     },
     [theme.breakpoints.down("md")]: {
       marginTop: theme.spacing(8)

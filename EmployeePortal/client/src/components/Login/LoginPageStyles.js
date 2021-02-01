@@ -41,20 +41,15 @@ export default makeStyles((theme) => ({
         
         },
       root: { 
-        [theme.breakpoints.between('xs', 'sm')]: {
+       
+        [theme.breakpoints.between('xs', 'md')]: {
           maxWidth:"100%",
-        },
-        [theme.breakpoints.between('sm', 'md')]: {
-          maxWidth:"50%",
-        },
-        [theme.breakpoints.between('md', 'lg')]: {
-          maxWidth:"70%",
         },
         [theme.breakpoints.up('md')]: {
           maxWidth:"30%",
-      
-          marginTop: theme.spacing(20)
+          marginTop: theme.spacing(20),
         },
+    
         margin: '0px auto',
         marginTop: theme.spacing(10), 
     

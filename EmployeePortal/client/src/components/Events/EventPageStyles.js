@@ -1,15 +1,22 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
+  topMargin: {
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(6),
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: theme.spacing(5),
+    },
+  },
   addButtonStyle: {
-   
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(15),
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(7),
     },
     [theme.breakpoints.down("md")]: {
-      marginTop: theme.spacing(8)
+      marginTop: theme.spacing(7),
     },
   },
 
@@ -134,6 +141,14 @@ export default makeStyles((theme) => ({
   alignment: {
     paddingLeft: "10px",
     fontSize: "smaller",
-    color: 'rgb(0 0 0 / 63%)'
+    color: "rgb(0 0 0 / 63%)",
+  },
+  repliesStyle: {
+    [theme.breakpoints.down("md")]: {
+      paddingBottom: "10px",
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingBottom: "20px",
+    },
   },
 }));
