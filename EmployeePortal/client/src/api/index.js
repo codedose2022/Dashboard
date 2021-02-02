@@ -4,7 +4,7 @@ const employeeDetailsUrl = 'http://localhost:5000/employeeDetails/';
 const eventsUrl =  'http://localhost:5000/events/';
 const likeDislike = 'http://localhost:5000/likesDislikes/'; 
 const commentsForEvents = 'http://localhost:5000/comments/'; 
-
+const pollsUrl =  'http://localhost:5000/polls/'
 
 export const login = (loginData) => axios.post(`${employeeDetailsUrl}login`,loginData);
 export const getProfile = (token) => axios.post(`${employeeDetailsUrl}profile`,null,{headers : {"x-auth-token": token}}); 
@@ -26,3 +26,8 @@ export const unDisLike = (token,likeReq) => axios.post(`${likeDislike}unDisLike`
 
 
 export const addNewComment = (token,comment) => axios.post(`${commentsForEvents}addComments`,comment,{headers : {"x-auth-token": token}}); 
+
+export const createPoll = (token,poll) => axios.post(`${pollsUrl}createPolls`,poll,{headers : {"x-auth-token": token}}); 
+export const getPolls = (token) => axios.post(`${pollsUrl}getPolls`,null,{headers : {"x-auth-token": token}}); 
+export const deletePoll = (token,poll) => axios.post(`${pollsUrl}deletePolls`,poll,{headers : {"x-auth-token": token}}); 
+export const addPoll = (token,poll) => axios.post(`${pollsUrl}addPolls`,poll,{headers : {"x-auth-token": token}}); 

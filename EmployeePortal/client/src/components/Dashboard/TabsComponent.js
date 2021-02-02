@@ -15,6 +15,7 @@ import EventsPage from "../Events/EventsPage";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Navbar from '../../components/Dashboard/Navbar';
 import { useDispatch, useSelector } from "react-redux";
+import Polls from "../Polls/Polls";
 import _ from "lodash";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -134,7 +135,7 @@ export default function TabsComponent(props) {
           <EventsPage />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          <Polls />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three

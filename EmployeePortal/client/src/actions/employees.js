@@ -1,6 +1,7 @@
 import * as api from "../api";
 import _ from "lodash";
 import { getEvents } from "./events";
+import {getPolls} from './polls';
 
 export const login = (loginData) => async (dispatch) => {
   try {
@@ -16,6 +17,7 @@ export const login = (loginData) => async (dispatch) => {
       dispatch({ type: "LOGIN_STATUS", payload: "loggedIn" });
       dispatch(getEmployeesDetails(token));
       dispatch(getEvents(token, _.get(data, "userData.division", "")));
+      dispatch(getPolls(token));
     }
   } catch (error) {
     console.log(error.message);

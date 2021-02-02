@@ -15,7 +15,9 @@ const handleClose = () => {
   return (
     <div>
       <Dialog
-       open={open} 
+       open={open}
+       fullWidth={true}
+       maxWidth="md" 
        onClose={handleClose}
        aria-labelledby="form-dialog-title" 
        disableBackdropClick 

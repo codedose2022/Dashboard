@@ -36,7 +36,9 @@ const employeeSchema = mongoose.Schema({
         type: String,
         default: 'N',
     }
-});
+},
+{timestamps: true}
+);
 
 const employeeDetails = mongoose.model('employeeDetails', employeeSchema);
 
