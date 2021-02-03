@@ -1,4 +1,4 @@
-import { IconButton, TextField, Typography } from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./EventPageStyles";
 import SendIcon from "@material-ui/icons/Send";

@@ -2,7 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     logo: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: '20%',
+       
+      },
+      [theme.breakpoints.up('md')]: {
+        maxWidth: '30%',
+      },
+       
         maxHeight: '80%',
 
       },
@@ -34,6 +41,7 @@ export default makeStyles((theme) => ({
         justifyContent: 'center',
         width: '90%',
         margin : 'auto',
+        marginTop: theme.spacing(5), 
       
       },
       input: {
@@ -55,8 +63,8 @@ export default makeStyles((theme) => ({
     
       },
       buttonStyle:{
-        marginTop:'5px',
-        marginBottom:'15px'
+        marginTop:'15px',
+        marginBottom:'30px'
       },
       
       

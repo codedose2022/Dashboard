@@ -3,11 +3,11 @@ import LoginPage from './components/Login/LoginPage';
 import Dashboard from './components/Dashboard/Dashboard';
 import {BrowserRouter as Router, Route,Switch,Redirect} from 'react-router-dom';
 import MyProfile from './components/Employees/MyProfile';
-import AddEmployee from './components/Employees/AddEmployee';
 import _ from 'lodash'; 
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';
 import { isTokenValid } from './api/index';
+import ResetPassword from './components/Login/ResetPassword';
 
 const App = () =>{
  
@@ -45,7 +45,6 @@ const App = () =>{
             return loggedIn && employeeData.employee
             ? children 
             : <Redirect to='/login'/>
-
       }} />
     )
   }
@@ -54,6 +53,9 @@ const App = () =>{
     <Router>
       <UserContext.Provider value ={{employeeData, setEmployeeData}}>
       <Route  path="/login" component={LoginPage} />
+      <Route  path="/changePassword"  > 
+          <ResetPassword/>
+          </Route>
       <main>
       <Switch>
           <PrivateRoute exact path="/dashboard"  > 
@@ -63,6 +65,9 @@ const App = () =>{
           <PrivateRoute exact path="/profile"  > 
           <MyProfile/>
           </PrivateRoute>
+
+          
+        
 
         </Switch> 
       </main>

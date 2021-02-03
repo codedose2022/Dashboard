@@ -3,6 +3,8 @@ import express from 'express';
 import {getEmployees,createEmployee,login,getProfile,editProfile,isTokenValid} from '../controllers/employee.js';
 import auth from '../middleware/auth.js';
 
+import {resetPassword} from '../controllers/login.js';
+
 const router = express.Router();
 
 
@@ -12,7 +14,7 @@ router.post('/login',login);
 router.post('/profile',auth,getProfile);
 router.post('/editProfile',auth,editProfile);
 router.post('/isTokenValid',isTokenValid);
-
+router.post('/resetPassword',resetPassword);
 
 
 export default router;

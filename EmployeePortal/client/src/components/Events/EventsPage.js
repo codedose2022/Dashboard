@@ -6,8 +6,7 @@ import {
   Box,
   Typography,
   Grid,
-  IconButton,
-  Link,
+  IconButton
 } from "@material-ui/core";
 import wall from "../../images/wall.jpg";
 import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
@@ -94,7 +93,6 @@ export default function EventsPage() {
 
   return (
     <div className={classes.root}>
-
       <Grid container justify='flex-end'>
         {isEventsMember ? (
           <Button
@@ -110,7 +108,9 @@ export default function EventsPage() {
           >
             Add events
           </Button>
-        ) : <div className = {classes.topMargin}></div>}
+        ) : (
+          <div className={classes.topMargin}></div>
+        )}
         {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
       </Grid>
       {events.map((event, eventIndex) => {
@@ -118,7 +118,7 @@ export default function EventsPage() {
           <Paper
             className={classes.paper}
             // variant='outlined'
-            elevation={3}
+            elevation={9}
             key={`event${event._id}`}
           >
             <Grid className={classes.header}>
@@ -126,8 +126,13 @@ export default function EventsPage() {
                 className={classes.chip}
                 key={`status_${event._id}`}
                 size='small'
-                label={event.status}
-                color={event.status === "Approved" ? "primary" : "secondary"}
+                label={event.status === 'Approved' ? 'Upcoming' : event.status}
+                style={
+                  event.status === "Approved"
+                    ? {background : '#1b5e20',color : 'white'}
+                    : { background : '#D9512C',color : 'white' }
+                }
+                
               />
               {isEventsMember && (
                 <span>
@@ -156,7 +161,6 @@ export default function EventsPage() {
               {isSuperAdmin &&
                 ["pending", "Disapproved"].includes(event.status) && (
                   <span>
-                    
                     {["pending", "Disapproved"].includes(event.status) && (
                       <Chip
                         size='small'
@@ -215,7 +219,7 @@ export default function EventsPage() {
                     {event.time}
                   </Box>
                   <Box p={1} key={`venue${event._id}`}>
-                  {event.venue}
+                    {event.venue}
                   </Box>
                 </Box>
 

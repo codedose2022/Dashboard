@@ -32,7 +32,7 @@
     const [error, seterror] = useState('');
     const [emailRequired, setEmailRequired] = useState('');
     const [passwordRequired, setPasswordRequired] = useState('');
-
+    const [forgotPass, setForgotPass] = useState(false);
     const state = useSelector(state => state)
     const loggedIn = _.get(state,'employees.loggedInStatus','');
     const messageStatus = _.get(state,'employees.employee.messages.status','');
@@ -52,7 +52,6 @@
         seterror(errMsg)
       }
       if(messageStatus === '11' ){
-        //let successMsg = _.get(state,'employees.employee.messages.message','')
         seterror('')
       }
     }, [loggedIn,messageStatus])
@@ -60,7 +59,6 @@
     
     const handleSubmit = async (e) =>{
         e.preventDefault();
-
         try {
           if(loginData.email === ''){
             setEmailRequired("Please enter the email address");     
@@ -68,10 +66,15 @@
           if(loginData.password === ''){
             setPasswordRequired( "Please enter the password");
           }
-          if(loginData.email !== '' && loginData.password !== ''){
+          if(loginData.email !== '' && loginData.password !== '' && !forgotPass){
             dispatch( login(loginData));
             clearFieldError();
           } 
+          if(forgotPass){
+          //  dispatch( sendResetLink(loginData));
+          
+          } 
+
         } catch (error) {
           console.log(error);
         }
@@ -79,24 +82,19 @@
     }
    
     useEffect(() => {
-      if(loginData.email !== ''){
+      if(loginData.email !== '')
         setEmailRequired("");   
-      }
-      if(loginData.password !== ''){
-        setPasswordRequired( "");
-      }
-      
+      if(loginData.password !== '')
+        setPasswordRequired( "");  
     }, [loginData.email, loginData.password])
 
     const clearFieldError = () =>{
       setEmailRequired("");   
       setPasswordRequired("");
     }
-     
-   
-       
-      return(
-       
+
+
+      return(  
         <Box  boxShadow={3} className={classes.root}>
           <ThemeProvider theme ={theme}>
             <AppBar position="static" className={classes.appbar} elevation={0}>
@@ -108,9 +106,9 @@
               </Toolbar>
             </AppBar>
             <CssBaseline/>
-          {error && 
-          <Alert severity="error"> {error} </Alert>  
-          }
+          
+            {error &&  <Alert severity="error"> {error} </Alert>   }
+         
           <form autoComplete="off" className={classes.form} onSubmit = {handleSubmit} >
             <TextField
               InputProps={{
@@ -132,7 +130,7 @@
                 onChange={(e) => (setLoginData({ ...loginData, email : e.target.value}))}
         
               />
-              <TextField
+             {!forgotPass &&  <TextField
               InputProps={{
                   disableUnderline: true,
                   classes: { input: classes.input } 
@@ -151,7 +149,7 @@
                 helperText = {passwordRequired}
                 value={loginData.password}
                 onChange={(e) => setLoginData({ ...loginData, password : e.target.value})}
-              />
+              />}
               <Button className ={classes.buttonStyle}
               variant={'contained'} 
               fullWidth 
@@ -159,7 +157,7 @@
               color={'primary'}
               type="submit"
               >
-                LOGIN
+                {forgotPass ? 'SET RESET LINK' : 'LOGIN'} 
               </Button>
               <Grid className ={classes.buttonStyle}
                   container
@@ -167,9 +165,9 @@
                   justify="flex-end"
                   alignItems="center"
               >
-              <Link href="#" variant="caption"> 
-                    Forgot password
-                  </Link>
+              <Link variant="caption" onClick = {()=>setForgotPass(!forgotPass)}> 
+                   {forgotPass ? 'Login' : 'Forgot password'} 
+              </Link>
               </Grid>
               
           </form>

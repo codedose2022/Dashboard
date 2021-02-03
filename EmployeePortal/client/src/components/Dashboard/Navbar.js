@@ -8,7 +8,6 @@ import {
   Badge,
   MenuItem,
   Menu,
-  Divider,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -50,6 +49,14 @@ const handleCloseForLogOut = () =>{
   dispatch ({type: 'RESET_STORE'});
   history.push('/login');
 }
+
+
+const handleCloseForChangePassword = () =>{
+ // localStorage.setItem("auth-token",'');
+  //dispatch ({type: 'RESET_STORE'});
+  history.push('/changePassword');
+}
+
   return (
     <div>
       <AppBar
@@ -102,11 +109,11 @@ const handleCloseForLogOut = () =>{
           >
             My Profile
           </MenuItem>
-          <Divider />
-          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleClose}>
+         
+          <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleCloseForChangePassword}>
             Change password
           </MenuItem>
-          <Divider />
+          
           <MenuItem style={{ fontSize: "0.95rem" }} onClick={handleCloseForLogOut}>
             Logout
           </MenuItem>

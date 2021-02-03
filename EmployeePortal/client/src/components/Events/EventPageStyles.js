@@ -29,7 +29,7 @@ export default makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
     [theme.breakpoints.up("md")]: {
-      maxWidth: "80%",
+      maxWidth: "70%",
       marginTop: theme.spacing(2),
     },
   },
