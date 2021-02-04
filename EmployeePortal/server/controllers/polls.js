@@ -7,6 +7,7 @@ const POLLS_DELETION_SUCCESS = '31';
 const VOTE_SUCCESS='32';
 const VOTE_DUPLICATE='33';
 const MIN_TWO_OPTION_REQ='34';
+const OPTION_DUPLICATE='35';
 
 export const getPolls = async (req, res) => {
 
@@ -29,7 +30,6 @@ export const createPolls = async (req, res) => {
     }
     
     const poll = new Polls(req.body);
-    
     try {
             if(poll.options.length<2)
             {
@@ -38,14 +38,27 @@ export const createPolls = async (req, res) => {
               return res.status(200).json(responseMessages);
             }
             else 
-            {
-            await poll.save();
-            const polls = await Polls.find();
-            responseMessages.messages.message= 'Poll Creation Successful';
-            responseMessages.messages.status = POLLS_CREATION_SUCCESS;
-            responseMessages.polls = polls;
-            return res.status(200).json(responseMessages);
+            { 
+              var valueArr = poll.options.map(function(item){ return item.option });
+              var option_duplicate = valueArr.some(function(item, idx){ 
+                return valueArr.indexOf(item) != idx 
+              });
+            
+              if(option_duplicate){
+                  responseMessages.messages.message= 'The poll cannot have same options';
+                  responseMessages.messages.status = OPTION_DUPLICATE;
+                  return res.status(200).json(responseMessages);
+              }
+              else{
+                await poll.save();
+                const polls = await Polls.find();
+                responseMessages.messages.message= 'Poll Creation Successful';
+                responseMessages.messages.status = POLLS_CREATION_SUCCESS;
+                responseMessages.polls = polls;
+                return res.status(200).json(responseMessages);
+              }      
             }
+    
    } catch (error) {
        res.status(404).json({ message: error.message });
    }

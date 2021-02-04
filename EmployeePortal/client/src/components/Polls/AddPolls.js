@@ -53,9 +53,10 @@ export default function AddPolls(props) {
         await api
           .createPoll(token, poll)
           .then((response) => {
-            console.log(response);
             const responseMessages = _.get(response, "data", "");
-            if (responseMessages.messages.status === "34") {
+            if (responseMessages.messages.status === "34" ||
+            responseMessages.messages.status === "35") 
+            {
               setError(responseMessages.messages.message);
             }
             if (responseMessages.messages.status === "30") {

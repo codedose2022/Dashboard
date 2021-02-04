@@ -19,10 +19,7 @@ const OptionSchema = mongoose.Schema({
 );
 
 const pollsSchema = mongoose.Schema({
-  question: {
-    type:String,
-    unique:true,
-  },
+  question: String,
   options: [OptionSchema],
   deadline:Date,
   title:String,
