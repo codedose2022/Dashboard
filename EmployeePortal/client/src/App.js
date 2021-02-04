@@ -7,10 +7,9 @@ import _ from 'lodash';
 import {useSelector} from 'react-redux';
 import UserContext from './context/UserContext';
 import { isTokenValid } from './api/index';
-import ResetPassword from './components/Login/ResetPassword';
+import ChangePassword from './components/Login/ChangePassword';
 
 const App = () =>{
- 
   const state = useSelector(state => state);
   const loggedIn = _.get(state,'employees.loggedInStatus','');
   const [employeeData, setEmployeeData] = useState({
@@ -54,7 +53,7 @@ const App = () =>{
       <UserContext.Provider value ={{employeeData, setEmployeeData}}>
       <Route  path="/login" component={LoginPage} />
       <Route  path="/changePassword"  > 
-          <ResetPassword/>
+          <ChangePassword/>
           </Route>
       <main>
       <Switch>

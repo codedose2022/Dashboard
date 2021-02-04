@@ -17,6 +17,7 @@ export const getEvents = async (req, res) => {
       events = await Events.find({ status: "Approved" }).sort({"updatedAt": -1});
     }
     let mappedArr = events.map(async (event) => {
+      //Adding likes, dislikes and comments array to the respective events
       try {
         await Like.find({
           eventId: event._id,

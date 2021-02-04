@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,  useContext } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Link,
-  TextField,
-  CssBaseline,
+  AppBar,Snackbar,Toolbar,Typography,Button,
+  Box,Link,TextField,CssBaseline,
 } from "@material-ui/core";
 import Mersatlogo from "../../images/Mersatlogo.jpg";
 import useStyles from "./LoginPageStyles";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
+import _ from "lodash";
+import UserContext from "../../context/UserContext";
+import * as api from "../../api/index";
 
 export default function ResetPassword() {
   const classes = useStyles();
   const history = useHistory();
-
+  const { employeeData } = useContext(UserContext);
+  const emailId = employeeData?.employee?.userData?.emailId;
   const [resetPasswordData, setResetPasswordData] = useState({
-    email: "",
+    email: emailId,
     password: "",
     newPassword: "",
     confirmPassword: "",
@@ -28,6 +26,28 @@ export default function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isFieldEmpty = [
+      resetPasswordData.password,
+      resetPasswordData.newPassword,
+      resetPasswordData.confirmPassword,
+    ].includes("");
+    if (!isFieldEmpty) {
+      try {
+        seterror("");
+        const { data } = await api.changePassword(resetPasswordData);
+        if (data.messages.status === "12" || data.messages.status === "13") {
+          seterror(data.messages.message);
+        }
+        if (data.messages.status === "14") {
+          seterror("");
+          history.push("/Dashboard");
+        }
+      } catch (error) {
+        seterror(error.message);
+      }
+    } else {
+      seterror("Enter values for all the field.");
+    }
   };
   const cancel = async (e) => {
     e.preventDefault();
@@ -66,6 +86,7 @@ export default function ResetPassword() {
             id='email'
             placeholder='EMAIL ADDRESS'
             name='email'
+            value={resetPasswordData.email}
             size='small'
             disabled
           />
@@ -85,7 +106,6 @@ export default function ResetPassword() {
             placeholder='OLD PASSWORD'
             type='password'
             id='old password'
-            // helperText = {passwordRequired}
             value={resetPasswordData.password}
             onChange={(e) =>
               setResetPasswordData({
@@ -111,7 +131,6 @@ export default function ResetPassword() {
             size='small'
             type='password'
             value={resetPasswordData.newPassword}
-            //helperText = {newPassword}
             onChange={(e) =>
               setResetPasswordData({
                 ...resetPasswordData,
@@ -135,7 +154,6 @@ export default function ResetPassword() {
             name='confirm password'
             size='small'
             value={resetPasswordData.confirmPassword}
-            //helperText = {confirmPassword}
             onChange={(e) =>
               setResetPasswordData({
                 ...resetPasswordData,

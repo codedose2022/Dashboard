@@ -106,17 +106,13 @@ export const isTokenValid = async (req,res) => {
             } , {
             $set: updates
             } )
-            // function (err , success) {
-            // if (err) throw (err);
-            // else {
+         
                 const employees = await employeeDetails.find({"disableInd" : 'N'},{password:0});
                 responseMessages.messages.message= 'Details Successfully Updated';
                 responseMessages.messages.status = USER_UPDATE_SUCCESS;
                 responseMessages.employees = employees;
                 return res.status(200).json(responseMessages);
           
-            // }
-            // }
            
 
    } catch (error) {
@@ -133,7 +129,8 @@ export const login = async (req,res) => {
             firstName :'',
             lastName:'',
             id:'',
-            division:''
+            division:'',
+            emailId : ''
         }, 
         token  :''  
     }
@@ -162,6 +159,7 @@ export const login = async (req,res) => {
                 responseData.userData.lastName = user.lastName;
                 responseData.userData.id = user._id;
                 responseData.userData.division =user.division;
+                responseData.userData.emailId = user.email;
                 responseMessages.messages.message= 'Login Success';
                 responseMessages.messages.status = LOGIN_SUCCESSFUL;
                 responseData.token = token;
