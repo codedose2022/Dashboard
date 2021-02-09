@@ -6,7 +6,7 @@ import {
   Box,
   Typography,
   Grid,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import wall from "../../images/wall.jpg";
 import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
@@ -44,7 +44,6 @@ export default function EventsPage() {
   const [editButton, setEdit] = useState({ index: {} });
   const [deleteButton, setDelete] = useState({ index: {} });
   const [open, setOpenModel] = useState(false);
-
   function setEditButton(index) {
     setEdit({
       index: {
@@ -121,71 +120,78 @@ export default function EventsPage() {
             elevation={9}
             key={`event${event._id}`}
           >
-            <Grid className={classes.header}>
-              <Chip
-                className={classes.chip}
-                key={`status_${event._id}`}
-                size='small'
-                label={event.status === 'Approved' ? 'Upcoming' : event.status}
-                style={
-                  event.status === "Approved"
-                    ? {background : '#1b5e20',color : 'white'}
-                    : { background : '#D9512C',color : 'white' }
+            {moment(`${event.date.substring(0, 10)} ${event.time}`).isAfter(
+              moment()
+            ) ? (
+              <Grid className={classes.header}>
+                {
+                  <Chip
+                    className={classes.chip}
+                    key={`status_${event._id}`}
+                    size='small'
+                    label={
+                      event.status === "Approved" ? "Upcoming" : event.status
+                    }
+                    style={
+                      event.status === "Approved"
+                        ? { background: "#1b5e20", color: "white" }
+                        : { background: "#D9512C", color: "white" }
+                    }
+                  />
                 }
-                
-              />
-              {isEventsMember && (
-                <span>
-                  <Tooltip title='Edit'>
-                    <IconButton
-                      style={{ background: "none", padding: "0px" }}
-                      key={`iconEditButton${event._id}`}
-                      className={classes.iconVertical}
-                      onClick={() => setEditButton(eventIndex)}
-                    >
-                      <EditIcon color='primary' size='small' />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title='Delete'>
-                    <IconButton
-                      style={{ background: "none" }}
-                      key={`iconDeleteButton${event._id}`}
-                      className={classes.iconVertical}
-                      onClick={() => setDeleteButton(eventIndex)}
-                    >
-                      <DeleteIcon color='primary' size='small' />
-                    </IconButton>
-                  </Tooltip>
-                </span>
-              )}
-              {isSuperAdmin &&
-                ["pending", "Disapproved"].includes(event.status) && (
+                {isEventsMember && (
                   <span>
-                    {["pending", "Disapproved"].includes(event.status) && (
-                      <Chip
-                        size='small'
-                        label='Approve'
-                        clickable
-                        color='primary'
-                        onDelete={() => approveEvent(event, eventIndex)}
-                        deleteIcon={<DoneIcon />}
-                        variant='outlined'
-                      />
-                    )}
-                    &nbsp;
-                    {["pending", "Approved"].includes(event.status) && (
-                      <Chip
-                        size='small'
-                        clickable
-                        label='disapprove'
-                        onDelete={() => disApproveEvent(event, eventIndex)}
-                        color='primary'
-                        variant='outlined'
-                      />
-                    )}
+                    <Tooltip title='Edit'>
+                      <IconButton
+                        style={{ background: "none", padding: "0px" }}
+                        key={`iconEditButton${event._id}`}
+                        className={classes.iconVertical}
+                        onClick={() => setEditButton(eventIndex)}
+                      >
+                        <EditIcon color='primary' size='small' />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title='Delete'>
+                      <IconButton
+                        style={{ background: "none" }}
+                        key={`iconDeleteButton${event._id}`}
+                        className={classes.iconVertical}
+                        onClick={() => setDeleteButton(eventIndex)}
+                      >
+                        <DeleteIcon color='primary' size='small' />
+                      </IconButton>
+                    </Tooltip>
                   </span>
                 )}
-            </Grid>
+                {isSuperAdmin &&
+                  ["pending", "Disapproved"].includes(event.status) && (
+                    <span>
+                      {["pending", "Disapproved"].includes(event.status) && (
+                        <Chip
+                          size='small'
+                          label='Approve'
+                          clickable
+                          color='primary'
+                          onDelete={() => approveEvent(event, eventIndex)}
+                          deleteIcon={<DoneIcon />}
+                          variant='outlined'
+                        />
+                      )}
+                      &nbsp;
+                      {["pending", "Approved"].includes(event.status) && (
+                        <Chip
+                          size='small'
+                          clickable
+                          label='disapprove'
+                          onDelete={() => disApproveEvent(event, eventIndex)}
+                          color='primary'
+                          variant='outlined'
+                        />
+                      )}
+                    </span>
+                  )}
+              </Grid>
+            ) : <div className = {classes.topPaddingStyle}></div>}
 
             {_.get(editButton, `index.${eventIndex}`, false) && (
               <AddEvents setEdit={setEdit} event={event} userData={userData} />
@@ -213,10 +219,10 @@ export default function EventsPage() {
               <div style={{ width: "100%" }}>
                 <Box display='flex' p={1} className={classes.box}>
                   <Box p={1} key={`date${event._id}`}>
-                    {event.date && event.date.substring(0, 10)}
+                    {event.date && moment(event.date).format("MMMM Do YYYY")}
                   </Box>
                   <Box p={1} key={`time${event._id}`}>
-                    {event.time}
+                    {moment(event.time, "hh:mm").format("LT")}
                   </Box>
                   <Box p={1} key={`venue${event._id}`}>
                     {event.venue}

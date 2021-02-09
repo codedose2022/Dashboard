@@ -46,7 +46,7 @@ export default makeStyles((theme) => ({
 
   marginStyle: {
     [theme.breakpoints.down("md")]: {
-      marginLeft: "8px",
+     marginLeft: "8px",
       marginRight: "8px",
     },
     [theme.breakpoints.up("md")]: {
@@ -57,23 +57,25 @@ export default makeStyles((theme) => ({
   box: {
     fontSize: "0.85rem",
     color: "#7b0000",
-    //  fontWeight: "bold",
     fontFamily: "cursive",
+
   },
   iconVertical: { background: "none", paddingRight: "30px", color: "black" },
 
   img: {
-    [theme.breakpoints.down("xs")]: {
-      width: "200px",
-    },
-    [theme.breakpoints.between("xs", "sm")]: {
-      width: "250px",
-    },
+    // [theme.breakpoints.down("xs")]: {
+    //   width: "200px",
+    // },
+    // [theme.breakpoints.between("xs", "sm")]: {
+    //   width: "250px",
+    // },
 
-    [theme.breakpoints.up("sm", "md")]: {
-      width: "600px",
-      objectFit: "contain",
-    },
+    // [theme.breakpoints.up("sm", "md")]: {
+    //   width: "600px",
+    //   objectFit: "contain",
+    // },
+   // max-width: -webkit-fill-available;
+     maxWidth : '-webkit-fill-available',
   },
   tableCellStyle: {
     fontSize: "0.7rem",
@@ -151,4 +153,7 @@ export default makeStyles((theme) => ({
       paddingBottom: "20px",
     },
   },
+  topPaddingStyle : {
+    paddingTop: '10px'
+  }
 }));

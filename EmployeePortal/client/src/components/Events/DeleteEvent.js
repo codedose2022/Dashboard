@@ -31,6 +31,7 @@ export default function DeleteEvent(props) {
 
       const responseData = _.get(response, "data.responseData", "");
       if (responseData.messages.status === "21") {
+        handleCancel();
         dispatch(getEvents(token, props.userData.division));
       }
     } catch (error) {

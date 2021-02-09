@@ -42,10 +42,7 @@ export default function AddEvents(props) {
   };
 
   const handleAdd = async () => {
-    // setOpen(false);
-    //props.setOpenModel(false);
     setShowRequired(true);
-
     const isFieldEmpty = [title, date, venue, time, desc].includes("");
     if (!isFieldEmpty) {
       let event = { title, date, venue, desc, img, time };
@@ -55,7 +52,9 @@ export default function AddEvents(props) {
           .then((response) => {
             const responseData = _.get(response, "data.responseData", "");
             if (responseData.messages.status === "21") {
+              handleCancel();
               dispatch(getEvents(token, props.userData.division));
+            
             }
           })
           .catch((error) => {
@@ -77,10 +76,11 @@ export default function AddEvents(props) {
       let event = { title, date, venue, desc, img, time, _id: props.event._id, status: 'pending' };
       try {
         const response = await api.editEvent(token, event);
-
         const responseData = _.get(response, "data.responseData", "");
         if (responseData.messages.status === "21") {
+          handleCancel();
          dispatch(getEvents(token, props.userData.division));
+         
         }
       } catch (error) {
         setError("something went wrong, please try again.");

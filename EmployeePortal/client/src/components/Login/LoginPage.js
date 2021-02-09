@@ -45,7 +45,7 @@
           employee : _.get(state,'employees.employee','')
         })
         localStorage.setItem("auth-token",token)
-        history.push('/dashboard');
+        history.push('/');
       }
       if(messageStatus === '10' || messageStatus === '12' ){
         let errMsg = _.get(state,'employees.employee.messages.message','')

@@ -1,9 +1,6 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-
-
-
-export default function auth (req, res, next) {
+export default function auth(req, res, next) {
   try {
     const token = req.header("x-auth-token");
     if (!token)
@@ -16,11 +13,9 @@ export default function auth (req, res, next) {
       return res
         .status(401)
         .json({ msg: "Token verification failed, authorization denied." });
-
-        req.id = verified.id;
+    req.id = verified.id;
     next();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-};
-
+}

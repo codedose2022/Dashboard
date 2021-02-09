@@ -40,7 +40,7 @@ export default function ResetPassword() {
         }
         if (data.messages.status === "14") {
           seterror("");
-          history.push("/Dashboard");
+          history.push("/");
         }
       } catch (error) {
         seterror(error.message);
@@ -51,7 +51,7 @@ export default function ResetPassword() {
   };
   const cancel = async (e) => {
     e.preventDefault();
-    history.push("/Dashboard");
+    history.push("/");
   };
 
   return (

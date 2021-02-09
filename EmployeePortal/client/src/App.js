@@ -9,36 +9,38 @@ import {
 } from "react-router-dom";
 import MyProfile from "./components/Employees/Profile/MyProfile";
 import _ from "lodash";
-import { useSelector } from "react-redux";
 import UserContext from "./context/UserContext";
 import { isTokenValid } from "./api/index";
 import ChangePassword from "./components/Login/ChangePassword";
+import { useDispatch } from "react-redux";
+import { setDetails } from "./actions/employees";
+
 
 const App = () => {
-  const state = useSelector((state) => state);
-  const loggedIn = _.get(state, "employees.loggedInStatus", "");
+  const dispatch = useDispatch();
   const [employeeData, setEmployeeData] = useState({
     token: "",
     employee: "",
   });
 
   useEffect(() => {
-    const checkloggedIn = async () => {
+    const checkIfLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
       if (token === null) {
         localStorage.setItem("auth-token", "");
         token = "";
       }
       const tokenRes = await isTokenValid(token);
-      //on logout set it to empty
-      // if(tokenRes){
-      //   const employeeDetail = await getProfile(token);
-      //   setEmployeeData({
-      //     token,
-      //     employee : employeeDetail.data});
-      // }
+      //if the user is already logged in and token is present in the local storage
+      if (tokenRes.data) {
+        dispatch(setDetails(token));
+        setEmployeeData({
+          token,
+          employee: "",
+        });
+      }
     };
-    checkloggedIn();
+    checkIfLoggedIn();
   }, []);
 
   function PrivateRoute({ children, ...rest }) {
@@ -46,11 +48,7 @@ const App = () => {
       <Route
         {...rest}
         render={() => {
-          return loggedIn && employeeData.employee ? (
-            children
-          ) : (
-            <Redirect to="/login" />
-          );
+          return employeeData.token ? children : <Redirect to='/login' />;
         }}
       />
     );
@@ -59,17 +57,18 @@ const App = () => {
   return (
     <Router>
       <UserContext.Provider value={{ employeeData, setEmployeeData }}>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/changePassword">
-          <ChangePassword />
+       
+        <Route exact path='/'>
+          <Dashboard />
         </Route>
+        <Route exact path='/login' component={LoginPage}></Route>
         <main>
           <Switch>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-            <PrivateRoute exact path="/profile">
+            <PrivateRoute exact path='/profile'>
               <MyProfile />
+            </PrivateRoute>
+            <PrivateRoute exact path='/changePassword'>
+              <ChangePassword />
             </PrivateRoute>
           </Switch>
         </main>

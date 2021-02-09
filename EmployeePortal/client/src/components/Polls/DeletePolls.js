@@ -1,13 +1,10 @@
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as api from "../../api";
 
 export default function DeletePolls(props) {
-  const theme = useTheme();
   let token = localStorage.getItem("auth-token");
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
@@ -21,7 +18,6 @@ export default function DeletePolls(props) {
   const handleDelete = async () => {
     try {
       const response = await api.deletePoll(token, props.poll);
-      console.log(response);
       const responseMessages = _.get(response, "data", "");
       if (responseMessages.messages.status === "31") {
         dispatch({ type: "GET_POLLS", payload: responseMessages.polls });

@@ -24,7 +24,7 @@ export default function MyProfile(props) {
         <div>
           {!props.employee && (
             <div>
-              <Link style={{ textDecoration: "none" }} to="/Dashboard">
+              <Link style={{ textDecoration: "none" }} to="/">
                 <h6 className={classes.linkStyle}>GO TO DASHBOARD</h6>
               </Link>
             </div>

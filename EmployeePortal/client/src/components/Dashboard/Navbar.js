@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useContext} from "react";
 import {
   AppBar,
   Toolbar,
@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../actions/employees";
 import _ from "lodash";
+import UserContext from "../../context/UserContext";
 
 export default function Navbar() {
   const history = useHistory();
@@ -26,6 +27,7 @@ export default function Navbar() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const { setEmployeeData } = useContext(UserContext);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -47,13 +49,16 @@ export default function Navbar() {
 const handleCloseForLogOut = () =>{
   localStorage.setItem("auth-token",'');
   dispatch ({type: 'RESET_STORE'});
+  localStorage.setItem("master_class", '');
+  setEmployeeData({
+    token : '',
+    employee : _.get(state,'employees.employee','')
+  })
   history.push('/login');
 }
 
 
 const handleCloseForChangePassword = () =>{
- // localStorage.setItem("auth-token",'');
-  //dispatch ({type: 'RESET_STORE'});
   history.push('/changePassword');
 }
 

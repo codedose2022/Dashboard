@@ -50,3 +50,17 @@ export const getEmployeesDetails = (token) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+//if token is already present
+export const setDetails = (token) => async (dispatch) => {
+  try {
+    const { data } = await api.getUserData(token);
+    dispatch({ type: "LOGIN", payload: data });
+    dispatch({ type: "LOGIN_STATUS", payload: "loggedIn" });
+    dispatch(getEmployeesDetails(token));
+    dispatch(getEvents(token, _.get(data, "userData.division", "")));
+    dispatch(getPolls(token));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
