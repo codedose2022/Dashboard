@@ -42,4 +42,7 @@ export default makeStyles((theme) => ({
       text :{
             fontFamily: 'cursive',
           },
+      helperTextColor: {
+            color: "#d50000",
+      },
 }));

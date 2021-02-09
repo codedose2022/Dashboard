@@ -9,6 +9,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from "@material-ui/lab/Alert";
 import useStyles from "./PollsStyles";
+import moment from 'moment';
 
 export default function AddPolls(props) {
 
@@ -21,6 +22,9 @@ export default function AddPolls(props) {
   const [question, setQuestion] = useState("");
   let [options, setOptions] = useState(
       [{
+        option:"",
+        votes:0,
+      },{
         option:"",
         votes:0,
       },]);
@@ -47,6 +51,7 @@ export default function AddPolls(props) {
   const handleAdd = async () => {
     setShowRequired(true);
     const isFieldEmpty = [title, question, options, deadline].includes("");
+    console.log(isFieldEmpty)
     if (!isFieldEmpty) {
       let poll = {title, question, options, deadline};
       try {
@@ -64,7 +69,7 @@ export default function AddPolls(props) {
             }
           });
       } catch (error) {
-        setError("something went wrong, please try again.");
+        setError("Something went wrong, please try again.");
       }
     }
   };
@@ -143,7 +148,7 @@ export default function AddPolls(props) {
           />
         </div>
         )) } 
-         <IconButton disabled={options.length<2} onClick={() => handleRemoveFields()}> 
+         <IconButton disabled={options.length<3} onClick={() => handleRemoveFields()}> 
             <RemoveIcon />
           </IconButton>
           <IconButton onClick={() => handleAddFields()}>

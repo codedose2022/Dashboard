@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Dialog, DialogActions,DialogTitle,Button} from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
-import * as api from "../../api";
-import { useDispatch } from "react-redux";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import _ from "lodash";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as api from "../../api";
 
 export default function DeletePolls(props) {
   const theme = useTheme();
   let token = localStorage.getItem("auth-token");
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -35,11 +34,11 @@ export default function DeletePolls(props) {
   return (
     <Dialog
       open={open}
-      aria-labelledby='form-dialog-title'
+      aria-labelledby="form-dialog-title"
       disableBackdropClick
     >
       <DialogTitle
-        id='form-dialog-title-delete'
+        id="form-dialog-title-delete"
         style={{ alignSelf: "center" }}
       >
         Are you sure you want to delete the poll?
@@ -47,18 +46,18 @@ export default function DeletePolls(props) {
 
       <DialogActions>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleCancel}
-          color='primary'
+          color="primary"
         >
           cancel
         </Button>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleDelete}
-          color='primary'
+          color="primary"
           autoFocus
         >
           Delete

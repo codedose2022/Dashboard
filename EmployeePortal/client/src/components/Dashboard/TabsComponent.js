@@ -10,7 +10,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
-import ListEmployees from "../Employees/ListEmployees";
+import ListEmployees from "../Employees/Display/ListEmployees";
 import EventsPage from "../Events/EventsPage";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Navbar from '../../components/Dashboard/Navbar';

@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
       marginTop: theme.spacing(8),
     },
     [theme.breakpoints.down("md")]: {
-      marginTop: theme.spacing(8)
+      marginTop: theme.spacing(8),
     },
   },
   tableHeadStyle: {
