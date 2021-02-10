@@ -26,7 +26,7 @@ export default function EditEmployeeModel(props) {
         disableBackdropClick
       >
         <DialogContent>
-          <AddEmployee employee={props.employee} />
+          <AddEmployee employee={props.employee} handleClose = {handleClose} />
         </DialogContent>
         <DialogActions>
           <Button

@@ -20,6 +20,7 @@ export default function DeletePolls(props) {
       const response = await api.deletePoll(token, props.poll);
       const responseMessages = _.get(response, "data", "");
       if (responseMessages.messages.status === "31") {
+        handleCancel();
         dispatch({ type: "GET_POLLS", payload: responseMessages.polls });
       }
     } catch (error) {
@@ -30,11 +31,11 @@ export default function DeletePolls(props) {
   return (
     <Dialog
       open={open}
-      aria-labelledby="form-dialog-title"
+      aria-labelledby='form-dialog-title'
       disableBackdropClick
     >
       <DialogTitle
-        id="form-dialog-title-delete"
+        id='form-dialog-title-delete'
         style={{ alignSelf: "center" }}
       >
         Are you sure you want to delete the poll?
@@ -42,18 +43,18 @@ export default function DeletePolls(props) {
 
       <DialogActions>
         <Button
-          size="small"
-          variant="contained"
+          size='small'
+          variant='contained'
           onClick={handleCancel}
-          color="primary"
+          color='primary'
         >
           cancel
         </Button>
         <Button
-          size="small"
-          variant="contained"
+          size='small'
+          variant='contained'
           onClick={handleDelete}
-          color="primary"
+          color='primary'
           autoFocus
         >
           Delete

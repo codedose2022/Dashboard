@@ -52,7 +52,7 @@ const handleCloseForLogOut = () =>{
   localStorage.setItem("master_class", '');
   setEmployeeData({
     token : '',
-    employee : _.get(state,'employees.employee','')
+    employee : ''
   })
   history.push('/login');
 }

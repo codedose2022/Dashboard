@@ -44,7 +44,7 @@ function AddEmployeeModel() {
           onClose={handleClose}
         >
           <DialogContent>
-            <AddEmployee />
+            <AddEmployee handleClose = {handleClose}/>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">

@@ -12,12 +12,14 @@ import _ from "lodash";
 import UserContext from "./context/UserContext";
 import { isTokenValid } from "./api/index";
 import ChangePassword from "./components/Login/ChangePassword";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDetails } from "./actions/employees";
-
 
 const App = () => {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const loggedIn = _.get(state, "employees.loggedInStatus", "");
+  const employeeDetail = _.get(state, "employees.employee", "");
   const [employeeData, setEmployeeData] = useState({
     token: "",
     employee: "",
@@ -36,7 +38,7 @@ const App = () => {
         dispatch(setDetails(token));
         setEmployeeData({
           token,
-          employee: "",
+          employee: employeeDetail,
         });
       }
     };
@@ -48,7 +50,15 @@ const App = () => {
       <Route
         {...rest}
         render={() => {
-          return employeeData.token ? children : <Redirect to='/login' />;
+          return loggedIn === "loggedIn" ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+              }}
+            />
+          );
         }}
       />
     );
@@ -57,7 +67,6 @@ const App = () => {
   return (
     <Router>
       <UserContext.Provider value={{ employeeData, setEmployeeData }}>
-       
         <Route exact path='/'>
           <Dashboard />
         </Route>

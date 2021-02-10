@@ -161,6 +161,7 @@ export default function AddEmployee(props) {
           await api.createEmployee(token, addEmployee).then((response) => {
             if (response.data.messages.status === "14") {
               setStatus(response.data.messages.message);
+              props.handleClose();
               dispatch({
                 type: "GET_EMPLOYEES",
                 payload: response.data.employees,
@@ -185,6 +186,7 @@ export default function AddEmployee(props) {
 
           if (data.data.messages.status === "15") {
             setStatus(data.data.messages.message);
+            props.handleClose();
             dispatch({ type: "GET_EMPLOYEES", payload: data.data.employees });
           }
         } catch (error) {
