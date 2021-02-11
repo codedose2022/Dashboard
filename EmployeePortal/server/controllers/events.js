@@ -12,12 +12,24 @@ export const getEvents = async (req, res) => {
     let events = [];
     const division = req.header("division");
     if (division === "EE" || division === "SA") {
-      events = await Events.find().sort({"updatedAt": -1});
+      events = await Events.find({
+        $or: [
+          {
+            $and: [
+              { status: { $in: ["Disapproved", "pending"] } },
+              { date: { $gte: new Date() } },
+            ],
+          },
+          { status: "Approved" },
+        ],
+      }).sort({ updatedAt: -1 });
     } else {
-      events = await Events.find({ status: "Approved" }).sort({"updatedAt": -1});
+      events = await Events.find({ status: "Approved" }).sort({
+        updatedAt: -1,
+      });
     }
     let mappedArr = events.map(async (event) => {
-      //Adding likes, dislikes and comments array to the respective events
+      //Adding likes, dislikes and comments array to the respective events.
       try {
         await Like.find({
           eventId: event._id,
@@ -30,11 +42,14 @@ export const getEvents = async (req, res) => {
         }).then((dislike) => {
           event._doc.dislikes = dislike;
         });
-        await commentsSchema.find({
-          eventId: event._id,
-        }).sort({"createdAt": -1}).then((comment) => {
-          event._doc.comments = comment;
-        });
+        await commentsSchema
+          .find({
+            eventId: event._id,
+          })
+          .sort({ createdAt: -1 })
+          .then((comment) => {
+            event._doc.comments = comment;
+          });
         return event;
       } catch (error) {
         console.log(error.message);

@@ -1,9 +1,9 @@
 import express from 'express';
 
-import {getEmployees,createEmployee,login,getProfile,editProfile,isTokenValid} from '../controllers/employee.js';
+import {getEmployees,createEmployee,getProfile,editProfile,isTokenValid} from '../controllers/employee.js';
 import auth from '../middleware/auth.js';
 
-import {changePassword,getUserData} from '../controllers/login.js';
+import {changePassword,getUserData,login} from '../controllers/login.js';
 
 const router = express.Router();
 

@@ -26,6 +26,7 @@ export default function CommentsComponent(props) {
 
         if (response.data.status === "23") {
           dispatch(getEvents(props.token, props.userData.division));
+          setComments('')
         }
       } catch (error) {
         console.log(error.message);

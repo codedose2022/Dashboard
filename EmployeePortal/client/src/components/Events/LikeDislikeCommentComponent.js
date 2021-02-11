@@ -15,12 +15,16 @@ export default function LikeDislikeCommentComponent(props) {
   let token = localStorage.getItem("auth-token");
   const likesArr = _.get(props.event, "likes", []);
   const dislikesArr = _.get(props.event, "dislikes", []);
-  const [Likes] = useState(likesArr.length ? props.event.likes.length : 0);
-  const [Dislikes] = useState(dislikesArr.length ? props.event.dislikes.length: 0);
+  const [Likes, setLikes] = useState(
+    likesArr.length ? props.event.likes.length : 0
+  );
+  const [Dislikes, setDislikes] = useState(
+    dislikesArr.length ? props.event.dislikes.length : 0
+  );
   const [LikeAction, setLikeAction] = useState(null);
   const [DislikeAction, setDislikeAction] = useState(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     likesArr.forEach((like) => {
       if (like.employeeId === props.userData.id) {
         setLikeAction("liked");
@@ -31,22 +35,30 @@ export default function LikeDislikeCommentComponent(props) {
         setDislikeAction("disliked");
       }
     });
-  }, [likesArr, dislikesArr]);
+  }, [props]);
 
   const onLike = async () => {
     let likeReq = { eventId: props.event._id, employeeId: props.userData.id };
-    //if user has already liked then unlike else uplike 
+    //if user has already liked then unlike else uplike
     if (LikeAction === null) {
       const response = await api.upLike(token, likeReq);
-          response.data.message.forEach((data) => {
+      response.data.message.forEach((data) => {
         if (["21", "23"].includes(data.status)) {
+          setLikes(Likes + 1);
+          setLikeAction("liked");
+          if (DislikeAction !== null) {
+            setDislikeAction(null);
+            setDislikes(Dislikes - 1);
+          }
           dispatch(getEvents(token, props.userData.division));
         }
       });
     } else {
       const response = await api.unLike(token, likeReq);
-       response.data.message.forEach((data) => {
+      response.data.message.forEach((data) => {
         if (data.status === "23") {
+          setLikes(Likes - 1);
+          setLikeAction(null);
           dispatch(getEvents(token, props.userData.division));
         }
       });
@@ -57,18 +69,26 @@ export default function LikeDislikeCommentComponent(props) {
       eventId: props.event._id,
       employeeId: props.userData.id,
     };
- //if user has already disliked then undislike else updislike 
+    //if user has already disliked then undislike else updislike
     if (DislikeAction !== null) {
       const response = await api.unDisLike(token, dislikeReq);
-       response.data.message.forEach((data) => {
+      response.data.message.forEach((data) => {
         if (data.status === "23") {
+          setDislikes(Dislikes - 1);
+          setDislikeAction(null);
           dispatch(getEvents(token, props.userData.division));
         }
       });
     } else {
       const response = await api.upDisLike(token, dislikeReq);
-       response.data.message.forEach((data) => {
+      response.data.message.forEach((data) => {
         if (["21", "23"].includes(data.status)) {
+          setDislikes(Dislikes + 1);
+          setDislikeAction("disliked");
+          if (LikeAction !== null) {
+            setLikeAction(null);
+            setLikes(Likes - 1);
+          }
           dispatch(getEvents(token, props.userData.division));
         }
       });
@@ -83,7 +103,7 @@ export default function LikeDislikeCommentComponent(props) {
         ) : (
           <ThumbUpAltOutlinedIcon fontSize='small' />
         )}
-        <span style= {{fontSize :'1rem'}}>{Likes}</span>
+        <span style={{ fontSize: "1rem" }}>{Likes}</span>
       </IconButton>
       <IconButton onClick={() => onDisLike()}>
         {DislikeAction === "disliked" ? (
@@ -91,9 +111,8 @@ export default function LikeDislikeCommentComponent(props) {
         ) : (
           <ThumbDownOutlinedIcon fontSize='small' />
         )}
-        <span style= {{fontSize :'1rem'}}>{Dislikes}</span>
+        <span style={{ fontSize: "1rem" }}>{Dislikes}</span>
       </IconButton>
-    
     </span>
   );
 }
