@@ -80,7 +80,7 @@ export default function LoginPage() {
       if (loginData.password === "") {
         setPasswordRequired("Please enter the password");
       }
-      if(!forgotPass)
+      if(!forgotPass && linkSent)
       {  
       setLinkSent(false);
       clearFieldError();
