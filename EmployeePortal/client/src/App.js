@@ -12,6 +12,7 @@ import _ from "lodash";
 import UserContext from "./context/UserContext";
 import { isTokenValid } from "./api/index";
 import ChangePassword from "./components/Login/ChangePassword";
+import ResetPassword from "./components/Login/ResetPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { setDetails } from "./actions/employees";
 
@@ -69,6 +70,9 @@ const App = () => {
       <UserContext.Provider value={{ employeeData, setEmployeeData }}>
         <Route exact path='/'>
           <Dashboard />
+        </Route>
+        <Route exact path='/reset/:key'>
+          <ResetPassword />
         </Route>
         <Route exact path='/login' component={LoginPage}></Route>
         <main>

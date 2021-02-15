@@ -35,7 +35,9 @@ const employeeSchema = mongoose.Schema({
     disableInd:{
         type: String,
         default: 'N',
-    }
+    },
+    resetToken:String,
+    expireToken:Date,
 },
 {timestamps: true}
 );

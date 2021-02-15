@@ -11,12 +11,12 @@ import _ from "lodash";
 import UserContext from "../../context/UserContext";
 import * as api from "../../api/index";
 
-export default function ResetPassword() {
+export default function ChangePassword() {
   const classes = useStyles();
   const history = useHistory();
   const { employeeData } = useContext(UserContext);
   const emailId = employeeData?.employee?.userData?.emailId;
-  const [resetPasswordData, setResetPasswordData] = useState({
+  const [changePasswordData, setChangePasswordData] = useState({
     email: emailId,
     password: "",
     newPassword: "",
@@ -27,14 +27,14 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isFieldEmpty = [
-      resetPasswordData.password,
-      resetPasswordData.newPassword,
-      resetPasswordData.confirmPassword,
+      changePasswordData.password,
+      changePasswordData.newPassword,
+      changePasswordData.confirmPassword,
     ].includes("");
     if (!isFieldEmpty) {
       try {
         seterror("");
-        const { data } = await api.changePassword(resetPasswordData);
+        const { data } = await api.changePassword(changePasswordData);
         if (data.messages.status === "12" || data.messages.status === "13") {
           seterror(data.messages.message);
         }
@@ -61,7 +61,7 @@ export default function ResetPassword() {
           <Toolbar>
             <img src={Mersatlogo} alt='Mersatlogo' className={classes.logo} />
             <Typography className={classes.title} variant='body2'>
-              EMPLOYEE PORTAL RESET PASSWORD
+              EMPLOYEE PORTAL CHANGE PASSWORD
             </Typography>
           </Toolbar>
         </AppBar>
@@ -86,7 +86,7 @@ export default function ResetPassword() {
             id='email'
             placeholder='EMAIL ADDRESS'
             name='email'
-            value={resetPasswordData.email}
+            value={changePasswordData.email}
             size='small'
             disabled
           />
@@ -106,10 +106,10 @@ export default function ResetPassword() {
             placeholder='OLD PASSWORD'
             type='password'
             id='old password'
-            value={resetPasswordData.password}
+            value={changePasswordData.password}
             onChange={(e) =>
-              setResetPasswordData({
-                ...resetPasswordData,
+              setChangePasswordData({
+                ...changePasswordData,
                 password: e.target.value,
               })
             }
@@ -130,10 +130,10 @@ export default function ResetPassword() {
             name='new password'
             size='small'
             type='password'
-            value={resetPasswordData.newPassword}
+            value={changePasswordData.newPassword}
             onChange={(e) =>
-              setResetPasswordData({
-                ...resetPasswordData,
+              setChangePasswordData({
+                ...changePasswordData,
                 newPassword: e.target.value,
               })
             }
@@ -153,10 +153,10 @@ export default function ResetPassword() {
             placeholder='CONFIRM PASSWORD'
             name='confirm password'
             size='small'
-            value={resetPasswordData.confirmPassword}
+            value={changePasswordData.confirmPassword}
             onChange={(e) =>
-              setResetPasswordData({
-                ...resetPasswordData,
+              setChangePasswordData({
+                ...changePasswordData,
                 confirmPassword: e.target.value,
               })
             }
