@@ -63,6 +63,9 @@ const theme = createMuiTheme({
     primary: {
       main: green[900],
     },
+    secondary : {
+      main: '#d50000'
+    }
   },
 });
 
@@ -114,20 +117,7 @@ export default function TabsComponent(props) {
                 {...a11yProps(3)}
               />
             )}
-            {props.isEventsMember && (
-              <Tab
-                className={classes.itemSize}
-                label='POSTS'
-                {...a11yProps(4)}
-              />
-            )}
-            {props.isEventsMember && (
-              <Tab
-                className={classes.itemSize}
-                label='MESSAGES'
-                {...a11yProps(5)}
-              />
-            )}
+
           </Tabs>
       
         </AppBar>
@@ -143,12 +133,7 @@ export default function TabsComponent(props) {
         <TabPanel value={value} index={3}>
           <ListEmployees />
         </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          Item Six
-        </TabPanel>
+        
       </ThemeProvider>
     </div>
   );

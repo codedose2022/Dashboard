@@ -153,6 +153,7 @@ export default function ChangePassword() {
             placeholder='CONFIRM PASSWORD'
             name='confirm password'
             size='small'
+            type='password'
             value={changePasswordData.confirmPassword}
             onChange={(e) =>
               setChangePasswordData({

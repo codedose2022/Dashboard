@@ -5,12 +5,10 @@ import {
   Typography,
   IconButton,
   Hidden,
-  Badge,
   MenuItem,
   Menu,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import useStyles from "./NavbarStyles.js";
 import Mersatlogo from "../../images/Mersatlogo.jpg";
 import { useHistory } from "react-router-dom";
@@ -73,12 +71,7 @@ const handleCloseForChangePassword = () =>{
           <img src={Mersatlogo} className={classes.logo} alt='Mersat logo' />
           <div className={classes.root} />
 
-          <div>
-            <IconButton aria-label='show 17 new notifications' color='inherit'>
-              <Badge badgeContent={17} color='secondary'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+          <div style = {{alignSelf : 'flex-start'}}>
             <IconButton
               edge='end'
               aria-label='account of current user'

@@ -175,6 +175,8 @@ export default function EventsPage() {
                           onDelete={() => approveEvent(event, eventIndex)}
                           deleteIcon={<DoneIcon />}
                           variant='outlined'
+                          style = {{border : '1px solid #DCDCDC',}}
+                          
                         />
                       )}
                       &nbsp;
@@ -184,8 +186,9 @@ export default function EventsPage() {
                           clickable
                           label='disapprove'
                           onDelete={() => disApproveEvent(event, eventIndex)}
-                          color='primary'
+                          color='secondary'
                           variant='outlined'
+                          style = {{border : '1px solid #DCDCDC',}}
                         />
                       )}
                     </span>

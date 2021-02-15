@@ -105,15 +105,27 @@ export default function Polls() {
   return (
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container justify='flex-end'>
         {isEventsMember && (
-          <Tooltip title="Add" aria-label="add">
-            <Fab onClick={() => addPolls()} color="primary" aria-label="add">
-              <AddIcon />
-            </Fab>
-          </Tooltip>
+          
+            
+            <Button
+            id='Add-polls-button'
+            key='Add-polls-button_'
+            className = {classes.buttonStyle}
+            color='primary'
+            justify='flex-end'
+            variant="contained"
+            size='small'
+            onClick={() => addPolls()}
+            startIcon={<AddIcon />}
+          >
+            Add polls
+          </Button>
+         
         )}
         {addModel && <AddPolls setAddModel={setAddModel} />}
-
+        </Grid>
         <Grid container spacing={4}>
           {polls.map((poll, pollIndex) => (
             <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={6}>
@@ -140,7 +152,7 @@ export default function Polls() {
                     <span>
                       <Box p={1} border={1} display="flex">
                         <Tooltip title="Time Left" aria-label="timeLeft">
-                          <ScheduleIcon fontSize="large" />
+                          <ScheduleIcon size="small" />
                         </Tooltip>
                         <Countdown
                           date={Date.now() + moment(setTime(poll.deadline))}
@@ -156,11 +168,15 @@ export default function Polls() {
                       </Box>
                     </span>
                   </Box>
+               
                   <Typography className={classes.text}>
                     {poll.question}
                   </Typography>
+                  
+                
                   <Grid>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
+                      
                       {poll.options.map((p, index) => (
                         <div key={`poll_option${index}`}>
                           <div className={classes.marginStyle}>
@@ -203,7 +219,7 @@ export default function Polls() {
                     </Grid>
                   </Grid>
                 </CardContent>
-                <CardActions className={classes.header}>
+                <CardActions className={classes.cardActions}>
                   {new Date(poll.deadline).getTime() <= new Date().getTime() ? (
                     <div>This poll is expired.</div>
                   ) : (
@@ -225,14 +241,9 @@ export default function Polls() {
                   {isEventsMember && (
                     <span>
                       <Tooltip title="Delete">
-                        <Fab
-                          color="primary"
-                          size="small"
-                          key={`iconDeleteButton${poll._id}`}
-                          onClick={() => deletePolls(pollIndex)}
-                        >
-                          <DeleteIcon size="small" />
-                        </Fab>
+                      
+                         <DeleteIcon key={`iconDeleteButton${poll._id}`}
+                          onClick={() => deletePolls(pollIndex)} color="primary" size="small" />
                       </Tooltip>
                     </span>
                   )}

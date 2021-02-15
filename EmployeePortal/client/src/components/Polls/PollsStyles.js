@@ -1,3 +1,4 @@
+import { CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
@@ -11,7 +12,8 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardContent: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    padding:'25px',
   },
   header :{
     justifyContent: 'space-between',
@@ -43,4 +45,14 @@ export default makeStyles((theme) => ({
   helperTextColor: {
     color: "#d50000",
   },
+  buttonStyle : {
+    fontSize: "0.59rem",
+    marginBottom : '14px'
+  },
+  cardActions : {
+    marginLeft: '20px',
+    justifyContent: 'space-between',
+
+  }
+  
 }))

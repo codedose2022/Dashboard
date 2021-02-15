@@ -42,6 +42,7 @@ export default function LoginPage() {
     password: "",
   });
   const [error, seterror] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [emailRequired, setEmailRequired] = useState("");
   const [passwordRequired, setPasswordRequired] = useState("");
   const [forgotPass, setForgotPass] = useState(false);
@@ -71,12 +72,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!forgotPass)
-    {
-      clearFieldError();
-      seterror("");
-      setLinkSent(false);
-    }
+   
     try {
       if (loginData.email === "") {
         setEmailRequired("Please enter the email address");
@@ -84,6 +80,11 @@ export default function LoginPage() {
       if (loginData.password === "") {
         setPasswordRequired("Please enter the password");
       }
+      if(!forgotPass)
+      {  
+      setLinkSent(false);
+      clearFieldError();
+      } 
       if (loginData.email !== "" && loginData.password !== "" && !forgotPass) {
         dispatch(login(loginData));
         clearFieldError();
@@ -93,7 +94,6 @@ export default function LoginPage() {
           setEmailRequired("Please enter the email address");
         } else {
           try {
-            console.log(error);
             seterror("");
             const { data } = await api.sendResetLink({
               email: loginData.email,
@@ -103,21 +103,22 @@ export default function LoginPage() {
               setLinkSent(false);
             }
             if (data.messages.status === "13") {
-              seterror(data.messages.message);
+              setSuccessMsg(data.messages.message);
               setLinkSent(true);
               setForgotPass(false);
             }
+          
           } catch (error) {
             seterror(error.message);
           }
         }
       }
+     
     } catch (error) {
       console.log(error);
     }
   };
   const onChange = (e) => {
-    seterror("");
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
@@ -157,7 +158,7 @@ export default function LoginPage() {
         <CssBaseline />
 
         {error && !linkSent && <Alert severity="error"> {error} </Alert>}
-        {error && linkSent && <Alert severity="success"> {error} </Alert>}
+        {successMsg && linkSent && <Alert severity="success"> {successMsg} </Alert>}
         <form
           autoComplete="off"
           className={classes.form}

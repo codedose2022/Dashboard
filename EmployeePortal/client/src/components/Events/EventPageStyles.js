@@ -12,8 +12,8 @@ export default makeStyles((theme) => ({
   addButtonStyle: {
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
-      marginRight: theme.spacing(15),
-      marginTop: theme.spacing(7),
+      marginRight: theme.spacing(23.5),
+      marginTop: theme.spacing(7),  
     },
     [theme.breakpoints.down("md")]: {
       marginTop: theme.spacing(7),
@@ -23,7 +23,6 @@ export default makeStyles((theme) => ({
   paper: {
     margin: "0px auto",
     borderRadius: "10px",
-    background: "#81c78429",
     [theme.breakpoints.down("md")]: {
       maxWidth: "100%",
       marginTop: theme.spacing(2),
