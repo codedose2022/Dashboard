@@ -59,7 +59,13 @@ export default function AddPolls(props) {
   };
   const handleAdd = async () => {
     setShowRequired(true);
-    const isFieldEmpty = [title, question, options, deadline].includes("");
+    const isFieldEmpty = [
+      title,
+      question,
+      options[0].option,
+      options[1].option,
+      deadline,
+    ].includes("");
     if (!isFieldEmpty) {
       let poll = { title, question, options, deadline };
       try {
@@ -77,24 +83,25 @@ export default function AddPolls(props) {
           }
         });
       } catch (error) {
+        console.log(error.message);
         setError("Something went wrong, please try again.");
       }
     }
   };
   return (
     <div>
-      <Dialog open={open} aria-labelledby='form-dialog-title'>
-        {error && <Alert severity='error'> {error} </Alert>}
-        <DialogTitle id='form-dialog-title'> Add Poll</DialogTitle>
+      <Dialog open={open} aria-labelledby="form-dialog-title">
+        {error && <Alert severity="error"> {error} </Alert>}
+        <DialogTitle id="form-dialog-title"> Add Poll</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
-                id='title'
-                name='title'
-                label='Title'
-                type='text'
+                id="title"
+                name="title"
+                label="Title"
+                type="text"
                 FormHelperTextProps={{
                   className: classes.helperTextColor,
                 }}
@@ -107,10 +114,10 @@ export default function AddPolls(props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 required
-                id='deadline'
-                name='deadline'
-                label='Deadline'
-                type='datetime-local'
+                id="deadline"
+                name="deadline"
+                label="Deadline"
+                type="datetime-local"
                 FormHelperTextProps={{
                   className: classes.helperTextColor,
                 }}
@@ -129,11 +136,11 @@ export default function AddPolls(props) {
             <Grid item xs={12}>
               <TextField
                 required
-                id='question'
-                name='question'
-                label='Question'
+                id="question"
+                name="question"
+                label="Question"
                 value={question}
-                type='text'
+                type="text"
                 FormHelperTextProps={{
                   className: classes.helperTextColor,
                 }}
@@ -145,12 +152,13 @@ export default function AddPolls(props) {
             {options.map((option, index) => (
               <div key={index}>
                 <TextField
+                  style={{ margin: "10px" }}
                   required
-                  id='option'
-                  name='option'
-                  label='Option'
+                  id="option"
+                  name="option"
+                  label=" Option"
                   value={option.option}
-                  type='text'
+                  type="text"
                   FormHelperTextProps={{
                     className: classes.helperTextColor,
                   }}
@@ -171,10 +179,10 @@ export default function AddPolls(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color='primary'>
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleAdd} color='primary'>
+          <Button onClick={handleAdd} color="primary">
             Add
           </Button>
         </DialogActions>

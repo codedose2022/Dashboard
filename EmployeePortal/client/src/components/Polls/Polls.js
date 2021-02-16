@@ -4,8 +4,8 @@ import {
   Card,
   CardActions,
   CardContent,
+  CardHeader,
   Container,
-  Fab,
   FormControl,
   FormControlLabel,
   Grid,
@@ -13,10 +13,11 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import Alert from "@material-ui/lab/Alert";
+import clsx from "clsx";
 import _ from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ export default function Polls() {
   const state = useSelector((state) => state);
   const employee_Id = _.get(state, "employees.employee.userData.id", "");
   const [selectedValue, setSelectedValue] = useState("");
+  const [selectedPollId, setSelectedPollId] = useState("");
   const [submitValue, setSubmitValue] = useState({
     poll_Id: "",
     option_Id: "",
@@ -49,6 +51,7 @@ export default function Polls() {
 
   const handleChange = (event, pollId, optionId) => {
     setSelectedValue(event.target.value);
+    setSelectedPollId(pollId);
     setSubmitValue({
       poll_Id: pollId,
       option_Id: optionId,
@@ -63,6 +66,7 @@ export default function Polls() {
 
   const handleSubmit = async () => {
     try {
+      console.log(submitValue);
       await api.addPoll(token, submitValue).then((response) => {
         const responseData = _.get(response, "data", "");
         if (responseData.messages.status === "33") {
@@ -95,6 +99,8 @@ export default function Polls() {
     const diff = cntdownDate - now;
     return diff;
   };
+  const [expanded, setExpanded] = React.useState(false);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1);
@@ -105,50 +111,30 @@ export default function Polls() {
   return (
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
-      <Grid container justify='flex-end'>
-        {isEventsMember && (
-          
-            
+        <Grid container justify="flex-end">
+          {isEventsMember && (
             <Button
-            id='Add-polls-button'
-            key='Add-polls-button_'
-            className = {classes.buttonStyle}
-            color='primary'
-            justify='flex-end'
-            variant="contained"
-            size='small'
-            onClick={() => addPolls()}
-            startIcon={<AddIcon />}
-          >
-            Add polls
-          </Button>
-         
-        )}
-        {addModel && <AddPolls setAddModel={setAddModel} />}
+              id="Add-polls-button"
+              key="Add-polls-button_"
+              className={classes.buttonStyle}
+              color="primary"
+              justify="flex-end"
+              variant="contained"
+              size="small"
+              onClick={() => addPolls()}
+              startIcon={<AddIcon />}
+            >
+              Add polls
+            </Button>
+          )}
+          {addModel && <AddPolls setAddModel={setAddModel} />}
         </Grid>
         <Grid container spacing={4}>
           {polls.map((poll, pollIndex) => (
-            <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={6}>
-              <Card className={classes.card} elevation={9}>
-                <CardContent className={classes.cardContent}>
-                  <Box
-                    className={classes.header}
-                    display="flex"
-                    bgcolor="background.paper"
-                  >
-                    <Box p={1}>
-                      {error && submitValue.poll_Id === poll._id && (
-                        <Alert severity="error"> {error} </Alert>
-                      )}
-                      <Typography
-                        className={classes.text}
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                      >
-                        {poll.title}
-                      </Typography>
-                    </Box>
+            <Grid item key={`poll${poll._id}`} xs={12} sm={6} md={6}>
+              <Card className={classes.root} elevation={10}>
+                <CardHeader
+                  action={
                     <span>
                       <Box p={1} border={1} display="flex">
                         <Tooltip title="Time Left" aria-label="timeLeft">
@@ -157,7 +143,7 @@ export default function Polls() {
                         <Countdown
                           date={Date.now() + moment(setTime(poll.deadline))}
                           renderer={(props) => (
-                            <Typography className={classes.text}>
+                            <Typography variant={"body2"}>
                               {props.days} D:
                               {props.hours} H:
                               {props.minutes} M:
@@ -167,85 +153,101 @@ export default function Polls() {
                         />
                       </Box>
                     </span>
-                  </Box>
-               
-                  <Typography className={classes.text}>
+                  }
+                  title={poll.title}
+                  subheader={
+                    "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
+                  }
+                  subheaderTypographyProps={{ variant: "smaller" }}
+                />
+
+                <CardContent>
+                  <Typography variant="subtitle1" component="p">
                     {poll.question}
                   </Typography>
-                  
-                
-                  <Grid>
-                    <Grid container spacing={1}>
-                      
-                      {poll.options.map((p, index) => (
-                        <div key={`poll_option${index}`}>
-                          <div className={classes.marginStyle}>
-                            <img className={classes.img} src={option1} />
-                          </div>
-                          <FormControl component="fieldset">
-                            <FormControlLabel
-                              style={
-                                new Date(poll.deadline).getTime() <=
-                                new Date().getTime()
-                                  ? { pointerEvents: "none", opacity: "0.4" }
-                                  : poll.employeeId.includes(employee_Id)
-                                  ? { pointerEvents: "none", opacity: "0.4" }
-                                  : {}
-                              }
-                              control={<Radio />}
-                              key={`poll_radio${index}`}
-                              checked={
-                                p.employeeId.includes(employee_Id)
-                                  ? p.employeeId.includes(employee_Id)
-                                  : selectedValue === `${p.option}`
-                              }
-                              onChange={(e) => handleChange(e, poll._id, p._id)}
-                              value={p.option}
-                              name="option"
-                              label={p.option}
-                              labelPlacement="start"
-                            />
-                            <Typography className={classes.text}>
-                              Votes : {p.votes}
-                            </Typography>
-                          </FormControl>
+
+                  <Grid container spacing={4}>
+                    {poll.options.map((p, index) => (
+                      <Grid
+                        item
+                        key={`poll_option${index}`}
+                        xs={12}
+                        sm={6}
+                        md={6}
+                      >
+                        <div>
+                          <img className={classes.img} src={option1} />
                         </div>
-                      ))}
-                      {poll.employeeId.includes(employee_Id) && (
-                        <Typography className={classes.text} variant="caption">
-                          You have voted for this poll.
-                        </Typography>
-                      )}
-                    </Grid>
+                        <FormControl component="fieldset">
+                          <FormControlLabel
+                            style={
+                              new Date(poll.deadline).getTime() <=
+                              new Date().getTime()
+                                ? { pointerEvents: "none", opacity: "0.4" }
+                                : poll.employeeId.includes(employee_Id)
+                                ? { pointerEvents: "none", opacity: "0.4" }
+                                : {}
+                            }
+                            key={`poll_radio${index}`}
+                            onChange={(e) => handleChange(e, poll._id, p._id)}
+                            checked={
+                              p.employeeId.includes(employee_Id)
+                                ? p.employeeId.includes(employee_Id)
+                                : selectedValue === `${p.option}` &&
+                                  selectedPollId === `${poll._id}`
+                            }
+                            value={p.option}
+                            control={<Radio color="primary" />}
+                            name="option"
+                            label={p.option + " (" + p.votes + ")"}
+                          />
+                        </FormControl>
+                      </Grid>
+                    ))}
                   </Grid>
+                  {poll.employeeId.includes(employee_Id) ? (
+                    <Typography variant="subtitle2" component="p">
+                      You have voted for this poll.
+                    </Typography>
+                  ) : (
+                    <br />
+                  )}
                 </CardContent>
-                <CardActions className={classes.cardActions}>
+                <CardActions disableSpacing>
                   {new Date(poll.deadline).getTime() <= new Date().getTime() ? (
-                    <div>This poll is expired.</div>
+                    <Typography style={{ marginLeft: "10px" }}>
+                      This poll is expired
+                    </Typography>
                   ) : (
                     <Button
-                      className={classes.text}
                       style={
                         poll.employeeId.includes(employee_Id)
-                          ? { pointerEvents: "none", opacity: "0.4" }
-                          : {}
+                          ? {
+                              pointerEvents: "none",
+                              opacity: "0.4",
+                              marginLeft: "8px",
+                            }
+                          : { marginLeft: "8px" }
                       }
                       key={`submitButton${poll._id}`}
                       onClick={() => handleSubmit(pollIndex)}
                       size="small"
                       color="primary"
+                      variant="contained"
                     >
                       Submit
                     </Button>
                   )}
                   {isEventsMember && (
-                    <span>
-                      <Tooltip title="Delete">
-                      
-                         <DeleteIcon key={`iconDeleteButton${poll._id}`}
-                          onClick={() => deletePolls(pollIndex)} color="primary" size="small" />
-                      </Tooltip>
-                    </span>
+                    <IconButton
+                      className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                      })}
+                      key={`iconDeleteButton${poll._id}`}
+                      onClick={() => deletePolls(pollIndex)}
+                    >
+                      <DeleteIcon color="primary" size="small" />
+                    </IconButton>
                   )}
                   {_.get(deleteModel, `index.${pollIndex}`, false) && (
                     <DeletePolls setDeleteModel={setDeleteModel} poll={poll} />
