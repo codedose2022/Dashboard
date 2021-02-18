@@ -254,7 +254,7 @@ export default function EventsPage() {
                   Posted on{" "}
                   {`${moment(event.createdAt).format("Do MMMM YYYY")}, ${moment(
                     event.createdAt
-                  ).format("HH:mm")}`}
+                  ).format("h:mm a")}`}
                 </Box>
               </div>
             </div>

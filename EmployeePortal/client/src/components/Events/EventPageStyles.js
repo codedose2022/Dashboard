@@ -151,6 +151,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       paddingBottom: "20px",
     },
+   cursor:'pointer'
   },
   topPaddingStyle : {
     paddingTop: '10px'

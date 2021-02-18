@@ -51,6 +51,19 @@ export default function ListEmployees() {
       },
     });
   }
+   const displayValue = (value) =>{
+      switch (value) {
+        case 'EE' : return 'Events'
+        break;
+        case 'SA' : return 'Super Admin'
+        break;
+        case 'ED' : return 'Editorial'
+        break;
+        case 'EM' : return 'Employee'
+        break;
+        default : return value;
+      }
+   }
 
   return (
     <div>
@@ -143,7 +156,7 @@ export default function ListEmployees() {
                                 )}
                               </div>
                             ) : (
-                              value
+                              displayValue(value)
                             )}
                           </TableCell>
                         );

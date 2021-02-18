@@ -158,7 +158,7 @@ export default function Polls() {
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
                   }
-                  subheaderTypographyProps={{ variant: "smaller" }}
+                  
                 />
 
                 <CardContent>

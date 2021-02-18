@@ -116,9 +116,9 @@ function AddWorkDetails(props) {
           variant="outlined"
           select
         >
-          <MenuItem value="EV">Events Committe</MenuItem>
+          <MenuItem value="EE">Events Committe</MenuItem>
           <MenuItem value="ED">Editorial Committe</MenuItem>
-          <MenuItem value="EE">Employee</MenuItem>
+          <MenuItem value="EM">Employee</MenuItem>
         </TextField>
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
