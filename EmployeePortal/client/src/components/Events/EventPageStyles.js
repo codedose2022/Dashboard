@@ -149,6 +149,7 @@ export default makeStyles((theme) => ({
   readMoreLink: {
     textDecoration: "none",
     color: "#8080808c",
+    cursor : 'pointer'
   },
   input : {
     fontSize : '.8rem'
