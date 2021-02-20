@@ -8,10 +8,9 @@ import {
   Grid,
   IconButton,
 } from "@material-ui/core";
-import wall from "../../images/wall.jpg";
 import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
 import AddIcon from "@material-ui/icons/Add";
-import { useMediaQuery, Button, Tooltip } from "@material-ui/core";
+import { useMediaQuery, Button, Tooltip, Hidden } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -26,6 +25,7 @@ import { useDispatch } from "react-redux";
 import * as api from "../../api";
 import { getEvents } from "../../actions/events";
 import DoneIcon from "@material-ui/icons/Done";
+import ViewMoreComponent from './ViewMoreComponent';
 
 export default function EventsPage() {
   const classes = useStyles();
@@ -91,9 +91,9 @@ export default function EventsPage() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.cardGrid}>
       <Grid container justify='flex-end'>
-        {isEventsMember ? (
+        {isEventsMember && (
           <Button
             id='Add-events-button'
             key='Add-events-button_'
@@ -107,8 +107,6 @@ export default function EventsPage() {
           >
             Add events
           </Button>
-        ) : (
-          <div className={classes.topMargin}></div>
         )}
         {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
       </Grid>
@@ -116,7 +114,6 @@ export default function EventsPage() {
         return (
           <Paper
             className={classes.paper}
-            // variant='outlined'
             elevation={9}
             key={`event${event._id}`}
           >
@@ -175,8 +172,7 @@ export default function EventsPage() {
                           onDelete={() => approveEvent(event, eventIndex)}
                           deleteIcon={<DoneIcon />}
                           variant='outlined'
-                          style = {{border : '1px solid #DCDCDC',}}
-                          
+                          style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
                       &nbsp;
@@ -188,13 +184,15 @@ export default function EventsPage() {
                           onDelete={() => disApproveEvent(event, eventIndex)}
                           color='secondary'
                           variant='outlined'
-                          style = {{border : '1px solid #DCDCDC',}}
+                          style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
                     </span>
                   )}
               </Grid>
-            ) : <div className = {classes.topPaddingStyle}></div>}
+            ) : (
+              <div className={classes.topPaddingStyle}></div>
+            )}
 
             {_.get(editButton, `index.${eventIndex}`, false) && (
               <AddEvents setEdit={setEdit} event={event} userData={userData} />
@@ -211,43 +209,52 @@ export default function EventsPage() {
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
+                variant='h6'
+                color='primary'
                 style={{
-                  color: "darkgreen",
-                  fontWeight: "600",
                   wordWrap: "break-word",
                 }}
               >
-                {event.title}
+                {event.title.toUpperCase()}
               </Typography>
-              <div style={{ width: "100%" }}>
+              <div>
                 <Box display='flex' p={1} className={classes.box}>
                   <Box p={1} key={`date${event._id}`}>
-                    {event.date && moment(event.date).format("MMMM Do YYYY")}
+                    {event.date && (
+                      <span>
+                        <Hidden smDown>
+                          <span variant = 'subtitle2'>Date : </span>
+                        </Hidden>
+                        {moment(event.date).format("MMMM Do YYYY")}
+                      </span>
+                    )}
                   </Box>
                   <Box p={1} key={`time${event._id}`}>
-                    {moment(event.time, "hh:mm").format("LT")}
+                    <span>
+                      <Hidden smDown>
+                        <span variant='subtitle2'>Time : </span>
+                      </Hidden>
+                      {moment(event.time, "hh:mm").format("LT")}
+                    </span>
                   </Box>
                   <Box p={1} key={`venue${event._id}`}>
-                    {event.venue}
+                    <span>
+                      <Hidden smDown>
+                        <span variant='subtitle2'>Venue : </span>
+                      </Hidden>
+                      {event.venue}
+                    </span>
                   </Box>
                 </Box>
 
-                <div className={classes.marginStyle}>
-                  <img
-                    key={`img${event._id}`}
-                    className={classes.img}
-                    alt='Contemplative Reptile'
-                    src={wall}
-                    title='Contemplative Reptile'
-                  />
-                </div>
                 <div style={{ margin: "12px", wordWrap: "break-word" }}>
                   <Typography
                     variant='caption'
                     key={`desc${event._id}`}
-                    className={classes.box}
+                    className={classes.desc}
                   >
-                    {event.desc}
+                   
+                    <ViewMoreComponent text = {event.desc} id = {event._id}/>
                   </Typography>
                 </div>
                 <Box className={classes.alignment}>
@@ -276,6 +283,7 @@ export default function EventsPage() {
                 />
               </div>
             )}
+            <div style= {{paddingBottom : '12px'}}></div>
           </Paper>
         );
       })}

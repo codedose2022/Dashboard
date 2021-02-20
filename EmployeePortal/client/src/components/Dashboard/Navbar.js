@@ -80,13 +80,13 @@ const handleCloseForChangePassword = () =>{
               onClick={handleClick}
               color='inherit'
             >
-              <Hidden smDown>
+              <AccountCircle /> &nbsp;
                 <Typography className={classes.fontSizeStyle}>
                   {" "}
-                  Welcome {employeeName}{" "}
+                  {employeeName}{" "}
                 </Typography>
-              </Hidden>
-              <AccountCircle />
+            
+             
             </IconButton>
           </div>
         </Toolbar>

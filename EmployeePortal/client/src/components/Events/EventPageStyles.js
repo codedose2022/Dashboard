@@ -13,11 +13,9 @@ export default makeStyles((theme) => ({
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(23.5),
-      marginTop: theme.spacing(7),  
+     
     },
-    [theme.breakpoints.down("md")]: {
-      marginTop: theme.spacing(7),
-    },
+    
   },
 
   paper: {
@@ -25,7 +23,7 @@ export default makeStyles((theme) => ({
     borderRadius: "10px",
     [theme.breakpoints.down("md")]: {
       maxWidth: "100%",
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1),
     },
     [theme.breakpoints.up("md")]: {
       maxWidth: "70%",
@@ -39,42 +37,38 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   chip: {
-    borderRadius: "0",
+    borderRadius: "0px",
     width: "100px",
   },
 
   marginStyle: {
     [theme.breakpoints.down("md")]: {
-     marginLeft: "8px",
+      marginLeft: "8px",
       marginRight: "8px",
     },
     [theme.breakpoints.up("md")]: {
       marginLeft: "15px",
       marginRight: "15px",
     },
+   
   },
   box: {
+    fontSize: "0.9rem",
+    color: "#524f4fcc",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+    justifyContent: "space-between",
+  },
+  desc: {
     fontSize: "0.85rem",
-    color: "#7b0000",
-    fontFamily: "cursive",
-
+    color: "#524f4fcc",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
   },
   iconVertical: { background: "none", paddingRight: "30px", color: "black" },
 
   img: {
-    // [theme.breakpoints.down("xs")]: {
-    //   width: "200px",
-    // },
-    // [theme.breakpoints.between("xs", "sm")]: {
-    //   width: "250px",
-    // },
-
-    // [theme.breakpoints.up("sm", "md")]: {
-    //   width: "600px",
-    //   objectFit: "contain",
-    // },
-   // max-width: -webkit-fill-available;
-     maxWidth : '-webkit-fill-available',
+    maxWidth: "-webkit-fill-available",
   },
   tableCellStyle: {
     fontSize: "0.7rem",
@@ -142,18 +136,29 @@ export default makeStyles((theme) => ({
   alignment: {
     paddingLeft: "10px",
     fontSize: "smaller",
-    color: "rgb(0 0 0 / 63%)",
+    color: "rgb(132 123 123 / 67%)",
   },
   repliesStyle: {
+    cursor: "pointer",
+  },
+  topPaddingStyle: {
+    paddingTop: "10px",
+  },
+  readMoreLink: {
+    textDecoration: "none",
+    color: "#8080808c",
+  },
+  input : {
+    fontSize : '.8rem'
+  },
+  cardGrid: {
     [theme.breakpoints.down("md")]: {
-      paddingBottom: "10px",
+      paddingTop: theme.spacing(6)
     },
     [theme.breakpoints.up("md")]: {
-      paddingBottom: "20px",
+      paddingTop: theme.spacing(8)
     },
-   cursor:'pointer'
-  },
-  topPaddingStyle : {
-    paddingTop: '10px'
+      
+  
   }
 }));

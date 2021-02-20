@@ -44,7 +44,7 @@ export default function CommentList(props) {
                   <Tooltip
                     title={`${comment.employeeFirstName} ${comment.employeeLastName}`}
                   >
-                    <Avatar>
+                    <Avatar >
                       <ImageIcon size='small' />
                     </Avatar>
                   </Tooltip>
@@ -63,6 +63,7 @@ export default function CommentList(props) {
             </List>
           );
         })}
+
     </div>
   );
 }

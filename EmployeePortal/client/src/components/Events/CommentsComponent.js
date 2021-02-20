@@ -40,6 +40,9 @@ export default function CommentsComponent(props) {
           key={`${props.userData.id}_CommentBox`}
           id={`${props.userData.id}_CommentBox`}
           fullWidth
+          InputProps={{
+            classes: { input: classes.input }
+          }}
           placeholder='leave your comments'
           value={commentsAdded}
           onChange={(e) => setComments(e.target.value)}
