@@ -84,6 +84,7 @@ const App = () => {
               <ChangePassword />
             </PrivateRoute>
             <PrivateRoute exact path='/:anything'>
+             Oops! 404 - page not found
             </PrivateRoute>
           </Switch>
         </main>
