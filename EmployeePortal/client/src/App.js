@@ -83,6 +83,8 @@ const App = () => {
             <PrivateRoute exact path='/changePassword'>
               <ChangePassword />
             </PrivateRoute>
+            <PrivateRoute exact path='/:anything'>
+            </PrivateRoute>
           </Switch>
         </main>
       </UserContext.Provider>
