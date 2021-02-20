@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ImageIcon from "@material-ui/icons/Image";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 export default function CommentList(props) {
   const classes = useStyles();
@@ -40,13 +41,11 @@ export default function CommentList(props) {
                 key={`${comment._id}listItem`}
                 className={classes.paddingZero}
               >
-                <ListItemAvatar>
+                <ListItemAvatar style = {{minWidth : '30px'}}>
                   <Tooltip
                     title={`${comment.employeeFirstName} ${comment.employeeLastName}`}
                   >
-                    <Avatar >
-                      <ImageIcon size='small' />
-                    </Avatar>
+                    <AccountCircle color = 'action'/>
                   </Tooltip>
                 </ListItemAvatar>
                 <ListItemText

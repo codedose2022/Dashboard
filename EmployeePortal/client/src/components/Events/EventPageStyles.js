@@ -102,7 +102,6 @@ export default makeStyles((theme) => ({
   },
 
   textAreaStyle: {
-    backgroundColor: "#f3ede5",
     [theme.breakpoints.down("xs")]: {
       width: "200px",
     },
@@ -128,6 +127,9 @@ export default makeStyles((theme) => ({
     padding: "0px",
   },
   fontSizeSmall: {
+    color : '#524f4fcc',
+    fontFamily:
+    "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
     fontSize: "small",
   },
   fontSizeSmaller: {
@@ -158,7 +160,8 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       paddingTop: theme.spacing(8)
     },
-      
-  
+  },
+  iconStyles : {
+    fontSize: 18 
   }
 }));

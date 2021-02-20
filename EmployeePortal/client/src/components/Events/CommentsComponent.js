@@ -8,7 +8,7 @@ import { getEvents } from "../../actions/events";
 
 export default function CommentsComponent(props) {
   const classes = useStyles();
-  
+
   const [commentsAdded, setComments] = useState("");
   const dispatch = useDispatch();
   const handleSubmit = async (e) => {
@@ -26,7 +26,7 @@ export default function CommentsComponent(props) {
 
         if (response.data.status === "23") {
           dispatch(getEvents(props.token, props.userData.division));
-          setComments('')
+          setComments("");
         }
       } catch (error) {
         console.log(error.message);
@@ -41,14 +41,14 @@ export default function CommentsComponent(props) {
           id={`${props.userData.id}_CommentBox`}
           fullWidth
           InputProps={{
-            classes: { input: classes.input }
+            classes: { input: classes.input },
           }}
           placeholder='leave your comments'
           value={commentsAdded}
           onChange={(e) => setComments(e.target.value)}
         />
-        <IconButton onClick = {handleSubmit}>
-          <SendIcon color='primary' />
+        <IconButton onClick={handleSubmit}>
+          <SendIcon color='primary' className = {classes.iconStyles} />
         </IconButton>
       </form>
     </div>
