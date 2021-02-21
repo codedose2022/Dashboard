@@ -7,7 +7,7 @@ import useStyles from "./AddEmployeeStyles";
 function AddProfilePhoto(props) {
   const classes = useStyles();
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       <Heading text="Add Profile Photo" />
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <FileBase

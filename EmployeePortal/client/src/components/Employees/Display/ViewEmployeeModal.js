@@ -3,11 +3,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogTitle,Typography,IconButton
 } from "@material-ui/core";
 import React from "react";
 import MyProfile from "../Profile/MyProfile";
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import useStyles from "./ListEmployeeStyles";
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function ViewEmployeeModel(props) {
   const classes = useStyles();
@@ -17,23 +19,42 @@ export default function ViewEmployeeModel(props) {
     setOpen(false);
     props.setShowViewModel(false);
   };
+
+  const DialogTitle = ((props) => {
+    const { children, classes, onClose, ...other } = props;
+    return (
+      <MuiDialogTitle disableTypography {...other}>
+        <Typography variant="h6">{children}</Typography>
+        {onClose ? (
+          <IconButton aria-label="close"  onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </MuiDialogTitle>
+    );
+  });
+
   return (
     <div>
       <Dialog
         open={open}
-        fullWidth={true}
-        maxWidth="md"
+       fullScreen
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         disableBackdropClick
       >
-        <DialogTitle id="form-dialog-title" style={{ alignSelf: "center" }}>
-          View Employee
+        <DialogTitle id="form-dialog-title" >
+          VIEW EMPLOYEE
+          <IconButton   aria-label="close" style={{  position: 'absolute',
+    right: '10px', top: '2px'}} onClick={handleClose}>
+            <CloseIcon />
+        </IconButton>
         </DialogTitle>
+       
         <DialogContent>
           <MyProfile employee={props.employee} />
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button
             className={classes.addButtonStyle}
             variant="contained"
@@ -42,7 +63,7 @@ export default function ViewEmployeeModel(props) {
           >
             Cancel
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </div>
   );

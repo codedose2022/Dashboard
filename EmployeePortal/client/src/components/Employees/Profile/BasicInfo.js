@@ -8,7 +8,7 @@ function BasicInfo(props) {
   const classes = useStyles();
   return (
     <Grid item xs={12}>
-      <Paper className={classes.paper} elevation={5}>
+     
         <Grid container spacing={1}>
           <Heading text="Basic Info" />
         </Grid>
@@ -33,7 +33,7 @@ function BasicInfo(props) {
             employee={props.employee}
           />
         </Grid>
-      </Paper>
+      
     </Grid>
   );
 }

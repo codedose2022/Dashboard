@@ -22,7 +22,7 @@ function AddWorkDetails(props) {
     props.validate({ [e.target.name]: e.target.value });
   };
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       <Heading text="Work Details" />
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <FormControl
@@ -129,7 +129,7 @@ function AddWorkDetails(props) {
           size="small"
           type="date"
           name="dateOfHire"
-          label="Date of Hire"
+          label="Date of Joining"
           error={props.errors.dateOfHire ? true : false}
           helperText={props.errors.dateOfHire}
           disabled={props.disableProfile.disableInd}

@@ -13,7 +13,7 @@ function AddPersonalDetails(props) {
     props.validate({ [e.target.name]: e.target.value });
   };
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       <Heading text="Personal Details" />
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <TextField

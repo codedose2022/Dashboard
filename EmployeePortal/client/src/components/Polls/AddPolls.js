@@ -92,7 +92,7 @@ export default function AddPolls(props) {
     <div>
       <Dialog open={open} aria-labelledby="form-dialog-title">
         {error && <Alert severity="error"> {error} </Alert>}
-        <DialogTitle id="form-dialog-title"> Add Poll</DialogTitle>
+        <DialogTitle style={{ alignSelf: "center",color:'darkgreen'}} id="form-dialog-title"> ADD NEW POLL</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -179,10 +179,10 @@ export default function AddPolls(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} size="small" variant='contained' color="primary">
             Cancel
           </Button>
-          <Button onClick={handleAdd} color="primary">
+          <Button onClick={handleAdd} size="small" variant='contained' color="primary">
             Add
           </Button>
         </DialogActions>

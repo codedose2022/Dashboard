@@ -8,7 +8,7 @@ function PersonalDetails(props) {
   const classes = useStyles();
   return (
     <Grid item sm={12}>
-      <Paper className={classes.paper} elevation={5}>
+     
         <Grid container spacing={1}>
           <Heading text="Personal Details" />
         </Grid>
@@ -37,7 +37,7 @@ function PersonalDetails(props) {
 
           <Textfield id="hobbies" label="Hobbies" employee={props.employee} />
         </Grid>
-      </Paper>
+      
     </Grid>
   );
 }

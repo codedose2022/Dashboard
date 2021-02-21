@@ -4,7 +4,8 @@ import { red } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
   root: {
-    maxWidth: 450,
+    maxWidth: '100%',
+    maxHeight: '100%',
     padding:"10px",
   },
   media: {
@@ -25,11 +26,7 @@ export default makeStyles((theme) => ({
     },
   },
   expand: {
-    transform: "rotate(0deg)",
     marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
   },
   expandOpen: {
     transform: "rotate(180deg)",
@@ -78,6 +75,9 @@ export default makeStyles((theme) => ({
     marginLeft: '20px',
     justifyContent: 'space-between',
 
+  },
+  headingSize : {
+    fontSize: "12px",
   }
   
 }))

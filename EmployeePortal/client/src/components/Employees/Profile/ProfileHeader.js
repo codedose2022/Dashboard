@@ -18,7 +18,7 @@ function ProfileHeader(props) {
   return (
     <Grid item xs={12} container>
       <Grid item xs={12}>
-        <Paper className={classes.firstPaper} elevation={5}>
+       
           <Container className={classes.container}>
             <Avatar
               src={props.profileData.selectedFile}
@@ -62,7 +62,7 @@ function ProfileHeader(props) {
               </Grid>
             </MuiThemeProvider>
           </Container>
-        </Paper>
+        
       </Grid>
     </Grid>
   );

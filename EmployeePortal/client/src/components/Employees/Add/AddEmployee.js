@@ -234,13 +234,13 @@ export default function AddEmployee(props) {
           {status && <Alert severity="error"> {status} </Alert>}
           <ThemeProvider theme={theme}>
             <div className={classes.paper}>
-              <Typography
+              {/* <Typography
                 variant="h6"
                 align="center"
                 className={classes.typography}
               >
                 {props.employee ? "EDIT EMPLOYEE DETAILS" : "ADD EMPLOYEE"}
-              </Typography>
+              </Typography> */}
               {props.employee && (
                 <Grid container justify="flex-end">
                   <FormGroup row>
@@ -305,13 +305,14 @@ export default function AddEmployee(props) {
             </div>
             <Grid>
               <Grid container spacing={6}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}></Grid>
-                <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
+                <Grid item xs={12} sm={12} md={8} lg={8} xl={8}></Grid>
+                <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
                   {!props.employee && (
                     <Button
                       className={classes.buttonStyle}
                       variant={"contained"}
                       fullWidth
+                      size="small"
                       disableElevation
                       color={"secondary"}
                       onClick={clear}
@@ -320,11 +321,12 @@ export default function AddEmployee(props) {
                     </Button>
                   )}
                 </Grid>
-                <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
+                <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
                   <Button
                     className={classes.buttonStyle}
                     variant={"contained"}
                     fullWidth
+                    size="small"
                     disableElevation
                     color={"primary"}
                     type="submit"

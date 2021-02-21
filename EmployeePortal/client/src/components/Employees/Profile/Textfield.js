@@ -30,7 +30,6 @@ function Textfield(props) {
           readOnly: true,
           disableUnderline: true,
         }}
-        variant="filled"
         value={getValue(props.id)}
       />
     </Grid>

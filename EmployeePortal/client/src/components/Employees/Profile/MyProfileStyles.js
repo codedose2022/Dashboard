@@ -1,15 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-  div: {
-    padding: "5px",
-  },
+
   firstPaper: {
     padding: "10px",
-    background: "#81c78429",
+    marginBottom: "10px",
   },
   paper: {
     padding: "10px",
+    // marginBottom: "10px",
   },
   typography: {
     padding: "3px",
@@ -22,11 +21,11 @@ export default makeStyles((theme) => ({
   },
   container: {
     textAlign: "center",
-    marginTop: "1%",
+
     [theme.breakpoints.up("md")]: {
       display: "flex",
       textAlign: "start",
-      marginLeft: "5%",
+     
     },
   },
   image: {

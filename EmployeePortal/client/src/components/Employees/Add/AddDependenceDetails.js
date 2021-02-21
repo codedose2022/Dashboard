@@ -27,12 +27,14 @@ function AddDependenceDetails(props) {
   };
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       <Heading text="Dependence Details" />
 
       {props.dependence.map((d, index) => (
-        <div key={index}>
+        <Grid container spacing={3} key={index}>
+           <Grid item lg={3} >
           <TextField
+          fullWidth
             className={classes.div}
             id="dependenceName"
             name="dependenceName"
@@ -43,7 +45,10 @@ function AddDependenceDetails(props) {
             value={d.dependenceName}
             onChange={(e) => handleChangeInput(index, e)}
           />
+          </Grid>
+          <Grid item lg={3}>
           <TextField
+          fullWidth
             className={classes.div}
             id="dependenceRelationship"
             name="dependenceRelationship"
@@ -54,7 +59,10 @@ function AddDependenceDetails(props) {
             value={d.dependenceRelationship}
             onChange={(e) => handleChangeInput(index, e)}
           />
+           </Grid>
+          <Grid item lg={3}>
           <TextField
+          fullWidth
             className={classes.div}
             id="dependenceDob"
             name="dependenceDob"
@@ -72,6 +80,8 @@ function AddDependenceDetails(props) {
             value={d.dependenceDob}
             onChange={(e) => handleChangeInput(index, e)}
           />
+           </Grid>
+          <Grid item lg={3}>
           <IconButton
             disabled={index === 0}
             onClick={() => handleRemoveFields(index)}
@@ -81,7 +91,8 @@ function AddDependenceDetails(props) {
           <IconButton onClick={() => handleAddFields()}>
             <AddIcon />
           </IconButton>
-        </div>
+          </Grid>
+        </Grid>
       ))}
     </Grid>
   );

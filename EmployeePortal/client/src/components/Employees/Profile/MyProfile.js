@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Paper } from "@material-ui/core";
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -29,17 +29,22 @@ export default function MyProfile(props) {
               </Link>
             </div>
           )}
-          <Container fixed fullwidth="true" maxWidth="md">
-            <Grid>
-              <Grid container spacing={1}>
-                <ProfileHeader profileData={profileData} />
-                <BasicInfo employee={props.employee} />
-                <WorkDetails employee={props.employee} />
-                <PersonalDetails employee={props.employee} />
-                <DependenceDetails profileData={profileData} />
-              </Grid>
-            </Grid>
-          </Container>{" "}
+          <Container
+            style={{ padding: "0px" }}
+            fixed
+            fullwidth="true"
+            maxWidth="lg"
+          >
+            <Paper className={classes.firstPaper} elevation={5}>
+              <ProfileHeader profileData={profileData} />
+            </Paper>
+            <Paper className={classes.paper} elevation={5}>
+              <BasicInfo employee={props.employee} />
+              <WorkDetails employee={props.employee} />
+              <PersonalDetails employee={props.employee} />
+              <DependenceDetails profileData={profileData} />
+            </Paper>
+          </Container>
         </div>
       ) : (
         "loading"

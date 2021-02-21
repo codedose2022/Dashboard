@@ -11,13 +11,14 @@ import {
   Grid,
   Radio,
   Tooltip,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
+import DoneIcon from "@material-ui/icons/Done";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import clsx from "clsx";
+import Alert from "@material-ui/lab/Alert";
 import _ from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -64,18 +65,21 @@ export default function Polls() {
     _.get(state, "employees.employee.userData.division", "")
   );
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (pollId) => {
     try {
-      console.log(submitValue);
-      await api.addPoll(token, submitValue).then((response) => {
-        const responseData = _.get(response, "data", "");
-        if (responseData.messages.status === "33") {
-          setError(responseData.messages.message);
-        }
-        if (responseData.messages.status === "32") {
-          dispatch({ type: "GET_POLLS", payload: responseData.polls });
-        }
-      });
+      if (pollId === submitValue.poll_Id) {
+        await api.addPoll(token, submitValue).then((response) => {
+          const responseData = _.get(response, "data", "");
+          if (responseData.messages.status === "33") {
+            setError(responseData.messages.message);
+          }
+          if (responseData.messages.status === "32") {
+            dispatch({ type: "GET_POLLS", payload: responseData.polls });
+          }
+        });
+      } else {
+        setError("Please submit the selected option.");
+      }
     } catch (error) {
       setError("something went wrong, please try again.");
     }
@@ -111,6 +115,7 @@ export default function Polls() {
   return (
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
+        {error && <Alert severity="error"> {error} </Alert>}
         <Grid container justify="flex-end">
           {isEventsMember && (
             <Button
@@ -134,34 +139,39 @@ export default function Polls() {
             <Grid item key={`poll${poll._id}`} xs={12} sm={6} md={6}>
               <Card className={classes.root} elevation={10}>
                 <CardHeader
-                  action={
-                    <span>
-                      <Box p={1} border={1} display="flex">
-                        <Tooltip title="Time Left" aria-label="timeLeft">
-                          <ScheduleIcon size="small" />
-                        </Tooltip>
-                        <Countdown
-                          date={Date.now() + moment(setTime(poll.deadline))}
-                          renderer={(props) => (
-                            <Typography variant={"body2"}>
-                              {props.days} D:
-                              {props.hours} H:
-                              {props.minutes} M:
-                              {props.seconds} S
-                            </Typography>
-                          )}
-                        />
-                      </Box>
-                    </span>
-                  }
-                  title={poll.title}
+                  style={{ paddingBottom: "5px" }}
+                  title={poll.title.toUpperCase()}
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
                   }
-                  
+                  titleTypographyProps={{ variant: "h6" }}
+                  subheaderTypographyProps={{ className: classes.headingSize }}
+                  action={
+                    <Box p={2} display="flex" alignItems="center">
+                      <Tooltip title="Time Left" aria-label="timeLeft">
+                        <ScheduleIcon
+                          style={{ fontSize: "1rem" }}
+                          size="small"
+                        />
+                      </Tooltip>
+                      &nbsp;
+                      <Countdown
+                        date={Date.now() + moment(setTime(poll.deadline))}
+                        renderer={(props) => (
+                          <Typography variant={"body2"}>
+                            {props.days} D:
+                            {props.hours} H:
+                            {props.minutes} M:
+                            {props.seconds} S
+                          </Typography>
+                        )}
+                      />
+                    </Box>
+                  }
                 />
-
-                <CardContent>
+                <CardContent
+                  style={{ paddingTop: "5px", paddingBottom: "5px" }}
+                >
                   <Typography variant="subtitle1" component="p">
                     {poll.question}
                   </Typography>
@@ -205,50 +215,61 @@ export default function Polls() {
                       </Grid>
                     ))}
                   </Grid>
-                  {poll.employeeId.includes(employee_Id) ? (
-                    <Typography variant="subtitle2" component="p">
-                      You have voted for this poll.
-                    </Typography>
-                  ) : (
-                    <br />
-                  )}
                 </CardContent>
-                <CardActions disableSpacing>
-                  {new Date(poll.deadline).getTime() <= new Date().getTime() ? (
-                    <Typography style={{ marginLeft: "10px" }}>
-                      This poll is expired
-                    </Typography>
-                  ) : (
-                    <Button
-                      style={
-                        poll.employeeId.includes(employee_Id)
-                          ? {
-                              pointerEvents: "none",
-                              opacity: "0.4",
-                              marginLeft: "8px",
-                            }
-                          : { marginLeft: "8px" }
-                      }
-                      key={`submitButton${poll._id}`}
-                      onClick={() => handleSubmit(pollIndex)}
-                      size="small"
-                      color="primary"
-                      variant="contained"
-                    >
-                      Submit
-                    </Button>
-                  )}
-                  {isEventsMember && (
-                    <IconButton
-                      className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                      })}
-                      key={`iconDeleteButton${poll._id}`}
-                      onClick={() => deletePolls(pollIndex)}
-                    >
-                      <DeleteIcon color="primary" size="small" />
-                    </IconButton>
-                  )}
+                <CardActions style={{ padding: "16px", display: "inherit" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>
+                      {poll.employeeId.includes(employee_Id) ? (
+                        <Typography variant="subtitle2">
+                          You have already voted for this poll.
+                        </Typography>
+                      ) : (
+                        <br />
+                      )}
+                      {new Date(poll.deadline).getTime() <=
+                        new Date().getTime() && (
+                        <Typography variant="subtitle2">
+                          This poll is expired.
+                        </Typography>
+                      )}
+                    </div>
+                    <div>
+                      {!(
+                        new Date(poll.deadline).getTime() <=
+                        new Date().getTime()
+                      ) && (
+                        <IconButton
+                          className={classes.expand}
+                          style={
+                            poll.employeeId.includes(employee_Id)
+                              ? {
+                                  pointerEvents: "none",
+                                  opacity: "0.4",
+                                }
+                              : {}
+                          }
+                          key={`submitButton${poll._id}`}
+                          onClick={() => handleSubmit(poll._id)}
+                          size="small"
+                          color="primary"
+                          variant="contained"
+                        >
+                          <DoneIcon color="primary" size="small" />
+                        </IconButton>
+                      )}
+                      {isEventsMember && (
+                        <IconButton
+                          className={classes.expand}
+                          key={`iconDeleteButton${poll._id}`}
+                          onClick={() => deletePolls(pollIndex)}
+                        >
+                          <DeleteIcon color="primary" size="small" />
+                        </IconButton>
+                      )}
+                    </div>
+                  </div>
                   {_.get(deleteModel, `index.${pollIndex}`, false) && (
                     <DeletePolls setDeleteModel={setDeleteModel} poll={poll} />
                   )}
