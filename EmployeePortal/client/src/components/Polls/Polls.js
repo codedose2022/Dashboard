@@ -103,8 +103,6 @@ export default function Polls() {
     const diff = cntdownDate - now;
     return diff;
   };
-  const [expanded, setExpanded] = React.useState(false);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1);
@@ -112,7 +110,7 @@ export default function Polls() {
     return () => clearInterval(interval);
   }, []);
 
-  return (
+  return ( 
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
         {error && <Alert severity="error"> {error} </Alert>}
@@ -186,7 +184,7 @@ export default function Polls() {
                         md={6}
                       >
                         <div>
-                          <img className={classes.img} src={option1} />
+                          <img alt="PollImage" className={classes.img} src={option1} />
                         </div>
                         <FormControl component="fieldset">
                           <FormControlLabel

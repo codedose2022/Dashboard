@@ -33,7 +33,7 @@ export default function ResetPassword() {
       resetPasswordData.newPassword,
       resetPasswordData.confirmPassword,
     ].includes("");
-    if (resetPasswordData.newPassword != resetPasswordData.confirmPassword) {
+    if (resetPasswordData.newPassword !== resetPasswordData.confirmPassword) {
       seterror("Password provided does not match, Please check again.");
     } else {
       if (!isFieldEmpty) {

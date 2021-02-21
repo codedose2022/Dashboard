@@ -65,6 +65,7 @@ export default function LoginPage() {
       localStorage.setItem("auth-token", token);
       history.push("/");
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, messageStatus]);
 
   const handleSubmit = async (e) => {

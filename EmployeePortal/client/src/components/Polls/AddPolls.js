@@ -50,7 +50,7 @@ export default function AddPolls(props) {
   };
   const handleRemoveFields = (index) => {
     const values = [...options];
-    values.splice(index, 1);
+    values.splice(index-1, 1);
     setOptions(values);
   };
   const handleClose = () => {
@@ -59,13 +59,17 @@ export default function AddPolls(props) {
   };
   const handleAdd = async () => {
     setShowRequired(true);
-    const isFieldEmpty = [
+    let isFieldEmpty = [
       title,
       question,
-      options[0].option,
-      options[1].option,
       deadline,
     ].includes("");
+    options.forEach(option => {
+      if(option.option==="")
+      {
+        isFieldEmpty=true;
+      }
+    });
     if (!isFieldEmpty) {
       let poll = { title, question, options, deadline };
       try {
@@ -83,7 +87,6 @@ export default function AddPolls(props) {
           }
         });
       } catch (error) {
-        console.log(error.message);
         setError("Something went wrong, please try again.");
       }
     }
@@ -169,7 +172,7 @@ export default function AddPolls(props) {
             ))}
             <IconButton
               disabled={options.length < 3}
-              onClick={() => handleRemoveFields()}
+              onClick={() => handleRemoveFields(options.length)}
             >
               <RemoveIcon />
             </IconButton>

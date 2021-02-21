@@ -44,6 +44,7 @@ const App = () => {
       }
     };
     checkIfLoggedIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function PrivateRoute({ children, ...rest }) {

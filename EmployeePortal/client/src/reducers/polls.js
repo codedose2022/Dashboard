@@ -1,4 +1,4 @@
-export default (state = [], action)=> {
+const polls = (state = [], action)=> {
     switch(action.type)
     {
          case 'GET_POLLS':
@@ -11,3 +11,4 @@ export default (state = [], action)=> {
             return {...state};
     }
 }
+export default polls;

@@ -1,6 +1,5 @@
-import { CardActions } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { red } from "@material-ui/core/colors";
+import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
@@ -70,11 +69,6 @@ export default makeStyles((theme) => ({
   buttonStyle : {
     fontSize: "0.59rem",
     marginBottom : '14px'
-  },
-  cardActions : {
-    marginLeft: '20px',
-    justifyContent: 'space-between',
-
   },
   headingSize : {
     fontSize: "12px",

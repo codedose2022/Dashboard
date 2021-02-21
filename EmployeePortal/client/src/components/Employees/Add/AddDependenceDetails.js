@@ -1,10 +1,10 @@
 import { Grid, IconButton, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import moment from 'moment';
 import React from "react";
 import Heading from "../Heading";
 import useStyles from "./AddEmployeeStyles";
-import moment from 'moment';
 
 function AddDependenceDetails(props) {
 

@@ -1,4 +1,4 @@
-export default (state = [], action) => {
+const tabs = (state = [], action) => {
   switch (action.type) {
     case "TABS_CHANGE":
       return {
@@ -9,3 +9,5 @@ export default (state = [], action) => {
       return state ;
   }
 };
+
+export default tabs;

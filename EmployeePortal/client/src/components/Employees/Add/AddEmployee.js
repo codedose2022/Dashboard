@@ -1,12 +1,11 @@
 import {
-    Button,
-    createMuiTheme,
-    FormControlLabel,
-    FormGroup,
-    Grid,
-    Switch,
-    ThemeProvider,
-    Typography
+  Button,
+  createMuiTheme,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Switch,
+  ThemeProvider
 } from "@material-ui/core";
 import { green, grey } from "@material-ui/core/colors";
 import Alert from "@material-ui/lab/Alert";
@@ -290,7 +289,6 @@ export default function AddEmployee(props) {
                   dependence={dependence}
                   disableProfile={disableProfile}
                   errors={errors}
-                  disableProfile={disableProfile}
                   setDependence={setDependence}
                 />
 

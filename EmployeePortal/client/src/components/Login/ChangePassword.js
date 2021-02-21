@@ -1,15 +1,20 @@
-import React, { useState,  useContext } from "react";
 import {
-  AppBar,Snackbar,Toolbar,Typography,Button,
-  Box,Link,TextField,CssBaseline,
+  AppBar,
+  Box,
+  Button,
+  CssBaseline,
+  Link,
+  TextField,
+  Toolbar,
+  Typography,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import * as api from "../../api/index";
+import UserContext from "../../context/UserContext";
 import Mersatlogo from "../../images/Mersatlogo.jpg";
 import useStyles from "./LoginPageStyles";
-import { useHistory } from "react-router-dom";
-import Alert from "@material-ui/lab/Alert";
-import _ from "lodash";
-import UserContext from "../../context/UserContext";
-import * as api from "../../api/index";
 
 export default function ChangePassword() {
   const classes = useStyles();
@@ -57,18 +62,18 @@ export default function ChangePassword() {
   return (
     <div>
       <Box boxShadow={3} className={classes.root}>
-        <AppBar position='static' className={classes.appbar} elevation={0}>
+        <AppBar position="static" className={classes.appbar} elevation={0}>
           <Toolbar>
-            <img src={Mersatlogo} alt='Mersatlogo' className={classes.logo} />
-            <Typography className={classes.title} variant='body2'>
+            <img src={Mersatlogo} alt="Mersatlogo" className={classes.logo} />
+            <Typography className={classes.title} variant="body2">
               EMPLOYEE PORTAL CHANGE PASSWORD
             </Typography>
           </Toolbar>
         </AppBar>
         <CssBaseline />
-        {error && <Alert severity='error'> {error} </Alert>}
+        {error && <Alert severity="error"> {error} </Alert>}
         <form
-          autoComplete='off'
+          autoComplete="off"
           className={classes.form}
           onSubmit={handleSubmit}
         >
@@ -80,14 +85,14 @@ export default function ChangePassword() {
             FormHelperTextProps={{
               className: classes.helperTextColor,
             }}
-            variant='filled'
-            margin='normal'
+            variant="filled"
+            margin="normal"
             fullWidth
-            id='email'
-            placeholder='EMAIL ADDRESS'
-            name='email'
+            id="email"
+            placeholder="EMAIL ADDRESS"
+            name="email"
             value={changePasswordData.email}
-            size='small'
+            size="small"
             disabled
           />
           <TextField
@@ -95,17 +100,17 @@ export default function ChangePassword() {
               disableUnderline: true,
               classes: { input: classes.input },
             }}
-            variant='filled'
+            variant="filled"
             FormHelperTextProps={{
               className: classes.helperTextColor,
             }}
             fullWidth
-            size='small'
-            margin='normal'
-            name='old password'
-            placeholder='OLD PASSWORD'
-            type='password'
-            id='old password'
+            size="small"
+            margin="normal"
+            name="old password"
+            placeholder="OLD PASSWORD"
+            type="password"
+            id="old password"
             value={changePasswordData.password}
             onChange={(e) =>
               setChangePasswordData({
@@ -122,14 +127,14 @@ export default function ChangePassword() {
             FormHelperTextProps={{
               className: classes.helperTextColor,
             }}
-            variant='filled'
-            margin='normal'
+            variant="filled"
+            margin="normal"
             fullWidth
-            id='new password'
-            placeholder='NEW PASSWORD'
-            name='new password'
-            size='small'
-            type='password'
+            id="new password"
+            placeholder="NEW PASSWORD"
+            name="new password"
+            size="small"
+            type="password"
             value={changePasswordData.newPassword}
             onChange={(e) =>
               setChangePasswordData({
@@ -146,14 +151,14 @@ export default function ChangePassword() {
             FormHelperTextProps={{
               className: classes.helperTextColor,
             }}
-            variant='filled'
-            margin='normal'
+            variant="filled"
+            margin="normal"
             fullWidth
-            id='confirm password'
-            placeholder='CONFIRM PASSWORD'
-            name='confirm password'
-            size='small'
-            type='password'
+            id="confirm password"
+            placeholder="CONFIRM PASSWORD"
+            name="confirm password"
+            size="small"
+            type="password"
             value={changePasswordData.confirmPassword}
             onChange={(e) =>
               setChangePasswordData({
@@ -168,7 +173,7 @@ export default function ChangePassword() {
             fullWidth
             disableElevation
             style={{ background: "#1b5e20", color: "white" }}
-            type='submit'
+            type="submit"
           >
             RESET PASSWORD
           </Button>

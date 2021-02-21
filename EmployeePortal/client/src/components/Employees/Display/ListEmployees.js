@@ -53,14 +53,14 @@ export default function ListEmployees() {
   }
    const displayValue = (value) =>{
       switch (value) {
-        case 'EE' : return 'Events'
-        break;
-        case 'SA' : return 'Super Admin'
-        break;
-        case 'ED' : return 'Editorial'
-        break;
-        case 'EM' : return 'Employee'
-        break;
+        case 'EE' : return 'Events';
+       
+        case 'SA' : return 'Super Admin';
+        
+        case 'ED' : return 'Editorial';
+        
+        case 'EM' : return 'Employee';
+        
         default : return value;
       }
    }

@@ -1,11 +1,9 @@
-import { Grid, Paper } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import Heading from "../Heading";
-import useStyles from "./MyProfileStyles";
 import Textfield from "./Textfield";
 
 function BasicInfo(props) {
-  const classes = useStyles();
   return (
     <Grid item xs={12}>
      

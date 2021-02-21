@@ -5,7 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
+  TextField
 } from "@material-ui/core";
 import React from "react";
 import { departments } from "../Constants/departmentList";

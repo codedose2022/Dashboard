@@ -1,4 +1,4 @@
-export default (state = [], action) => {
+const events = (state = [], action) => {
   switch (action.type) {
     case "GET_EVENTS":
       return {
@@ -15,3 +15,5 @@ export default (state = [], action) => {
       return { ...state };
   }
 };
+
+export default events;

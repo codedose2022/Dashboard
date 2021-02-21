@@ -1,8 +1,7 @@
 import { Grid, MenuItem, TextField } from "@material-ui/core";
+import moment from 'moment';
 import React from "react";
 import Heading from "../Heading";
-import useStyles from "./AddEmployeeStyles";
-import moment from 'moment';
 
 function AddPersonalDetails(props) {
   const onChangeFields = (e) => {

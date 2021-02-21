@@ -4,9 +4,9 @@ import {
   createMuiTheme,
   Grid,
   MuiThemeProvider,
-  Paper,
+
   responsiveFontSizes,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import React from "react";
 import useStyles from "./MyProfileStyles";

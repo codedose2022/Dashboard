@@ -1,4 +1,4 @@
-import { Grid, Paper, TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import Heading from "../Heading";

@@ -1,4 +1,4 @@
-export default (state = [], action)=> {
+const employees = (state = [], action)=> {
     switch(action.type)
     {
         case 'LOGIN_STATUS':
@@ -26,3 +26,5 @@ export default (state = [], action)=> {
             return {...state};
     }
 }
+
+export default employees;

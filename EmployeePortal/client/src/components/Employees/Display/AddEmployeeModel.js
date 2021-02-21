@@ -1,15 +1,15 @@
 import {
   Button,
   Dialog,
-  DialogActions,DialogTitle,IconButton,
   DialogContent,
+  DialogTitle,
   Grid,
+  IconButton,
   useMediaQuery,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
 import React, { useState } from "react";
-import CloseIcon from '@material-ui/icons/Close';
-
 import AddEmployee from "../Add/AddEmployee";
 import useStyles from "./ListEmployeeStyles";
 
@@ -39,26 +39,20 @@ function AddEmployeeModel() {
         >
           Add new employee
         </Button>
-        <Dialog
-          fullScreen
-          open={open}
-          onClose={handleClose}
-        >
-           <DialogTitle id="form-dialog-title" >
-          ADD EMPLOYEE
-          <IconButton   aria-label="close" style={{  position: 'absolute',
-    right: '10px', top: '2px'}} onClick={handleClose}>
-            <CloseIcon />
-        </IconButton>
-        </DialogTitle>
+        <Dialog fullScreen open={open} onClose={handleClose}>
+          <DialogTitle id="form-dialog-title">
+            ADD EMPLOYEE
+            <IconButton
+              aria-label="close"
+              style={{ position: "absolute", right: "10px", top: "2px" }}
+              onClick={handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
           <DialogContent>
-            <AddEmployee handleClose = {handleClose}/>
+            <AddEmployee handleClose={handleClose} />
           </DialogContent>
-          {/* <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-          </DialogActions> */}
         </Dialog>
       </Grid>
     </div>

@@ -35,6 +35,7 @@ export default function LikeDislikeCommentComponent(props) {
         setDislikeAction("disliked");
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   const onLike = async () => {

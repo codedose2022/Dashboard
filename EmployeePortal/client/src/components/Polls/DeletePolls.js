@@ -3,6 +3,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as api from "../../api";
+import Alert from "@material-ui/lab/Alert";
 
 export default function DeletePolls(props) {
   let token = localStorage.getItem("auth-token");
@@ -34,6 +35,7 @@ export default function DeletePolls(props) {
       aria-labelledby='form-dialog-title'
       disableBackdropClick
     >
+       {error && <Alert severity='error'> {error} </Alert>}
       <DialogTitle
         id='form-dialog-title-delete'
         style={{ alignSelf: "center" }}
