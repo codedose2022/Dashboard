@@ -42,6 +42,13 @@ export default makeStyles((theme) => ({
 
   linkStyle: {
     color: "#1b5e20",
-    paddingLeft: "30px",
-  },
+   
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "30px",
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "170px",
+    },
+   
+  }
 }));

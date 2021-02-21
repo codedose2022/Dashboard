@@ -14,14 +14,18 @@ export default makeStyles((theme) => ({
       },
     logo: {
          [theme.breakpoints.up('sm')]: {
-            maxWidth:"70px",
-             maxHeight:"70px",
+            maxWidth:"80px",
+             maxHeight:"80px",
+          
         },
         [theme.breakpoints.down('sm')]: {
             maxWidth:"50px",
              maxHeight:"60px",
-          }
-      
+          },
+          position : 'absolute',
+          top : '0px'
+
+          
       },
     root: {
         flexGrow: 1,

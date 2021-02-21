@@ -83,6 +83,9 @@ const App = () => {
             <PrivateRoute exact path='/changePassword'>
               <ChangePassword />
             </PrivateRoute>
+            <PrivateRoute exact path='/:anything'>
+             Oops! 404 - page not found
+            </PrivateRoute>
           </Switch>
         </main>
       </UserContext.Provider>

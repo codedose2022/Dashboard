@@ -98,16 +98,10 @@ export default function AddEvents(props) {
       onClose={handleClose}
       aria-labelledby='form-dialog-title-add-events'
       disableBackdropClick
-      PaperProps={{
-        style: {
-          backgroundColor: '#f3ede5',
-          boxShadow: 'none',
-        },
-      }}
     >
       <DialogTitle
         id='form-dialog-title-Addevents'
-        style={{ alignSelf: "center",color:'darkgreen' }}
+        style={{ alignSelf: "center" }}
       
       >
         {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}

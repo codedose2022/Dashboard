@@ -51,6 +51,10 @@ export default function LoginPage() {
   const loggedIn = _.get(state, "employees.loggedInStatus", "");
   const messageStatus = _.get(state, "employees.employee.messages.status", "");
 
+  function setNetworkErrors(err) {
+    seterror(err)
+  }
+
   useEffect(() => {
     if (loggedIn === "loggedIn") {
       const token = _.get(state, "employees.employee.token", "");
@@ -60,13 +64,6 @@ export default function LoginPage() {
       });
       localStorage.setItem("auth-token", token);
       history.push("/");
-    }
-    if (messageStatus === "10" || messageStatus === "12") {
-      let errMsg = _.get(state, "employees.employee.messages.message", "");
-      seterror(errMsg);
-    }
-    if (messageStatus === "11") {
-      seterror("");
     }
   }, [loggedIn, messageStatus]);
 
@@ -86,7 +83,7 @@ export default function LoginPage() {
       clearFieldError();
       } 
       if (loginData.email !== "" && loginData.password !== "" && !forgotPass) {
-        dispatch(login(loginData));
+        dispatch(login(loginData,setNetworkErrors));
         clearFieldError();
       }
       if (forgotPass) {
