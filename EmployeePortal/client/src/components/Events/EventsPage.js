@@ -25,7 +25,7 @@ import { useDispatch } from "react-redux";
 import * as api from "../../api";
 import { getEvents } from "../../actions/events";
 import DoneIcon from "@material-ui/icons/Done";
-import ViewMoreComponent from './ViewMoreComponent';
+import ViewMoreComponent from "./ViewMoreComponent";
 
 export default function EventsPage() {
   const classes = useStyles();
@@ -217,44 +217,60 @@ export default function EventsPage() {
               >
                 {event.title.toUpperCase()}
               </Typography>
+              
               <div>
-                <Box display='flex' p={1} className={classes.box}>
-                  <Box p={1} key={`date${event._id}`}>
-                    {event.date && (
-                      <span>
-                        <Hidden smDown>
-                          <span variant = 'subtitle2'>Date : </span>
-                        </Hidden>
-                        {moment(event.date).format("MMMM Do YYYY")}
-                      </span>
-                    )}
-                  </Box>
-                  <Box p={1} key={`time${event._id}`}>
-                    <span>
-                      <Hidden smDown>
-                        <span variant='subtitle2'>Time : </span>
-                      </Hidden>
-                      {moment(event.time, "hh:mm").format("LT")}
-                    </span>
-                  </Box>
-                  <Box p={1} key={`venue${event._id}`}>
-                    <span>
-                      <Hidden smDown>
-                        <span variant='subtitle2'>Venue : </span>
-                      </Hidden>
-                      {event.venue}
-                    </span>
-                  </Box>
-                </Box>
+                <Box p={1} key={`date${event._id}`} className={classes.box}>
+                  <Grid container>
+                    <Grid item xs={4}>
+                      <Box p={1} key={`date${event._id}`}>
+                        {event.date && (
+                          <span>
+                            <Hidden smDown>
+                              <span variant='subtitle2'>Date : </span>
+                            </Hidden>
+                            {moment(event.date).format("MMMM Do YYYY")}
+                          </span>
+                        )}
+                      </Box>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box
+                        p={1}
+                        key={`time${event._id}`}
+                        style={{ textAlign: "center" }}
+                      >
+                        <span>
+                          <Hidden smDown>
+                            <span variant='subtitle2'>Time : </span>
+                          </Hidden>
+                          {moment(event.time, "hh:mm").format("LT")}
+                        </span>
+                      </Box>
+                    </Grid>
 
+                    <Grid item xs={4}>
+                      <Box
+                        p={1}
+                        key={`venue${event._id}`}
+                        style={{ textAlign: "end" }}
+                      >
+                        <span>
+                          <Hidden smDown>
+                            <span variant='subtitle2'>Venue : </span>
+                          </Hidden>
+                          {event.venue}
+                        </span>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
                 <div style={{ margin: "12px", wordWrap: "break-word" }}>
                   <Typography
                     variant='caption'
                     key={`desc${event._id}`}
                     className={classes.desc}
                   >
-                   
-                    <ViewMoreComponent text = {event.desc} id = {event._id}/>
+                    <ViewMoreComponent text={event.desc} id={event._id} />
                   </Typography>
                 </div>
                 <Box className={classes.alignment}>
@@ -283,7 +299,7 @@ export default function EventsPage() {
                 />
               </div>
             )}
-            <div style= {{paddingBottom : '12px'}}></div>
+            <div style={{ paddingBottom: "12px" }}></div>
           </Paper>
         );
       })}
