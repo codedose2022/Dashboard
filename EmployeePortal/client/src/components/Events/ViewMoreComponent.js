@@ -11,27 +11,36 @@ export default function ViewMoreComponent(props) {
         {linkText === "Read more" ? (
           <>
             {props.text.substring(0, 300)}
-            <a
+            <button
+            style={{background: 'none',
+              border: 'none',
+              padding: '0px',
+              fontFamily: 'arial, sans-serif',
+              cursor: 'pointer'}}
               className={classes.readMoreLink}
               id={`${props.id}readMoreLink`}
               key={`${props.id}readMoreLink`}
               onClick={() => setLinkText("Read less")}
             >
               ...{linkText}
-            </a>
+            </button>
           </>
         ) : (
           <>
             {props.text}
-            <a
+            <button
+               style={{background: 'none',
+               border: 'none',
+               padding: '0px',
+               fontFamily: 'arial, sans-serif',
+               cursor: 'pointer'}}
               id={`${props.id}readMore`}
               key={`${props.id}readMore`}
               className={classes.readMoreLink}
-              key={props.id}
               onClick={() => setLinkText("Read more")}
             >
               ...{linkText}
-            </a>
+            </button>
           </>
         )}
       </div>
