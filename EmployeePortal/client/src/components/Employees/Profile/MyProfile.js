@@ -23,11 +23,12 @@ export default function MyProfile(props) {
       {profileData ? (
         <div>
           {!props.employee && (
-            <div>
+            <Grid item style={{textAlign:'end',mgiarginRight:'5px'}}>
               <Link style={{ textDecoration: "none" }} to="/">
                 <h6 className={classes.linkStyle}>GO TO DASHBOARD</h6>
               </Link>
-            </div>
+            </Grid>
+           
           )}
           <Container
             style={{ padding: "0px" }}
