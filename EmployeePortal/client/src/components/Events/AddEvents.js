@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import useStyles from "./EventPageStyles";
 import {
-  Dialog,
+  Button, Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogTitle, Grid, TextareaAutosize, TextField
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { validateRequired } from "../../helper";
 import Alert from "@material-ui/lab/Alert";
-import * as api from "../../api";
 import _ from "lodash";
-import FileBase from "react-file-base64";
 import moment from "moment";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { getEvents } from "../../actions/events";
+import * as api from "../../api";
+import { validateRequired } from "../../helper";
+import useStyles from "./EventPageStyles";
 
-import { Button, TextareaAutosize, Grid, TextField } from "@material-ui/core";
 
 export default function AddEvents(props) {
   const classes = useStyles();
@@ -41,20 +39,27 @@ export default function AddEvents(props) {
     props.event ? props.setEdit(false) : props.setOpenModel(false);
   };
 
-  const handleAdd = async () => {
+  const handleAdd = async (e) => {
+    e.preventDefault();
     setShowRequired(true);
     const isFieldEmpty = [title, date, venue, time, desc].includes("");
     if (!isFieldEmpty) {
-      let event = { title, date, venue, desc, img, time };
+      //let event = { title, date, venue, desc, img, time };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("date", date);
+      formData.append("venue", venue);
+      formData.append("desc", desc);
+      formData.append("time", time);
+      formData.append("img", img);
       try {
         await api
-          .addEvent(token, event)
+          .addEvent(token, formData)
           .then((response) => {
             const responseData = _.get(response, "data.responseData", "");
             if (responseData.messages.status === "21") {
               handleCancel();
               dispatch(getEvents(token, props.userData.division));
-            
             }
           })
           .catch((error) => {
@@ -73,19 +78,40 @@ export default function AddEvents(props) {
     setShowRequired(true);
     const isFieldEmpty = [title, date, time, desc, venue].includes("");
     if (!isFieldEmpty) {
-      let event = { title, date, venue, desc, img, time, _id: props.event._id, status: 'pending' };
+      let event = {
+        title,
+        date,
+        venue,
+        desc,
+        img,
+        time,
+        _id: props.event._id,
+        status: "pending",
+      };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("date", date);
+      formData.append("venue", venue);
+      formData.append("desc", desc);
+      formData.append("time", time);
+      formData.append("_id", event._id);
+      formData.append("status", 'pending');
+      formData.append("img", img);
       try {
-        const response = await api.editEvent(token, event);
+        const response = await api.editEvent(token, formData);
         const responseData = _.get(response, "data.responseData", "");
         if (responseData.messages.status === "21") {
           handleCancel();
-         dispatch(getEvents(token, props.userData.division));
-         
+          dispatch(getEvents(token, props.userData.division));
         }
       } catch (error) {
         setError("something went wrong, please try again.");
       }
     }
+  };
+
+  const setImage = (e) => {
+    setImg(e.target.files[0]);
   };
 
   const handleClose = () => {
@@ -96,20 +122,19 @@ export default function AddEvents(props) {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby='form-dialog-title-add-events'
+      aria-labelledby="form-dialog-title-add-events"
       disableBackdropClick
     >
       <DialogTitle
-        id='form-dialog-title-Addevents'
+        id="form-dialog-title-Addevents"
         style={{ alignSelf: "center" }}
-      
       >
         {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}
       </DialogTitle>
       <DialogContent>
         <div className={classes.marginStyle}>
-          {error && <Alert severity='error'> {error} </Alert>}
-          <form autoComplete='off'>
+          {error && <Alert severity="error"> {error} </Alert>}
+          <form autoComplete="off">
             <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
@@ -118,12 +143,12 @@ export default function AddEvents(props) {
                   FormHelperTextProps={{
                     className: classes.helperTextColor,
                   }}
-                  type='text'
-                  id='Title'
+                  type="text"
+                  id="Title"
                   helperText={flag && validateRequired(title)}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  label='Title'
+                  label="Title"
                 />
               </Grid>
 
@@ -137,15 +162,15 @@ export default function AddEvents(props) {
                   inputProps={{
                     min: `${todayDate}`,
                   }}
-                  id='Date'
+                  id="Date"
                   helperText={flag && validateRequired(date)}
                   onChange={(e) => setDate(e.target.value)}
                   value={date}
-                  type='date'
+                  type="date"
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  label='Event Date'
+                  label="Event Date"
                 />
               </Grid>
 
@@ -156,12 +181,12 @@ export default function AddEvents(props) {
                   FormHelperTextProps={{
                     className: classes.helperTextColor,
                   }}
-                  type='time'
+                  type="time"
                   helperText={flag && validateRequired(date)}
-                  id='Event Time'
+                  id="Event Time"
                   onChange={(e) => setTime(e.target.value)}
                   value={time}
-                  label='Event Time'
+                  label="Event Time"
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -175,22 +200,18 @@ export default function AddEvents(props) {
                   FormHelperTextProps={{
                     className: classes.helperTextColor,
                   }}
-                  id='Venue'
-                  type='text'
+                  id="Venue"
+                  type="text"
                   helperText={flag && validateRequired(venue)}
                   onChange={(e) => setVenue(e.target.value)}
                   value={venue}
-                  label='Venue'
+                  label="Venue"
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <div className={classes.fileInputStyle}>
-                  <FileBase
-                    type='file'
-                    multiple={false}
-                    onDone={({ base64 }) => setImg({ base64 })}
-                  />
+                  <input type="file" name="img" onChange={(e) => setImage(e)} />
                 </div>
               </Grid>
 
@@ -199,9 +220,9 @@ export default function AddEvents(props) {
                   onChange={(e) => setDesc(e.target.value)}
                   value={desc}
                   className={classes.textAreaStyle}
-                  aria-label='minimum height'
+                  aria-label="minimum height"
                   rowsMin={10}
-                  placeholder='Description'
+                  placeholder="Description"
                 />
               </Grid>
             </Grid>
@@ -210,18 +231,18 @@ export default function AddEvents(props) {
       </DialogContent>
       <DialogActions>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleCancel}
-          color='primary'
+          color="primary"
         >
           cancel
         </Button>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={props.event ? handleEdit : handleAdd}
-          color='primary'
+          color="primary"
           autoFocus
         >
           {props.event ? "Done" : "Add"}

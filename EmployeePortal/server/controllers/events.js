@@ -1,10 +1,10 @@
 import express from "express";
-import Events from "../models/eventsSchema.js";
-import Dislike from "../models/dislikeSchema.js";
-import Like from "../models/likeSchema.js";
-import commentsSchema from "../models/commentsSchema.js";
 import mongoose from "mongoose";
-import _ from "lodash";
+import commentsSchema from "../models/commentsSchema.js";
+import Dislike from "../models/dislikeSchema.js";
+import Events from "../models/eventsSchema.js";
+import Like from "../models/likeSchema.js";
+
 const router = express.Router();
 
 export const getEvents = async (req, res) => {
@@ -64,8 +64,24 @@ export const getEvents = async (req, res) => {
 };
 
 export const createEvents = async (req, res) => {
-  const event = new Events(req.body);
+  const title = req.body.title;
+  const date = req.body.date;
+  const venue = req.body.venue;
+  const desc = req.body.desc;
+  const img = req.file ? req.file.filename : "";
+  const time = req.body.time;
+  const status = req.body.status;
 
+  const eventData = {
+    title,
+    date,
+    venue,
+    desc,
+    img,
+    time,
+    status,
+  };
+  const event = new Events(eventData);
   let responseData = {
     events: {},
     messages: {
@@ -88,6 +104,26 @@ export const createEvents = async (req, res) => {
 };
 
 export const editEvents = async (req, res) => {
+  const title = req.body.title;
+  const date = req.body.date;
+  const venue = req.body.venue;
+  const desc = req.body.desc;
+  const img = req.file.filename;
+  const time = req.body.time;
+  const status = req.body.status;
+  const _id = req.body._id;
+
+  const eventData = {
+    title,
+    date,
+    venue,
+    desc,
+    img,
+    time,
+    status,
+    _id,
+  };
+
   let responseData = {
     events: {},
     messages: {
@@ -95,6 +131,55 @@ export const editEvents = async (req, res) => {
       message: "",
     },
   };
+
+  const entries = Object.keys(eventData);
+
+  if (!mongoose.Types.ObjectId.isValid(eventData._id)) {
+    responseData.messages.message = "Update failed due to invalid post id";
+    responseData.messages.status = "20";
+    return res.status(404).send({
+      responseData,
+    });
+  }
+
+  try {
+    const updates = {};
+    for (let i = 0; i < entries.length; i++) {
+      updates[entries[i]] = Object.values(eventData)[i];
+    }
+    await Events.updateOne(
+      {
+        _id: eventData._id,
+      },
+      {
+        $set: updates,
+      }
+    );
+
+    responseData.messages.message = "Updated Successfully";
+    responseData.messages.status = "21";
+
+    if ((responseData.messages.status = "21")) {
+      const events = await Events.find();
+      responseData.events = events;
+      return res.status(200).send({
+        responseData,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const approval = async (req, res) => {
+  let responseData = {
+    events: {},
+    messages: {
+      status: "",
+      message: "",
+    },
+  };
+
   const entries = Object.keys(req.body);
 
   if (!mongoose.Types.ObjectId.isValid(req.body._id)) {
@@ -163,4 +248,5 @@ export const deleteEvents = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
 export default router;

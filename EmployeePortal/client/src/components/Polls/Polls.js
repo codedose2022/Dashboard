@@ -11,7 +11,7 @@ import {
   Grid,
   Radio,
   Tooltip,
-  Typography
+  Typography, useMediaQuery
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -26,7 +26,7 @@ import Countdown from "react-countdown";
 import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../api";
 import * as helper from "../../helper";
-import option1 from "../../images/1.jpg";
+import pollDefaultImage from "../../images/poll-24px.svg";
 import AddPolls from "./AddPolls";
 import DeletePolls from "./DeletePolls";
 import useStyles from "./PollsStyles";
@@ -47,6 +47,7 @@ export default function Polls() {
   const [seconds, setSeconds] = useState(0);
   const [addModel, setAddModel] = useState(false);
   const [deleteModel, setDeleteModel] = useState({ index: {} });
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   let polls = _.get(state, "polls.polls", []);
 
@@ -79,9 +80,12 @@ export default function Polls() {
         });
       } else {
         setError("Please submit the selected option.");
+        scroll();
+        
       }
     } catch (error) {
       setError("something went wrong, please try again.");
+      
     }
   };
 
@@ -109,7 +113,9 @@ export default function Polls() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
+  const scroll = () =>{
+    window.scrollTo(0,0)
+  } 
   return ( 
     <div>
       <Container className={classes.cardGrid} maxWidth="md">
@@ -122,7 +128,7 @@ export default function Polls() {
               className={classes.buttonStyle}
               color="primary"
               justify="flex-end"
-              variant="contained"
+              variant={isSmallScreen ? "text" : "contained"}
               size="small"
               onClick={() => addPolls()}
               startIcon={<AddIcon />}
@@ -132,9 +138,9 @@ export default function Polls() {
           )}
           {addModel && <AddPolls setAddModel={setAddModel} />}
         </Grid>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           {polls.map((poll, pollIndex) => (
-            <Grid item key={`poll${poll._id}`} xs={12} sm={6} md={6}>
+            <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={12}>
               <Card className={classes.root} elevation={10}>
                 <CardHeader
                   style={{ paddingBottom: "5px" }}
@@ -170,7 +176,7 @@ export default function Polls() {
                 <CardContent
                   style={{ paddingTop: "5px", paddingBottom: "5px" }}
                 >
-                  <Typography variant="subtitle1" component="p">
+                  <Typography style={{marginBottom:'5px'}} variant="subtitle1" component="p">
                     {poll.question}
                   </Typography>
 
@@ -183,9 +189,12 @@ export default function Polls() {
                         sm={6}
                         md={6}
                       >
-                        <div>
-                          <img alt="PollImage" className={classes.img} src={option1} />
-                        </div>
+                       
+                        <div style={{width:'100%',height:'200px'}}>
+                        {p.image? <img alt={p.title} className={classes.img} src= {`http://localhost:5000/${p.image}`} />:
+                         <img alt={p.title} className={classes.img} src={pollDefaultImage} />}
+                          
+                        </div> 
                         <FormControl component="fieldset">
                           <FormControlLabel
                             style={
@@ -207,7 +216,8 @@ export default function Polls() {
                             value={p.option}
                             control={<Radio color="primary" />}
                             name="option"
-                            label={p.option + " (" + p.votes + ")"}
+                            label={<Typography style={{fontSize:'0.9rem'}}>{p.option + " (" + p.votes + ")"}</Typography>}
+                            
                           />
                         </FormControl>
                       </Grid>
@@ -273,7 +283,9 @@ export default function Polls() {
                   )}
                 </CardActions>
               </Card>
+              
             </Grid>
+           
           ))}
         </Grid>
       </Container>

@@ -26,7 +26,8 @@ export const login = async (req,res) => {
           lastName:'',
           id:'',
           division:'',
-          emailId : ''
+          emailId : '',
+          selectedFile : ''
       }, 
       token  :''  
   }
@@ -55,6 +56,7 @@ export const login = async (req,res) => {
               responseData.userData.id = user._id;
               responseData.userData.division =user.division;
               responseData.userData.emailId = user.email;
+              responseData.userData.selectedFile = user.selectedFile;
               responseMessages.messages.message= 'Login Success';
               responseMessages.messages.status = LOGIN_SUCCESSFUL;
               responseData.token = token;
@@ -138,6 +140,7 @@ export const getUserData = async (req, res) => {
       responseData.userData.id = user._id;
       responseData.userData.division = user.division;
       responseData.userData.emailId = user.email;
+      responseData.userData.selectedFile = user.selectedFile;
       responseData.token = token;
       responseMessages.messages.message = "Login Success through token";
       responseMessages.messages.status = "11";
@@ -205,7 +208,6 @@ export const resetPassword = async (req, res) => {
     if(!user){
       responseMessages.messages.message= 'Password reset link is either invalid or expired.';
       responseMessages.messages.status = INVALID_LINK;
-      console.log(responseMessages);
       return res.status(200).json(responseMessages);
   } 
   else{
@@ -222,7 +224,6 @@ export const resetPassword = async (req, res) => {
 
     responseMessages.messages.message = "Password has been updated.";
     responseMessages.messages.status = PASSWORD_UPDATE_SUCCESS;
-    console.log(responseMessages);
     return res.status(200).json(responseMessages);
 
 }

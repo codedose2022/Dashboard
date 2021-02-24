@@ -5,14 +5,15 @@ import {
   FormGroup,
   Grid,
   Switch,
-  ThemeProvider
+  ThemeProvider,
 } from "@material-ui/core";
 import { green, grey } from "@material-ui/core/colors";
 import Alert from "@material-ui/lab/Alert";
 import moment from "moment";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import * as api from '../../../api';
+import * as api from "../../../api";
+import { employeeFormData } from "../../../helper";
 import AddBasicInfo from "./AddBasicInfo";
 import AddDependenceDetails from "./AddDependenceDetails";
 import useStyles from "./AddEmployeeStyles";
@@ -94,9 +95,7 @@ export default function AddEmployee(props) {
           : "10-digits required."
         : "This field is required";
     }
-    // if ("hobbies" in fieldValues) {
-    //   temp.hobbies = fieldValues.hobbies ? "" : "This field is required.";
-    // }
+
     if ("dateOfHire" in fieldValues) {
       temp.dateOfHire = fieldValues.dateOfHire ? "" : "This field is required.";
     }
@@ -134,9 +133,7 @@ export default function AddEmployee(props) {
           : "10-digits required."
         : "This field is required.";
     }
-    // if ("dietPath" in fieldValues) {
-    //   temp.dietPath = fieldValues.dietPath ? "" : "This field is required.";
-    // }
+
     setErrors({
       ...temp,
     });
@@ -155,9 +152,11 @@ export default function AddEmployee(props) {
     e.preventDefault();
     if (validate()) {
       if (!props.employee) {
+        const formData = employeeFormData(addEmployee, dependence);
+
         try {
           addEmployee.dependenceDetails = dependence;
-          await api.createEmployee(token, addEmployee).then((response) => {
+          await api.createEmployee(token, formData).then((response) => {
             if (response.data.messages.status === "14") {
               setStatus(response.data.messages.message);
               props.handleClose();
@@ -176,12 +175,16 @@ export default function AddEmployee(props) {
       }
       if (props.employee) {
         try {
-          addEmployee.dependenceDetails = dependence;
-          addEmployee._id = props.employee._id;
+          const formData = employeeFormData(addEmployee, dependence);
+          formData.append("_id", props.employee._id);
+
           if (disableProfile.disableInd) {
             addEmployee.disableInd = "Y";
+            formData.append("disableInd", "Y");
+          } else {
+            formData.append("disableInd", "N");
           }
-          const data = await api.editEmployee(token, addEmployee);
+          const data = await api.editEmployee(token, formData);
 
           if (data.data.messages.status === "15") {
             setStatus(data.data.messages.message);
@@ -284,7 +287,7 @@ export default function AddEmployee(props) {
                   addEmployee={addEmployee}
                   validate={validate}
                 />
- 
+
                 <AddDependenceDetails
                   dependence={dependence}
                   disableProfile={disableProfile}

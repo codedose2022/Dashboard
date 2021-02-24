@@ -164,5 +164,9 @@ export default makeStyles((theme) => ({
   },
   iconStyles : {
     fontSize: 18 
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   }
 }));

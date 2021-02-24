@@ -42,11 +42,12 @@ export default makeStyles((theme) => ({
       fontSizeStyle :{
         fontSize : '0.8rem'
       },
-    backGroundColorStyle:{
-      //backgroundColor: "#9acd326b"
-    },
     menuStyleNav : {
       top: '35px',
+    },
+    small: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
     }
 })
 )

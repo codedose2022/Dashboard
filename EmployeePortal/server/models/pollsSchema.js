@@ -10,6 +10,9 @@ const OptionSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    image: {
+      type: String,
+    },
     employeeId: {
       type: [schema.Types.ObjectId],
       ref: "employeeSchema",

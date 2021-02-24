@@ -26,7 +26,25 @@ export const createPolls = async (req, res) => {
     },
     polls: {},
   };
-  const poll = new Polls(req.body);
+  const question = req.body.question;
+  const title = req.body.title;
+  const deadline = req.body.deadline;
+  const options = JSON.parse(req.body.options);
+
+  options.map((option, optionIndex) => {
+    req.files.map((file, fileIndex) => {
+      if (optionIndex === fileIndex) {
+        option.image = file.filename;
+      }
+    });
+  });
+  const pollData = {
+    question,
+    title,
+    deadline,
+    options,
+  };
+  const poll = new Polls(pollData);
   try {
     if (poll.options.length < 2) {
       responseMessages.messages.message =

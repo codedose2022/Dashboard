@@ -3,26 +3,26 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    maxWidth: '100%',
-    maxHeight: '100%',
-    padding:"10px",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "100%"
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: '75%',
+      maxHeight: '100%',
+      padding:"10px",
+      margin: '0px auto'
+    },
+   
   },
+  
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
   img: {
-    [theme.breakpoints.down("xs")]: {
-      width: "100px",
-    },
-    [theme.breakpoints.between("xs", "sm")]: {
-      width: "150px",
-    },
-    [theme.breakpoints.up("sm", "md")]: {
-      width: "150px",
-      height: "150px",
-      objectFit: "contain",
-    },
+    objectFit: "cover",
+    width: "100%",
+        height: "100%",
   },
   expand: {
     marginLeft: "auto",
@@ -36,6 +36,8 @@ export default makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+    paddingLeft:'0px',
+    paddingRight:'0px',
   },
   card: {
     height: '100%',
@@ -43,7 +45,6 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardContent: {
-    // flexGrow: 1,
     padding:'25px',
   },
   header :{
@@ -68,7 +69,11 @@ export default makeStyles((theme) => ({
   },
   buttonStyle : {
     fontSize: "0.59rem",
-    marginBottom : '14px'
+    marginBottom : '14px',
+    [theme.breakpoints.up("md")]: {
+      marginRight: theme.spacing(13.4),
+     
+    },
   },
   headingSize : {
     fontSize: "12px",

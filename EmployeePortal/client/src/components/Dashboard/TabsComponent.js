@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
-  Tabs,
-  Tab,
-  createMuiTheme,
-  ThemeProvider,
   Box,
+  createMuiTheme,
+  Tab,
+  Tabs,
+  ThemeProvider,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import _ from "lodash";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../../components/Dashboard/Navbar";
 import ListEmployees from "../Employees/Display/ListEmployees";
 import EventsPage from "../Events/EventsPage";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Navbar from '../../components/Dashboard/Navbar';
-import { useDispatch, useSelector } from "react-redux";
 import Polls from "../Polls/Polls";
-import _ from "lodash";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
-      role='tabpanel'
+      role="tabpanel"
       hidden={value !== index}
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
@@ -63,9 +63,9 @@ const theme = createMuiTheme({
     primary: {
       main: green[900],
     },
-    secondary : {
-      main: '#d50000'
-    }
+    secondary: {
+      main: "#d50000",
+    },
   },
 });
 
@@ -73,53 +73,51 @@ export default function TabsComponent(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const [value, setValue] = useState(_.get(state, 'tabs.selectedTab',0))
+  const [value, setValue] = useState(_.get(state, "tabs.selectedTab", 0));
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    dispatch ({type: 'TABS_CHANGE', payload: newValue});
+    dispatch({ type: "TABS_CHANGE", payload: newValue });
   };
 
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
         <AppBar
-          position='fixed'
-          color='default'
+          position="fixed"
+          color="default"
           style={{ backgroundColor: "#ffffff" }}
           elevation={0}
         >
-          <Navbar/>
+          <Navbar />
           <Tabs
             value={value}
             onChange={handleChange}
-            indicatorColor='primary'
-            textColor='primary'
+            indicatorColor="primary"
+            textColor="primary"
             variant={smallScreen ? "scrollable" : "fullWidth"}
-            scrollButtons='auto'
-            aria-label='scrollable tabs'
+            scrollButtons="auto"
+            aria-label="scrollable tabs"
           >
             <Tab
               className={classes.itemSize}
-              label='EVENTS'
+              label="EVENTS"
               {...a11yProps(0)}
             />
-            <Tab className={classes.itemSize} label='POLLS' {...a11yProps(1)} />
+            <Tab className={classes.itemSize} label="POLLS" {...a11yProps(1)} />
             <Tab
               className={classes.itemSize}
-              label='GALLERY'
+              label="GALLERY"
               {...a11yProps(2)}
             />
             {props.isEventsMember && (
               <Tab
                 className={classes.itemSize}
-                label='EMPLOYEES'
+                label="EMPLOYEES"
                 {...a11yProps(3)}
               />
             )}
-
           </Tabs>
-      
         </AppBar>
         <TabPanel value={value} index={0}>
           <EventsPage />
@@ -128,12 +126,11 @@ export default function TabsComponent(props) {
           <Polls />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          gallery
         </TabPanel>
         <TabPanel value={value} index={3}>
           <ListEmployees />
         </TabPanel>
-        
       </ThemeProvider>
     </div>
   );

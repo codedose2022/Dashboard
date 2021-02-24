@@ -1,13 +1,12 @@
 import { Grid, IconButton, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import moment from 'moment';
+import moment from "moment";
 import React from "react";
 import Heading from "../Heading";
 import useStyles from "./AddEmployeeStyles";
 
 function AddDependenceDetails(props) {
-
   const classes = useStyles();
   const handleChangeInput = (index, e) => {
     const values = [...props.dependence];
@@ -30,70 +29,71 @@ function AddDependenceDetails(props) {
     <Grid container spacing={2}>
       <Heading text="Dependence Details" />
 
-      {props.dependence.map((d, index) => (
-        <Grid container spacing={3} key={index}>
-           <Grid item lg={3} >
-          <TextField
-          fullWidth
-            className={classes.div}
-            id="dependenceName"
-            name="dependenceName"
-            label="Name"
-            variant="outlined"
-            size="small"
-            disabled={props.disableProfile.disableInd}
-            value={d.dependenceName}
-            onChange={(e) => handleChangeInput(index, e)}
-          />
+      {props.dependence &&
+        props.dependence.map((d, index) => (
+          <Grid container spacing={3} key={index}>
+            <Grid item lg={3}>
+              <TextField
+                fullWidth
+                className={classes.div}
+                id="dependenceName"
+                name="dependenceName"
+                label="Name"
+                variant="outlined"
+                size="small"
+                disabled={props.disableProfile.disableInd}
+                value={d.dependenceName}
+                onChange={(e) => handleChangeInput(index, e)}
+              />
+            </Grid>
+            <Grid item lg={3}>
+              <TextField
+                fullWidth
+                className={classes.div}
+                id="dependenceRelationship"
+                name="dependenceRelationship"
+                label="Relationship"
+                variant="outlined"
+                size="small"
+                disabled={props.disableProfile.disableInd}
+                value={d.dependenceRelationship}
+                onChange={(e) => handleChangeInput(index, e)}
+              />
+            </Grid>
+            <Grid item lg={3}>
+              <TextField
+                fullWidth
+                className={classes.div}
+                id="dependenceDob"
+                name="dependenceDob"
+                label="Date of Birth"
+                variant="outlined"
+                type="date"
+                size="small"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  max: `${moment().format("YYYY-MM-DD").toString()}`,
+                }}
+                disabled={props.disableProfile.disableInd}
+                value={d.dependenceDob}
+                onChange={(e) => handleChangeInput(index, e)}
+              />
+            </Grid>
+            <Grid item lg={3}>
+              <IconButton
+                disabled={index === 0}
+                onClick={() => handleRemoveFields(index)}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <IconButton onClick={() => handleAddFields()}>
+                <AddIcon />
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item lg={3}>
-          <TextField
-          fullWidth
-            className={classes.div}
-            id="dependenceRelationship"
-            name="dependenceRelationship"
-            label="Relationship"
-            variant="outlined"
-            size="small"
-            disabled={props.disableProfile.disableInd}
-            value={d.dependenceRelationship}
-            onChange={(e) => handleChangeInput(index, e)}
-          />
-           </Grid>
-          <Grid item lg={3}>
-          <TextField
-          fullWidth
-            className={classes.div}
-            id="dependenceDob"
-            name="dependenceDob"
-            label="Date of Birth"
-            variant="outlined"
-            type="date"
-            size="small"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              max: `${moment().format("YYYY-MM-DD").toString()}`,
-            }}
-            disabled={props.disableProfile.disableInd}
-            value={d.dependenceDob}
-            onChange={(e) => handleChangeInput(index, e)}
-          />
-           </Grid>
-          <Grid item lg={3}>
-          <IconButton
-            disabled={index === 0}
-            onClick={() => handleRemoveFields(index)}
-          >
-            <RemoveIcon />
-          </IconButton>
-          <IconButton onClick={() => handleAddFields()}>
-            <AddIcon />
-          </IconButton>
-          </Grid>
-        </Grid>
-      ))}
+        ))}
     </Grid>
   );
 }

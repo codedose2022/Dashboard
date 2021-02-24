@@ -1,10 +1,10 @@
 import { IconButton, TextField } from "@material-ui/core";
-import React, { useState } from "react";
-import useStyles from "./EventPageStyles";
 import SendIcon from "@material-ui/icons/Send";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewComment } from "../../api/index";
 import { getEvents } from "../../actions/events";
+import { addNewComment } from "../../api/index";
+import useStyles from "./EventPageStyles";
 
 export default function CommentsComponent(props) {
   const classes = useStyles();
@@ -19,6 +19,7 @@ export default function CommentsComponent(props) {
       comments: commentsAdded,
       employeeFirstName: props.userData.firstName,
       employeeLastName: props.userData.lastName,
+      selectedFile: props.userData.selectedFile,
     };
     if (commentsAdded !== "") {
       try {
@@ -43,12 +44,12 @@ export default function CommentsComponent(props) {
           InputProps={{
             classes: { input: classes.input },
           }}
-          placeholder='leave your comments'
+          placeholder="leave your comments"
           value={commentsAdded}
           onChange={(e) => setComments(e.target.value)}
         />
         <IconButton onClick={handleSubmit}>
-          <SendIcon color='primary' className = {classes.iconStyles} />
+          <SendIcon color="primary" className={classes.iconStyles} />
         </IconButton>
       </form>
     </div>

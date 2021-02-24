@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-import useStyles from "./EventPageStyles";
 import {
-  Paper,
-  Chip,
   Box,
-  Typography,
+  Button,
+  Chip,
   Grid,
+  Hidden,
   IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+  useMediaQuery,
 } from "@material-ui/core";
-import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
 import AddIcon from "@material-ui/icons/Add";
-import { useMediaQuery, Button, Tooltip, Hidden } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
+import DoneIcon from "@material-ui/icons/Done";
 import EditIcon from "@material-ui/icons/Edit";
 import _ from "lodash";
-import AddEvents from "./AddEvents";
-import DeleteEvent from "./DeleteEvent";
 import moment from "moment";
-import * as helper from "../../helper";
-import CommentsComponent from "./CommentsComponent";
-import CommentList from "./CommentList";
-import { useDispatch } from "react-redux";
-import * as api from "../../api";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../actions/events";
-import DoneIcon from "@material-ui/icons/Done";
+import * as api from "../../api";
+import * as helper from "../../helper";
+import AddEvents from "./AddEvents";
+import CommentList from "./CommentList";
+import CommentsComponent from "./CommentsComponent";
+import DeleteEvent from "./DeleteEvent";
+import useStyles from "./EventPageStyles";
+import LikeDislikeCommentComponent from "./LikeDislikeCommentComponent";
 import ViewMoreComponent from "./ViewMoreComponent";
 
 export default function EventsPage() {
@@ -66,7 +68,7 @@ export default function EventsPage() {
 
   const approveEvent = async (event, eventIndex) => {
     try {
-      const response = await api.editEvent(token, {
+      const response = await api.approval(token, {
         status: "Approved",
         _id: event._id,
       });
@@ -79,7 +81,7 @@ export default function EventsPage() {
 
   const disApproveEvent = async (event, eventIndex) => {
     try {
-      const response = await api.editEvent(token, {
+      const response = await api.approval(token, {
         status: "Disapproved",
         _id: event._id,
       });
@@ -90,18 +92,19 @@ export default function EventsPage() {
     } catch (error) {}
   };
 
+
   return (
     <div className={classes.cardGrid}>
-      <Grid container justify='flex-end'>
+      <Grid container justify="flex-end">
         {isEventsMember && (
           <Button
-            id='Add-events-button'
-            key='Add-events-button_'
+            id="Add-events-button"
+            key="Add-events-button_"
             className={classes.addButtonStyle}
-            color='primary'
-            justify='flex-end'
+            color="primary"
+            justify="flex-end"
             variant={isSmallScreen ? "text" : "contained"}
-            size='small'
+            size="small"
             onClick={handleAddEventModelOpen}
             startIcon={<AddIcon className={classes.tableCellStyle} />}
           >
@@ -125,7 +128,7 @@ export default function EventsPage() {
                   <Chip
                     className={classes.chip}
                     key={`status_${event._id}`}
-                    size='small'
+                    size="small"
                     label={
                       event.status === "Approved" ? "Upcoming" : event.status
                     }
@@ -138,24 +141,24 @@ export default function EventsPage() {
                 }
                 {isEventsMember && (
                   <span>
-                    <Tooltip title='Edit'>
+                    <Tooltip title="Edit">
                       <IconButton
                         style={{ background: "none", padding: "0px" }}
                         key={`iconEditButton${event._id}`}
                         className={classes.iconVertical}
                         onClick={() => setEditButton(eventIndex)}
                       >
-                        <EditIcon color='primary' size='small' />
+                        <EditIcon color="primary" size="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title='Delete'>
+                    <Tooltip title="Delete">
                       <IconButton
                         style={{ background: "none" }}
                         key={`iconDeleteButton${event._id}`}
                         className={classes.iconVertical}
                         onClick={() => setDeleteButton(eventIndex)}
                       >
-                        <DeleteIcon color='primary' size='small' />
+                        <DeleteIcon color="primary" size="small" />
                       </IconButton>
                     </Tooltip>
                   </span>
@@ -165,25 +168,25 @@ export default function EventsPage() {
                     <span>
                       {["pending", "Disapproved"].includes(event.status) && (
                         <Chip
-                          size='small'
-                          label='Approve'
+                          size="small"
+                          label="Approve"
                           clickable
-                          color='primary'
+                          color="primary"
                           onDelete={() => approveEvent(event, eventIndex)}
                           deleteIcon={<DoneIcon />}
-                          variant='outlined'
+                          variant="outlined"
                           style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
                       &nbsp;
                       {["pending", "Approved"].includes(event.status) && (
                         <Chip
-                          size='small'
+                          size="small"
                           clickable
-                          label='disapprove'
+                          label="disapprove"
                           onDelete={() => disApproveEvent(event, eventIndex)}
-                          color='secondary'
-                          variant='outlined'
+                          color="secondary"
+                          variant="outlined"
                           style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
@@ -209,15 +212,15 @@ export default function EventsPage() {
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
-                variant='h6'
-                color='primary'
+                variant="h6"
+                color="primary"
                 style={{
                   wordWrap: "break-word",
                 }}
               >
                 {event.title.toUpperCase()}
               </Typography>
-              
+
               <div>
                 <Box p={1} key={`date${event._id}`} className={classes.box}>
                   <Grid container>
@@ -226,7 +229,7 @@ export default function EventsPage() {
                         {event.date && (
                           <span>
                             <Hidden smDown>
-                              <span variant='subtitle2'>Date : </span>
+                              <span variant="subtitle2">Date : </span>
                             </Hidden>
                             {moment(event.date).format("MMMM Do YYYY")}
                           </span>
@@ -241,7 +244,7 @@ export default function EventsPage() {
                       >
                         <span>
                           <Hidden smDown>
-                            <span variant='subtitle2'>Time : </span>
+                            <span variant="subtitle2">Time : </span>
                           </Hidden>
                           {moment(event.time, "hh:mm").format("LT")}
                         </span>
@@ -256,7 +259,7 @@ export default function EventsPage() {
                       >
                         <span>
                           <Hidden smDown>
-                            <span variant='subtitle2'>Venue : </span>
+                            <span variant="subtitle2">Venue : </span>
                           </Hidden>
                           {event.venue}
                         </span>
@@ -264,9 +267,16 @@ export default function EventsPage() {
                     </Grid>
                   </Grid>
                 </Box>
+
+                <img
+                  alt={event.title}
+                  style={{ width: "100%", height: "400px", objectFit: "cover" }}
+                  src={`http://localhost:5000/${event.img}`}
+                ></img>
+
                 <div style={{ margin: "12px", wordWrap: "break-word" }}>
                   <Typography
-                    variant='caption'
+                    variant="caption"
                     key={`desc${event._id}`}
                     className={classes.desc}
                   >

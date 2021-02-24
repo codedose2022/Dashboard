@@ -11,9 +11,10 @@ const commentsSchema = mongoose.Schema(
       type: schema.Types.ObjectId,
       ref: "eventsSchema",
     },
-    comments : String,
-    employeeFirstName : String,
-    employeeLastName : String,
+    comments: String,
+    employeeFirstName: String,
+    employeeLastName: String,
+    selectedFile: String,
   },
   { timestamps: true }
 );

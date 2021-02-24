@@ -1,23 +1,23 @@
-import React, { useState } from "react";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Grid,
-  TextField,
-  IconButton,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  TextField,
 } from "@material-ui/core";
-import * as api from "../../api";
-import { useDispatch } from "react-redux";
-import _ from "lodash";
-import { validateRequired } from "../../helper";
-import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import Alert from "@material-ui/lab/Alert";
-import useStyles from "./PollsStyles";
+import _ from "lodash";
 import moment from "moment";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as api from "../../api";
+import { validateRequired } from "../../helper";
+import useStyles from "./PollsStyles";
 
 export default function AddPolls(props) {
   const dispatch = useDispatch();
@@ -30,10 +30,12 @@ export default function AddPolls(props) {
   let [options, setOptions] = useState([
     {
       option: "",
+      image: "",
       votes: 0,
     },
     {
       option: "",
+      image: "",
       votes: 0,
     },
   ]);
@@ -48,9 +50,14 @@ export default function AddPolls(props) {
     values[index][e.target.name] = e.target.value;
     setOptions(values);
   };
+  const handleChangeInputPhoto = (index, e) => {
+    const values = [...options];
+    values[index][e.target.name] = e.target.files[0];
+    setOptions(values);
+  };
   const handleRemoveFields = (index) => {
     const values = [...options];
-    values.splice(index-1, 1);
+    values.splice(index - 1, 1);
     setOptions(values);
   };
   const handleClose = () => {
@@ -59,21 +66,24 @@ export default function AddPolls(props) {
   };
   const handleAdd = async () => {
     setShowRequired(true);
-    let isFieldEmpty = [
-      title,
-      question,
-      deadline,
-    ].includes("");
-    options.forEach(option => {
-      if(option.option==="")
-      {
-        isFieldEmpty=true;
+    let isFieldEmpty = [title, question, deadline].includes("");
+    options.forEach((option) => {
+      if (option.option === "") {
+        isFieldEmpty = true;
       }
     });
     if (!isFieldEmpty) {
-      let poll = { title, question, options, deadline };
+     // let poll = { title, question, options, deadline };
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("question", question);
+      formData.append("options", JSON.stringify(options));
+      options.forEach((option, index) => {
+        formData.append("image", option.image);
+      });
+      formData.append("deadline", deadline);
       try {
-        await api.createPoll(token, poll).then((response) => {
+        await api.createPoll(token, formData).then((response) => {
           const responseMessages = _.get(response, "data", "");
           if (
             responseMessages.messages.status === "34" ||
@@ -95,7 +105,13 @@ export default function AddPolls(props) {
     <div>
       <Dialog open={open} aria-labelledby="form-dialog-title">
         {error && <Alert severity="error"> {error} </Alert>}
-        <DialogTitle style={{ alignSelf: "center",color:'darkgreen'}} id="form-dialog-title"> ADD NEW POLL</DialogTitle>
+        <DialogTitle
+          style={{ alignSelf: "center", color: "darkgreen" }}
+          id="form-dialog-title"
+        >
+          {" "}
+          ADD NEW POLL
+        </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -168,6 +184,20 @@ export default function AddPolls(props) {
                   helperText={flag && validateRequired(option.option)}
                   onChange={(e) => handleChangeInput(index, e)}
                 />
+                <input
+                  style={{
+                    margin: "10px",
+                    paddingTop: "28px",
+                    marginRight: "50px",
+                  }}
+                  name="image"
+                  type="file"
+                  // FormHelperTextProps={{
+                  //   className: classes.helperTextColor,
+                  // }}
+                  // helperText={flag && validateRequired(option.option)}
+                  onChange={(e) => handleChangeInputPhoto(index, e)}
+                />
               </div>
             ))}
             <IconButton
@@ -182,10 +212,20 @@ export default function AddPolls(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} size="small" variant='contained' color="primary">
+          <Button
+            onClick={handleClose}
+            size="small"
+            variant="contained"
+            color="primary"
+          >
             Cancel
           </Button>
-          <Button onClick={handleAdd} size="small" variant='contained' color="primary">
+          <Button
+            onClick={handleAdd}
+            size="small"
+            variant="contained"
+            color="primary"
+          >
             Add
           </Button>
         </DialogActions>

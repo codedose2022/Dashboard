@@ -22,6 +22,7 @@ export const getEvents = (token,division) => axios.post(`${eventsUrl}getEvents`,
 export const addEvent = (token,event) => axios.post(`${eventsUrl}createEvents`,event,{headers : {"x-auth-token": token}}); 
 export const editEvent = (token,event) => axios.post(`${eventsUrl}editEvents`,event,{headers : {"x-auth-token": token}}); 
 export const deleteEvent = (token,event) => axios.post(`${eventsUrl}deleteEvents`,event,{headers : {"x-auth-token": token}}); 
+export const approval = (token,event) => axios.post(`${eventsUrl}approval`,event,{headers : {"x-auth-token": token}}); 
 
 
 export const upLike = (token,likeReq) => axios.post(`${likeDislike}upLike`,likeReq,{headers : {"x-auth-token": token}}); 

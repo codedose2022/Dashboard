@@ -1,13 +1,11 @@
+import { Link, List, Tooltip } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import moment from "moment";
 import React, { useState } from "react";
 import useStyles from "./EventPageStyles";
-import moment from "moment";
-import { List, Tooltip, Link } from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import ImageIcon from "@material-ui/icons/Image";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 export default function CommentList(props) {
   const classes = useStyles();
@@ -45,7 +43,7 @@ export default function CommentList(props) {
                   <Tooltip
                     title={`${comment.employeeFirstName} ${comment.employeeLastName}`}
                   >
-                    <AccountCircle color = 'action'/>
+                    <Avatar className = {classes.small} src={`http://localhost:5000/${comment.selectedFile}`} color = 'action'/>
                   </Tooltip>
                 </ListItemAvatar>
                 <ListItemText
