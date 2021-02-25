@@ -122,7 +122,7 @@ export default function AddEvents(props) {
 
   const setImage = (e) => {
     setImageRequired('');
-    let filename = e.target.files[0] === undefined ? '' : e.target.files[0].name
+    let filename = e.target.files[0] === undefined ? 'No image chosen' : e.target.files[0].name
     setFilename(filename)
     let pic = e.target.files[0] === undefined ? '' : e.target.files[0]
     console.log(pic)
