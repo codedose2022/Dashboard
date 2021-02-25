@@ -31,6 +31,7 @@ export default function AddEvents(props) {
   const [flag, setShowRequired] = useState(false);
   const [error, setError] = useState("");
   const [imageRequired, setImageRequired] = useState('')
+  const [filename, setFilename] = useState(props.event ? props.event.img : "")
   
 
   const today = moment();
@@ -120,8 +121,11 @@ export default function AddEvents(props) {
   };
 
   const setImage = (e) => {
-    setImageRequired('')
+    setImageRequired('');
+    let filename = e.target.files[0] === undefined ? '' : e.target.files[0].name
+    setFilename(filename)
     let pic = e.target.files[0] === undefined ? '' : e.target.files[0]
+    console.log(pic)
     setImg(pic);
   };
 
@@ -222,8 +226,11 @@ export default function AddEvents(props) {
 
               <Grid item xs={12}>
                 <div className={classes.fileInputStyle}>
-                  <input type="file" name="img" file = {img} onChange={(e) => setImage(e)} />  
+                  
+                  <input accept="image/*" type="file" style = {{color:'transparent'}} name="img" onChange={(e) => setImage(e)}/>
+                  <p className = {classes.imgRequired} style = {{color : 'black'}}>{filename}</p>
                   <p className = {classes.imgRequired}>{imageRequired}</p>
+                
                 </div>
               </Grid>
 
