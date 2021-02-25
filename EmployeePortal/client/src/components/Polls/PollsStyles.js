@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
       padding:"10px",
       margin: '0px auto'
     },
-   
+    borderRadius:'10px',
   },
   
   media: {

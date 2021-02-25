@@ -153,7 +153,6 @@ export default function AddEmployee(props) {
     if (validate()) {
       if (!props.employee) {
         const formData = employeeFormData(addEmployee, dependence);
-
         try {
           addEmployee.dependenceDetails = dependence;
           await api.createEmployee(token, formData).then((response) => {
@@ -236,13 +235,6 @@ export default function AddEmployee(props) {
           {status && <Alert severity="error"> {status} </Alert>}
           <ThemeProvider theme={theme}>
             <div className={classes.paper}>
-              {/* <Typography
-                variant="h6"
-                align="center"
-                className={classes.typography}
-              >
-                {props.employee ? "EDIT EMPLOYEE DETAILS" : "ADD EMPLOYEE"}
-              </Typography> */}
               {props.employee && (
                 <Grid container justify="flex-end">
                   <FormGroup row>
@@ -298,6 +290,7 @@ export default function AddEmployee(props) {
                 <AddProfilePhoto
                   errors={errors}
                   disableProfile={disableProfile}
+                  selectedFile={addEmployee.selectedFile}
                   setAddEmployee={setAddEmployee}
                   addEmployee={addEmployee}
                   validate={validate}

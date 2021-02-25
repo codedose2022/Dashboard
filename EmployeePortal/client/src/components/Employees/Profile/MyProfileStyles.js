@@ -29,14 +29,14 @@ export default makeStyles((theme) => ({
     },
   },
   image: {
-    marginLeft: "27%",
+    marginLeft: "30%",
     [theme.breakpoints.down("sm")]: {
-      width: "45%",
-      height: "45%",
+      width: "150px",
+      height: "150px",
     },
     [theme.breakpoints.up("md")]: {
-      width: "15%",
-      height: "15%",
+      width: "180px",
+      height: "180px",
     },
   },
 

@@ -17,7 +17,6 @@ const employeeSchema = mongoose.Schema({
     dateOfHire:Date,
     deskPhone:Number,
     workMobile:Number,
-    employeeStatus:String,
     phoneNumber:Number,
     nationality:String,
     gender:String,

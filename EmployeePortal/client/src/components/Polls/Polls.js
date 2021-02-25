@@ -168,12 +168,11 @@ export default function Polls() {
             <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={12}>
               <Card className={classes.root} elevation={10}>
                 <CardHeader
-                  style={{ paddingBottom: "5px" }}
+                  style={{ paddingBottom: "5px" ,color: "#1b5e20" }}
                   title={poll.title.toUpperCase()}
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
                   }
-                  style={{ color: "#1b5e20" }}
                   titleTypographyProps={{ variant: "h6" }}
                   subheaderTypographyProps={{ className: classes.headingSize }}
                   action={
@@ -276,7 +275,7 @@ export default function Polls() {
                     <div>
                       {poll.employeeId.includes(employee_Id) ? (
                         <Typography variant='subtitle2'>
-                          You have already voted for this poll.
+                          You have voted for this poll.
                         </Typography>
                       ) : (
                         <br />

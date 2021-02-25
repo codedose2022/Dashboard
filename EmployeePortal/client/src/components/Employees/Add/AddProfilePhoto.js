@@ -9,16 +9,18 @@ function AddProfilePhoto(props) {
     <Grid container spacing={2}>
       <Heading text="Add Profile Photo" />
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+       
         <input
           className={classes.fileInput}
           type="file"
           onChange={(e) =>
             props.setAddEmployee({
               ...props.addEmployee,
-              selectedFile: e.target.files[0],
-            })
+              selectedFile: e.target.files.length>0?e.target.files[0]:'',
+            } )
           }
         />
+        {console.log(props.addEmployee)}
       </Grid>
     </Grid>
   );

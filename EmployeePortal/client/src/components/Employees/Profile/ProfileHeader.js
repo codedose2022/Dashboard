@@ -18,10 +18,12 @@ function ProfileHeader(props) {
     <Grid item xs={12} container>
       <Grid item xs={12}>
         <Container className={classes.container}>
+         
           <Avatar
             src={`http://localhost:5000/${props.profileData.selectedFile}`}
             className={classes.image}
           />
+         
           <MuiThemeProvider theme={theme}>
             <Grid>
               <Grid container spacing={0}>

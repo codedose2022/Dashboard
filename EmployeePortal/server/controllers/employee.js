@@ -132,7 +132,7 @@ export const isTokenValid = async (req, res) => {
 };
 
 export const editProfile = async (req, res) => {
-    const selectedFile = req.file? req.file.filename : (!req.body.selectedFile?'':req.body.selectedFile);
+  const selectedFile = req.file? req.file.filename :req.body.selectedFile;
   let responseMessages = {
     messages: {
       status: "",
