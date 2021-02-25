@@ -30,6 +30,7 @@ export default function AddEvents(props) {
   const [img, setImg] = useState(props.event ? props.event.img : "");
   const [flag, setShowRequired] = useState(false);
   const [error, setError] = useState("");
+  const [imageRequired, setImageRequired] = useState('')
   
 
   const today = moment();
@@ -41,8 +42,9 @@ export default function AddEvents(props) {
   };
 
   const handleAdd = async (e) => {
-    e.preventDefault();
-    if(img ==='') setError('please add an image') ;
+    e.preventDefault(); 
+    console.log(img)
+    if(img ==='') setImageRequired('Please add an image') ;
     setShowRequired(true);
     const isFieldEmpty = [title, date, venue, time, img,desc].includes("");
     if (!isFieldEmpty) {
@@ -80,8 +82,8 @@ export default function AddEvents(props) {
 
   const handleEdit = async () => {
     setShowRequired(true);
-  
-    const isFieldEmpty = [title, date, time, desc, venue].includes("");
+    if(img ==='') setImageRequired('Please add an image') ;
+    const isFieldEmpty = [title, date, time, desc, venue,img].includes("");
     if (!isFieldEmpty) {
       let event = {
         title,
@@ -118,8 +120,9 @@ export default function AddEvents(props) {
   };
 
   const setImage = (e) => {
-    setError('')
-    setImg(e.target.files[0]);
+    setImageRequired('')
+    let pic = e.target.files[0] === undefined ? '' : e.target.files[0]
+    setImg(pic);
   };
 
   const handleClose = () => {
@@ -219,7 +222,8 @@ export default function AddEvents(props) {
 
               <Grid item xs={12}>
                 <div className={classes.fileInputStyle}>
-                  <input type="file" name="img" onChange={(e) => setImage(e)} />
+                  <input type="file" name="img" file = {img} onChange={(e) => setImage(e)} />  
+                  <p className = {classes.imgRequired}>{imageRequired}</p>
                 </div>
               </Grid>
 
