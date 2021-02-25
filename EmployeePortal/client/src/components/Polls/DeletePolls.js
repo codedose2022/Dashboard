@@ -23,6 +23,8 @@ export default function DeletePolls(props) {
       if (responseMessages.messages.status === "31") {
         handleCancel();
         dispatch({ type: "GET_POLLS", payload: responseMessages.polls });
+        props.setShowSnackbar(true);
+        props.setDisplaySnackbarText('Post deleted successfully' );
       }
     } catch (error) {
       setError("something went wrong, please try again.");

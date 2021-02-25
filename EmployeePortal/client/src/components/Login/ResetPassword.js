@@ -28,7 +28,6 @@ export default function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(window.location.href);
     const isFieldEmpty = [
       resetPasswordData.newPassword,
       resetPasswordData.confirmPassword,

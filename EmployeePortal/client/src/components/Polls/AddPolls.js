@@ -94,6 +94,8 @@ export default function AddPolls(props) {
           if (responseMessages.messages.status === "30") {
             handleClose();
             dispatch({ type: "GET_POLLS", payload: responseMessages.polls });
+            props.setShowSnackbar(true);
+            props.setDisplaySnackbarText('Posted successfully' );
           }
         });
       } catch (error) {
@@ -191,11 +193,8 @@ export default function AddPolls(props) {
                     marginRight: "50px",
                   }}
                   name="image"
+                  id = {index}
                   type="file"
-                  // FormHelperTextProps={{
-                  //   className: classes.helperTextColor,
-                  // }}
-                  // helperText={flag && validateRequired(option.option)}
                   onChange={(e) => handleChangeInputPhoto(index, e)}
                 />
               </div>

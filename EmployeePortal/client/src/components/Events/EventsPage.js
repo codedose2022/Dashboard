@@ -9,7 +9,9 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
+  Snackbar,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
@@ -46,6 +48,8 @@ export default function EventsPage() {
   const [editButton, setEdit] = useState({ index: {} });
   const [deleteButton, setDelete] = useState({ index: {} });
   const [open, setOpenModel] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [displaySnackbarText, setDisplaySnackbarText] = useState('');
   function setEditButton(index) {
     setEdit({
       index: {
@@ -53,6 +57,13 @@ export default function EventsPage() {
       },
     });
   }
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   function setDeleteButton(index) {
     setDelete({
@@ -92,26 +103,40 @@ export default function EventsPage() {
     } catch (error) {}
   };
 
-
   return (
     <div className={classes.cardGrid}>
-      <Grid container justify="flex-end">
+      <Grid container justify='flex-end'>
         {isEventsMember && (
           <Button
-            id="Add-events-button"
-            key="Add-events-button_"
+            id='Add-events-button'
+            key='Add-events-button_'
             className={classes.addButtonStyle}
-            color="primary"
-            justify="flex-end"
+            color='primary'
+            justify='flex-end'
             variant={isSmallScreen ? "text" : "contained"}
-            size="small"
+            size='small'
             onClick={handleAddEventModelOpen}
             startIcon={<AddIcon className={classes.tableCellStyle} />}
           >
             Add events
           </Button>
         )}
-        {open && <AddEvents setOpenModel={setOpenModel} userData={userData} />}
+        {open && (
+          <AddEvents
+            setOpenModel={setOpenModel}
+            userData={userData}
+            setShowSnackbar={setShowSnackbar}
+            setDisplaySnackbarText = {setDisplaySnackbarText}
+          />
+        )}
+        <Snackbar
+          open={showSnackbar}
+          autoHideDuration={2000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin ={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert  style = {{width: '300px', color: 'white', background: '#1b5e20'}} severity='success'>{displaySnackbarText}</Alert>
+        </Snackbar>
       </Grid>
       {events.map((event, eventIndex) => {
         return (
@@ -128,7 +153,7 @@ export default function EventsPage() {
                   <Chip
                     className={classes.chip}
                     key={`status_${event._id}`}
-                    size="small"
+                    size='small'
                     label={
                       event.status === "Approved" ? "Upcoming" : event.status
                     }
@@ -141,24 +166,24 @@ export default function EventsPage() {
                 }
                 {isEventsMember && (
                   <span>
-                    <Tooltip title="Edit">
+                    <Tooltip title='Edit'>
                       <IconButton
                         style={{ background: "none", padding: "0px" }}
                         key={`iconEditButton${event._id}`}
                         className={classes.iconVertical}
                         onClick={() => setEditButton(eventIndex)}
                       >
-                        <EditIcon color="primary" size="small" />
+                        <EditIcon color='primary' size='small' />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete">
+                    <Tooltip title='Delete'>
                       <IconButton
                         style={{ background: "none" }}
                         key={`iconDeleteButton${event._id}`}
                         className={classes.iconVertical}
                         onClick={() => setDeleteButton(eventIndex)}
                       >
-                        <DeleteIcon color="primary" size="small" />
+                        <DeleteIcon color='primary' size='small' />
                       </IconButton>
                     </Tooltip>
                   </span>
@@ -168,25 +193,25 @@ export default function EventsPage() {
                     <span>
                       {["pending", "Disapproved"].includes(event.status) && (
                         <Chip
-                          size="small"
-                          label="Approve"
+                          size='small'
+                          label='Approve'
                           clickable
-                          color="primary"
+                          color='primary'
                           onDelete={() => approveEvent(event, eventIndex)}
                           deleteIcon={<DoneIcon />}
-                          variant="outlined"
+                          variant='outlined'
                           style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
                       &nbsp;
                       {["pending", "Approved"].includes(event.status) && (
                         <Chip
-                          size="small"
+                          size='small'
                           clickable
-                          label="disapprove"
+                          label='disapprove'
                           onDelete={() => disApproveEvent(event, eventIndex)}
-                          color="secondary"
-                          variant="outlined"
+                          color='secondary'
+                          variant='outlined'
                           style={{ border: "1px solid #DCDCDC" }}
                         />
                       )}
@@ -198,13 +223,15 @@ export default function EventsPage() {
             )}
 
             {_.get(editButton, `index.${eventIndex}`, false) && (
-              <AddEvents setEdit={setEdit} event={event} userData={userData} />
+              <AddEvents setEdit={setEdit} event={event} userData={userData}  setShowSnackbar={setShowSnackbar}  setDisplaySnackbarText = {setDisplaySnackbarText}/>
             )}
             {_.get(deleteButton, `index.${eventIndex}`, false) && (
               <DeleteEvent
                 setDelete={setDelete}
                 event={event}
                 userData={userData}
+                setShowSnackbar={setShowSnackbar}
+                setDisplaySnackbarText = {setDisplaySnackbarText}
               />
             )}
 
@@ -212,8 +239,8 @@ export default function EventsPage() {
               <Typography
                 key={`title${event._id}`}
                 className={classes.marginStyle}
-                variant="h6"
-                color="primary"
+                variant='h6'
+                color='primary'
                 style={{
                   wordWrap: "break-word",
                 }}
@@ -229,7 +256,7 @@ export default function EventsPage() {
                         {event.date && (
                           <span>
                             <Hidden smDown>
-                              <span variant="subtitle2">Date : </span>
+                              <span variant='subtitle2'>Date : </span>
                             </Hidden>
                             {moment(event.date).format("MMMM Do YYYY")}
                           </span>
@@ -244,7 +271,7 @@ export default function EventsPage() {
                       >
                         <span>
                           <Hidden smDown>
-                            <span variant="subtitle2">Time : </span>
+                            <span variant='subtitle2'>Time : </span>
                           </Hidden>
                           {moment(event.time, "hh:mm").format("LT")}
                         </span>
@@ -259,7 +286,7 @@ export default function EventsPage() {
                       >
                         <span>
                           <Hidden smDown>
-                            <span variant="subtitle2">Venue : </span>
+                            <span variant='subtitle2'>Venue : </span>
                           </Hidden>
                           {event.venue}
                         </span>
@@ -276,7 +303,7 @@ export default function EventsPage() {
 
                 <div style={{ margin: "12px", wordWrap: "break-word" }}>
                   <Typography
-                    variant="caption"
+                    variant='caption'
                     key={`desc${event._id}`}
                     className={classes.desc}
                   >

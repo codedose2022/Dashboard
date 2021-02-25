@@ -30,6 +30,7 @@ export default function AddEvents(props) {
   const [img, setImg] = useState(props.event ? props.event.img : "");
   const [flag, setShowRequired] = useState(false);
   const [error, setError] = useState("");
+  
 
   const today = moment();
   const todayDate = today.format("YYYY-MM-DD").toString();
@@ -41,8 +42,9 @@ export default function AddEvents(props) {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    if(img ==='') setError('please add an image') ;
     setShowRequired(true);
-    const isFieldEmpty = [title, date, venue, time, desc].includes("");
+    const isFieldEmpty = [title, date, venue, time, img,desc].includes("");
     if (!isFieldEmpty) {
       //let event = { title, date, venue, desc, img, time };
       const formData = new FormData();
@@ -60,6 +62,8 @@ export default function AddEvents(props) {
             if (responseData.messages.status === "21") {
               handleCancel();
               dispatch(getEvents(token, props.userData.division));
+              props.setShowSnackbar(true);
+              props.setDisplaySnackbarText('Posted successfully' );
             }
           })
           .catch((error) => {
@@ -76,6 +80,7 @@ export default function AddEvents(props) {
 
   const handleEdit = async () => {
     setShowRequired(true);
+  
     const isFieldEmpty = [title, date, time, desc, venue].includes("");
     if (!isFieldEmpty) {
       let event = {
@@ -103,6 +108,8 @@ export default function AddEvents(props) {
         if (responseData.messages.status === "21") {
           handleCancel();
           dispatch(getEvents(token, props.userData.division));
+          props.setShowSnackbar(true)
+          props.setDisplaySnackbarText('Edited successfully' )
         }
       } catch (error) {
         setError("something went wrong, please try again.");
@@ -111,6 +118,7 @@ export default function AddEvents(props) {
   };
 
   const setImage = (e) => {
+    setError('')
     setImg(e.target.files[0]);
   };
 

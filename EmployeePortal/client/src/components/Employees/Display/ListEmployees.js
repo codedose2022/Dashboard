@@ -73,13 +73,13 @@ export default function ListEmployees() {
           <Table
             stickyHeader
             aria-label="sticky table"
-            className={classes.tableBorder}
+           
           >
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell
-                    style={{ borderBottom: "1px solid #1b5e20" }}
+                    style={{ background: "rgb(47 51 49 / 6%)" }}
                     key={`${index}_${column.id}`}
                     align="left"
                     className={classes.tableHeadStyle}
@@ -104,7 +104,6 @@ export default function ListEmployees() {
                         const value = employee[column.id];
                         return (
                           <TableCell
-                            style={{ borderBottom: "1px solid green" }}
                             className={classes.tableCellStyle}
                             key={`${employeeIndex}_${column.id}`}
                             align="left"
@@ -167,7 +166,7 @@ export default function ListEmployees() {
             </TableBody>
           </Table>
           <TablePagination
-            className={classes.tableBorderStyle}
+        
             rowsPerPageOptions={[10, 100]}
             component="div"
             count={employeeInfo.length}

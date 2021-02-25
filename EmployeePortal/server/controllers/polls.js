@@ -1,5 +1,6 @@
 import express from "express";
 import Polls from "../models/pollsSchema.js";
+import fs from 'fs';
 const router = express.Router();
 
 const POLLS_CREATION_SUCCESS = "30";
@@ -86,6 +87,11 @@ export const deletePolls = async (req, res) => {
   };
   try {
     await Polls.findByIdAndRemove(req.body._id);
+      req.body.options.map(option =>{
+        if(option.image!==''){
+          fs.unlinkSync('images/'+ option.image)
+        }
+      })
     responseMessages.messages.message = "Poll Deleted Successfully.";
     responseMessages.messages.status = POLLS_DELETION_SUCCESS;
     const polls = await Polls.find().sort({ createdAt: -1 });

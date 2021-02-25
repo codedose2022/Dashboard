@@ -33,6 +33,8 @@ export default function DeleteEvent(props) {
       if (responseData.messages.status === "21") {
         handleCancel();
         dispatch(getEvents(token, props.userData.division));
+        props.setShowSnackbar(true)
+        props.setDisplaySnackbarText('Post deleted successfully' )
       }
     } catch (error) {
       setError("something went wrong, please try again.");

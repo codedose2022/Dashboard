@@ -77,6 +77,11 @@ export default makeStyles((theme) => ({
   },
   headingSize : {
     fontSize: "12px",
+  },
+  qStyles : {
+    marginBottom:'5px',
+    color: "#524f4fcc",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
   }
-  
 }))

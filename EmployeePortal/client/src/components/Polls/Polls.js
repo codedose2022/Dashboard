@@ -11,7 +11,9 @@ import {
   Grid,
   Radio,
   Tooltip,
-  Typography, useMediaQuery
+  Snackbar,
+  Typography,
+  useMediaQuery,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -48,7 +50,8 @@ export default function Polls() {
   const [addModel, setAddModel] = useState(false);
   const [deleteModel, setDeleteModel] = useState({ index: {} });
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
-
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [displaySnackbarText, setDisplaySnackbarText] = useState('');
   let polls = _.get(state, "polls.polls", []);
 
   const handleChange = (event, pollId, optionId) => {
@@ -81,11 +84,9 @@ export default function Polls() {
       } else {
         setError("Please submit the selected option.");
         scroll();
-        
       }
     } catch (error) {
       setError("something went wrong, please try again.");
-      
     }
   };
 
@@ -100,7 +101,12 @@ export default function Polls() {
       },
     });
   };
-
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
   const setTime = (deadline) => {
     const now = new Date().getTime();
     const cntdownDate = new Date(deadline).getTime();
@@ -113,31 +119,50 @@ export default function Polls() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  const scroll = () =>{
-    window.scrollTo(0,0)
-  } 
-  return ( 
+  const scroll = () => {
+    window.scrollTo(0, 0);
+  };
+  return (
     <div>
-      <Container className={classes.cardGrid} maxWidth="md">
-        {error && <Alert severity="error"> {error} </Alert>}
-        <Grid container justify="flex-end">
+      <Container className={classes.cardGrid} maxWidth='md'>
+        {error && <Alert severity='error'> {error} </Alert>}
+        <Grid container justify='flex-end'>
           {isEventsMember && (
             <Button
-              id="Add-polls-button"
-              key="Add-polls-button_"
+              id='Add-polls-button'
+              key='Add-polls-button_'
               className={classes.buttonStyle}
-              color="primary"
-              justify="flex-end"
+              color='primary'
+              justify='flex-end'
               variant={isSmallScreen ? "text" : "contained"}
-              size="small"
+              size='small'
               onClick={() => addPolls()}
               startIcon={<AddIcon />}
             >
               Add polls
             </Button>
           )}
-          {addModel && <AddPolls setAddModel={setAddModel} />}
+          {addModel && (
+            <AddPolls
+              setAddModel={setAddModel}
+              setShowSnackbar={setShowSnackbar}
+              setDisplaySnackbarText={setDisplaySnackbarText}
+            />
+          )}
         </Grid>
+        <Snackbar
+          open={showSnackbar}
+          autoHideDuration={2000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            style={{ width: "300px", color: "white", background: "#1b5e20" }}
+            severity='success'
+          >
+           {displaySnackbarText}
+          </Alert>
+        </Snackbar>
         <Grid container spacing={2}>
           {polls.map((poll, pollIndex) => (
             <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={12}>
@@ -148,21 +173,25 @@ export default function Polls() {
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
                   }
+                  style={{ color: "#1b5e20" }}
                   titleTypographyProps={{ variant: "h6" }}
                   subheaderTypographyProps={{ className: classes.headingSize }}
                   action={
-                    <Box p={2} display="flex" alignItems="center">
-                      <Tooltip title="Time Left" aria-label="timeLeft">
+                    <Box p={2} display='flex' alignItems='center'>
+                      <Tooltip title='Time Left' aria-label='timeLeft'>
                         <ScheduleIcon
-                          style={{ fontSize: "1rem" }}
-                          size="small"
+                          style={{ fontSize: "1rem", color: "grey" }}
+                          size='small'
                         />
                       </Tooltip>
                       &nbsp;
                       <Countdown
                         date={Date.now() + moment(setTime(poll.deadline))}
                         renderer={(props) => (
-                          <Typography variant={"body2"}>
+                          <Typography
+                            style={{ color: "grey" }}
+                            variant={"body2"}
+                          >
                             {props.days} D:
                             {props.hours} H:
                             {props.minutes} M:
@@ -176,7 +205,11 @@ export default function Polls() {
                 <CardContent
                   style={{ paddingTop: "5px", paddingBottom: "5px" }}
                 >
-                  <Typography style={{marginBottom:'5px'}} variant="subtitle1" component="p">
+                  <Typography
+                    className={classes.qStyles}
+                    variant='subtitle1'
+                    component='p'
+                  >
                     {poll.question}
                   </Typography>
 
@@ -189,13 +222,22 @@ export default function Polls() {
                         sm={6}
                         md={6}
                       >
-                       
-                        <div style={{width:'100%',height:'200px'}}>
-                        {p.image? <img alt={p.title} className={classes.img} src= {`http://localhost:5000/${p.image}`} />:
-                         <img alt={p.title} className={classes.img} src={pollDefaultImage} />}
-                          
-                        </div> 
-                        <FormControl component="fieldset">
+                        <div style={{ width: "100%", height: "200px" }}>
+                          {p.image ? (
+                            <img
+                              alt={p.title}
+                              className={classes.img}
+                              src={`http://localhost:5000/${p.image}`}
+                            />
+                          ) : (
+                            <img
+                              alt={p.title}
+                              className={classes.img}
+                              src={pollDefaultImage}
+                            />
+                          )}
+                        </div>
+                        <FormControl component='fieldset'>
                           <FormControlLabel
                             style={
                               new Date(poll.deadline).getTime() <=
@@ -214,10 +256,13 @@ export default function Polls() {
                                   selectedPollId === `${poll._id}`
                             }
                             value={p.option}
-                            control={<Radio color="primary" />}
-                            name="option"
-                            label={<Typography style={{fontSize:'0.9rem'}}>{p.option + " (" + p.votes + ")"}</Typography>}
-                            
+                            control={<Radio color='primary' />}
+                            name='option'
+                            label={
+                              <Typography style={{ fontSize: "0.9rem" }}>
+                                {p.option + " (" + p.votes + ")"}
+                              </Typography>
+                            }
                           />
                         </FormControl>
                       </Grid>
@@ -230,7 +275,7 @@ export default function Polls() {
                   >
                     <div>
                       {poll.employeeId.includes(employee_Id) ? (
-                        <Typography variant="subtitle2">
+                        <Typography variant='subtitle2'>
                           You have already voted for this poll.
                         </Typography>
                       ) : (
@@ -238,7 +283,7 @@ export default function Polls() {
                       )}
                       {new Date(poll.deadline).getTime() <=
                         new Date().getTime() && (
-                        <Typography variant="subtitle2">
+                        <Typography variant='subtitle2'>
                           This poll is expired.
                         </Typography>
                       )}
@@ -260,11 +305,11 @@ export default function Polls() {
                           }
                           key={`submitButton${poll._id}`}
                           onClick={() => handleSubmit(poll._id)}
-                          size="small"
-                          color="primary"
-                          variant="contained"
+                          size='small'
+                          color='primary'
+                          variant='contained'
                         >
-                          <DoneIcon color="primary" size="small" />
+                          <DoneIcon color='primary' size='small' />
                         </IconButton>
                       )}
                       {isEventsMember && (
@@ -273,19 +318,18 @@ export default function Polls() {
                           key={`iconDeleteButton${poll._id}`}
                           onClick={() => deletePolls(pollIndex)}
                         >
-                          <DeleteIcon color="primary" size="small" />
+                          <DeleteIcon color='primary' size='small' />
                         </IconButton>
                       )}
                     </div>
                   </div>
                   {_.get(deleteModel, `index.${pollIndex}`, false) && (
-                    <DeletePolls setDeleteModel={setDeleteModel} poll={poll} />
+                    <DeletePolls setDeleteModel={setDeleteModel} poll={poll} setShowSnackbar={setShowSnackbar}
+                    setDisplaySnackbarText={setDisplaySnackbarText}/>
                   )}
                 </CardActions>
               </Card>
-              
             </Grid>
-           
           ))}
         </Grid>
       </Container>

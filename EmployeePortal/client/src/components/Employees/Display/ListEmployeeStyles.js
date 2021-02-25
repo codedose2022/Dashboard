@@ -31,18 +31,6 @@ export default makeStyles((theme) => ({
     fontSize: "0.7rem",
   },
 
-  tableBorder: {
-    borderColor: "green",
-    borderStyle: "solid",
-    borderWidth: 0.2,
-    borderBottom: 0,
-  },
-  tableBorderStyle: {
-    borderColor: "green",
-    borderStyle: "solid",
-    borderWidth: 0.2,
-    borderTopWidth: 0,
-  },
   selectDropdown: { color: "#fff", backgroundColor: "#1b1f38" },
 
   toolbar: {

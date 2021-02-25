@@ -4,6 +4,7 @@ import commentsSchema from "../models/commentsSchema.js";
 import Dislike from "../models/dislikeSchema.js";
 import Events from "../models/eventsSchema.js";
 import Like from "../models/likeSchema.js";
+import fs from "fs";
 
 const router = express.Router();
 
@@ -108,7 +109,7 @@ export const editEvents = async (req, res) => {
   const date = req.body.date;
   const venue = req.body.venue;
   const desc = req.body.desc;
-  const img = req.file.filename;
+  const img = req.file? req.file.filename : req.body.img;
   const time = req.body.time;
   const status = req.body.status;
   const _id = req.body._id;
@@ -131,7 +132,7 @@ export const editEvents = async (req, res) => {
       message: "",
     },
   };
-
+ 
   const entries = Object.keys(eventData);
 
   if (!mongoose.Types.ObjectId.isValid(eventData._id)) {
@@ -143,7 +144,23 @@ export const editEvents = async (req, res) => {
   }
 
   try {
-    const updates = {};
+    const updates = {}; 
+    await Events.findOne({
+      _id: eventData._id,
+    }).then((event) => {
+      if(event.img !== img){
+        try {
+          fs.unlinkSync('images/'+ event.img);
+        } catch (err) {
+          if (err.code === 'ENOENT') {
+            console.log('File not found!');
+          } else {
+            throw err;
+          }
+        }
+        
+      }
+    });
     for (let i = 0; i < entries.length; i++) {
       updates[entries[i]] = Object.values(eventData)[i];
     }
@@ -235,8 +252,20 @@ export const deleteEvents = async (req, res) => {
         responseData,
       });
     }
-
+  
     await Events.findByIdAndRemove(req.body._id);
+    try {
+      if(req.body.img!==''){
+      fs.unlinkSync('images/'+req.body.img);
+      }
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        console.log('File not found!');
+      } else {
+        throw err;
+      }
+    }
+  
     responseData.messages.message = "Event deleted successfully.";
     responseData.messages.status = "21";
     const events = await Events.find();

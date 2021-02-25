@@ -2,6 +2,7 @@ import express from "express";
 import employeeDetails from "../models/employeeSchema.js";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import fs from 'fs';
 dotenv.config();
 
 const router = express.Router();
@@ -23,7 +24,7 @@ export const getEmployees = async (req, res) => {
 };
 
 export const createEmployee = async (req, res) => {
-  const selectedFile = req.file.filename;
+  const selectedFile = req.file ? req.file.filename: '';
 
   const {
     firstName,
@@ -131,7 +132,7 @@ export const isTokenValid = async (req, res) => {
 };
 
 export const editProfile = async (req, res) => {
-    const selectedFile = req.file.filename;
+    const selectedFile = req.file? req.file.filename : (!req.body.selectedFile?'':req.body.selectedFile);
   let responseMessages = {
     messages: {
       status: "",
@@ -187,6 +188,18 @@ export const editProfile = async (req, res) => {
       disableInd,
       _id,
     };
+
+    await employeeDetails.findOne({
+      _id: data._id,
+    }).then((employee) => {
+      if(employee.selectedFile !== selectedFile){
+        if(employee.selectedFile!==''){
+          fs.unlinkSync('images/'+ employee.selectedFile);
+        }
+        
+      }
+    });
+
     const entries = Object.keys(data);
     const updates = {};
     for (let i = 0; i < entries.length; i++) {
