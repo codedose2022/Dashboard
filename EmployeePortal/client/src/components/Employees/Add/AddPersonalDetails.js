@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField } from "@material-ui/core";
+import { Grid, MenuItem, TextField,InputAdornment } from "@material-ui/core";
 import moment from 'moment';
 import React from "react";
 import Heading from "../Heading";
@@ -64,6 +64,9 @@ function AddPersonalDetails(props) {
           size="small"
           variant="outlined"
           type="number"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">+971</InputAdornment>,
+          }}
           error={props.errors.phoneNumber ? true : false}
           helperText={props.errors.phoneNumber}
           disabled={props.disableProfile.disableInd}

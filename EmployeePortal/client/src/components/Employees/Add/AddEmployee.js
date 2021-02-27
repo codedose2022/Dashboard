@@ -68,18 +68,32 @@ export default function AddEmployee(props) {
   const validate = (fieldValues = addEmployee) => {
     let temp = { ...errors };
     if ("firstName" in fieldValues) {
-      temp.firstName = fieldValues.firstName ? "" : "This field is required.";
+      temp.firstName = fieldValues.firstName
+        ? /^[a-zA-Z]+$/.test(fieldValues.firstName)
+          ? ""
+          : "Please enter valid details."
+        : "This field is required.";
     }
     if ("lastName" in fieldValues) {
-      temp.lastName = fieldValues.lastName ? "" : "This field is required.";
+      temp.lastName = fieldValues.lastName
+        ? /^[a-zA-Z]+$/.test(fieldValues.lastName)
+          ? ""
+          : "Please enter valid details."
+        : "This field is required.";
     }
     if ("email" in fieldValues) {
-      temp.email = /.+@.+..+/.test(fieldValues.email) ? "" : "Invalid Email.";
+      temp.email = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/.test(
+        fieldValues.email
+      )
+        ? ""
+        : "Invalid Email.";
     }
     if ("employeeCode" in fieldValues) {
       temp.employeeCode = fieldValues.employeeCode
-        ? ""
-        : "This field is required.";
+      ? /^[a-zA-Z0-9]+$/.test(fieldValues.employeeCode)
+      ? ""
+      : "Please enter valid details."
+    : "This field is required.";
     }
     if ("deskPhone" in fieldValues) {
       temp.deskPhone = fieldValues.deskPhone
@@ -90,10 +104,10 @@ export default function AddEmployee(props) {
     }
     if ("workMobile" in fieldValues) {
       temp.workMobile = fieldValues.workMobile
-        ? fieldValues.workMobile.toString().length === 10
+        ? /^5\d{8}$/.test(fieldValues.workMobile)
           ? ""
-          : "10-digits required."
-        : "This field is required";
+          : "Please provide a valid UAE number."
+        : "";
     }
 
     if ("dateOfHire" in fieldValues) {
@@ -128,9 +142,9 @@ export default function AddEmployee(props) {
     }
     if ("phoneNumber" in fieldValues) {
       temp.phoneNumber = fieldValues.phoneNumber
-        ? fieldValues.phoneNumber.toString().length === 10
+        ? /^5\d{8}$/.test(fieldValues.phoneNumber)
           ? ""
-          : "10-digits required."
+          : "Please provide a valid UAE number."
         : "This field is required.";
     }
 

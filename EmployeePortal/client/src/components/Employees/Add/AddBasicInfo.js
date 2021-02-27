@@ -4,7 +4,6 @@ import { CountryDropdown } from "react-country-region-selector";
 import Heading from "../Heading";
 import useStyles from "./AddEmployeeStyles";
 
-
 function AddBasicInfo(props) {
   const classes = useStyles();
   const onChangeFields = (e) => {
@@ -12,7 +11,7 @@ function AddBasicInfo(props) {
       ...props.addEmployee,
       [e.target.name]: e.target.value,
     });
-    props.validate({[e.target.name]:e.target.value});
+    props.validate({ [e.target.name]: e.target.value });
   };
 
   return (
@@ -27,7 +26,7 @@ function AddBasicInfo(props) {
           label="First Name"
           variant="outlined"
           size="small"
-          error={props.errors.firstName?true:false}
+          error={props.errors.firstName ? true : false}
           helperText={props.errors.firstName}
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.firstName}
@@ -43,7 +42,7 @@ function AddBasicInfo(props) {
           label="Last Name"
           variant="outlined"
           size="small"
-          error={props.errors.lastName?true:false}
+          error={props.errors.lastName ? true : false}
           helperText={props.errors.lastName}
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.lastName}
@@ -59,7 +58,7 @@ function AddBasicInfo(props) {
           label="Email"
           variant="outlined"
           size="small"
-          error={props.errors.email?true:false}
+          error={props.errors.email ? true : false}
           helperText={props.errors.email}
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.email}
@@ -75,7 +74,7 @@ function AddBasicInfo(props) {
           label="Employee Code"
           variant="outlined"
           size="small"
-          error={props.errors.employeeCode?true:false}
+          error={props.errors.employeeCode ? true : false}
           helperText={props.errors.employeeCode}
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.employeeCode}
@@ -84,12 +83,18 @@ function AddBasicInfo(props) {
       </Grid>
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <CountryDropdown
+          style={{ borderStyle: "revert", borderColor: "darkgrey" }}
+          defaultOptionLabel="Select Nationality"
           required
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.nationality}
-          onChange={(e) => props.setAddEmployee({ ...props.addEmployee, nationality: e })}
+          whitelist={["IN","AE","PH"]}
+          onChange={(e) =>
+            props.setAddEmployee({ ...props.addEmployee, nationality: e })
+          }
           className={classes.country}
         />
+        <div style={{color:'red'}}>{props.errors.nationality}</div>
       </Grid>
     </Grid>
   );

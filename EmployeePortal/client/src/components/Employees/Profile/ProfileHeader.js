@@ -20,7 +20,8 @@ function ProfileHeader(props) {
         <Container className={classes.container}>
          
           <Avatar
-            src={`http://localhost:5000/${props.profileData.selectedFile}`}
+            alt={props.profileData.selectedFile}
+            src={props.profileData.selectedFile?`http://localhost:5000/${props.profileData.selectedFile}`:""}
             className={classes.image}
           />
          

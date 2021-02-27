@@ -187,6 +187,7 @@ export default function AddPolls(props) {
                   onChange={(e) => handleChangeInput(index, e)}
                 />
                 <input
+                  accept="image/*"
                   style={{
                     margin: "10px",
                     paddingTop: "28px",

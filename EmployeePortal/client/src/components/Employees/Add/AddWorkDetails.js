@@ -5,7 +5,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField
+  TextField,
+  InputAdornment
 } from "@material-ui/core";
 import React from "react";
 import { departments } from "../Constants/departmentList";
@@ -164,17 +165,19 @@ function AddWorkDetails(props) {
       <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <TextField
           fullWidth
-          required
           id="workMobile"
           name="workMobile"
           label="Work Mobile"
           type="number"
           variant="outlined"
           size="small"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">+971</InputAdornment>,
+          }}
           error={props.errors.workMobile ? true : false}
           helperText={props.errors.workMobile}
           disabled={props.disableProfile.disableInd}
-          value={props.addEmployee.workMobile}
+          value={props.addEmployee.workMobile?props.addEmployee.workMobile:""}
           onChange={(e) => onChangeFields(e)}
         />
       </Grid>
