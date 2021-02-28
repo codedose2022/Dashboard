@@ -5,11 +5,11 @@ const likeSchema = mongoose.Schema(
   {
     employeeId: {
       type: schema.Types.ObjectId,
-      ref: 'employeeSchema',
+      ref: "employeeSchema",
     },
     eventId: {
       type: schema.Types.ObjectId,
-      ref: 'eventsSchema',
+      ref: "eventsSchema",
     },
   },
   { timestamps: true }

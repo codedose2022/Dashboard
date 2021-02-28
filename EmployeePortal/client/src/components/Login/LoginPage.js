@@ -11,6 +11,8 @@ import {
   Grid,
   TextField,
   CssBaseline,
+  Container,
+  Card,
 } from "@material-ui/core";
 import Mersatlogo from "../../images/Mersatlogo.jpg";
 import { green } from "@material-ui/core/colors";
@@ -52,7 +54,7 @@ export default function LoginPage() {
   const messageStatus = _.get(state, "employees.employee.messages.status", "");
 
   function setNetworkErrors(err) {
-    seterror(err)
+    seterror(err);
   }
 
   useEffect(() => {
@@ -65,26 +67,25 @@ export default function LoginPage() {
       localStorage.setItem("auth-token", token);
       history.push("/");
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, messageStatus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     try {
       if (loginData.email === "") {
-        setEmailRequired("Please enter the email address");
+        setEmailRequired("Email required.");
       }
       if (loginData.password === "") {
-        setPasswordRequired("Please enter the password");
+        setPasswordRequired("Password required.");
       }
-      if(!forgotPass && linkSent)
-      {  
-      setLinkSent(false);
-      clearFieldError();
-      } 
+      if (!forgotPass && linkSent) {
+        setLinkSent(false);
+        clearFieldError();
+      }
       if (loginData.email !== "" && loginData.password !== "" && !forgotPass) {
-        dispatch(login(loginData,setNetworkErrors));
+        dispatch(login(loginData, setNetworkErrors));
         clearFieldError();
       }
       if (forgotPass) {
@@ -105,13 +106,11 @@ export default function LoginPage() {
               setLinkSent(true);
               setForgotPass(false);
             }
-          
           } catch (error) {
             seterror(error.message);
           }
         }
       }
-     
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +124,6 @@ export default function LoginPage() {
     if (loginData.password !== "") setPasswordRequired("");
   }, [loginData.email, loginData.password]);
 
-
   const clearFieldError = () => {
     setEmailRequired("");
     setPasswordRequired("");
@@ -136,106 +134,118 @@ export default function LoginPage() {
     setLoginData({
       email: "",
       password: "",
-    })
+    });
     setForgotPass(!forgotPass);
-  }
+  };
 
   return (
-    <div>
-      
-    <Box boxShadow={3} className={classes.root}>
-      <ThemeProvider theme={theme}>
-        <AppBar position="static" className={classes.appbar} elevation={0}>
-          <Toolbar>
-            <img src={Mersatlogo} alt="Mersatlogo" className={classes.logo} />
-            <Typography className={classes.title} variant="body2">
-              EMPLOYEE PORTAL LOGIN
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <CssBaseline />
+    <>
+      <Grid container>
+        <Grid item lg={4} md={5} sm={10} className={classes.absoluteCard}>
+          <Card className={classes.loginCard}>
+            <ThemeProvider theme={theme}>
+              <Container className={classes.loginHeader}>
+                <img
+                  src={Mersatlogo}
+                  alt="Mersatlogo"
+                  className={classes.logo}
+                />
+                <Typography className={classes.title} variant="h6">
+                  EMPLOYEE PORTAL LOGIN
+                </Typography>
+              </Container>
+              <CssBaseline />
 
-        {error && !linkSent && <Alert severity="error"> {error} </Alert>}
-        {successMsg && linkSent && <Alert severity="success"> {successMsg} </Alert>}
-        <form
-          autoComplete="off"
-          className={classes.form}
-          onSubmit={handleSubmit}
-        >
-          {!linkSent && (
-          <TextField
-            InputProps={{
-              disableUnderline: true,
-              classes: { input: classes.input },
-            }}
-            FormHelperTextProps={{
-              className: classes.helperTextColor,
-            }}
-            variant="filled"
-            margin="normal"
-            fullWidth
-            id="email"
-            placeholder="EMAIL ADDRESS"
-            name="email"
-            size="small"
-            value={loginData.email}
-            helperText={emailRequired}
-            onChange={(e) => onChange(e)}
-          />
-          )}
-          {!forgotPass && !linkSent && (
-            <TextField
-              InputProps={{
-                disableUnderline: true,
-                classes: { input: classes.input },
-              }}
-              variant="filled"
-              FormHelperTextProps={{
-                className: classes.helperTextColor,
-              }}
-              fullWidth
-              size="small"
-              margin="normal"
-              name="password"
-              placeholder="PASSWORD"
-              type="password"
-              id="password"
-              helperText={passwordRequired}
-              value={loginData.password}
-              onChange={(e) => onChange(e)}
-            />
-          )}
-          
-          <Button
-            className={classes.buttonStyle}
-            variant={"contained"}
-            fullWidth
-            disableElevation
-            color={"primary"}
-            type="submit"
-          >
-            {forgotPass ? "SET RESET LINK" : "LOGIN"}
-          </Button>
-          
-          {!linkSent &&
-          <Grid
-            className={classes.buttonStyle}
-            container
-            direction="row"
-            justify="flex-end"
-            alignItems="center"
-          >
-            <Link variant="caption" onClick={()=>handleLinkClick()}>
-              {forgotPass ? "Login" : "Forgot password"}
-            </Link>
-          </Grid>
-          }
-        </form>
-      
-      
-      </ThemeProvider>
-    </Box>
-    
-    </div>
+              {error && !linkSent && <Alert severity="error"> {error} </Alert>}
+              {successMsg && linkSent && (
+                <Alert severity="success"> {successMsg} </Alert>
+              )}
+              <form
+                autoComplete="off"
+                className={classes.form}
+                onSubmit={handleSubmit}
+              >
+                <Grid container>
+                  <Grid item xs={12}>
+                    {!linkSent && (
+                      <TextField
+                        InputProps={{
+                          disableUnderline: true,
+                          classes: { input: classes.input },
+                        }}
+                        FormHelperTextProps={{
+                          className: classes.helperTextColor,
+                        }}
+                        variant="filled"
+                        margin="normal"
+                        fullWidth
+                        id="email"
+                        placeholder="EMAIL ADDRESS"
+                        name="email"
+                        size="small"
+                        value={loginData.email}
+                        helperText={emailRequired}
+                        onChange={(e) => onChange(e)}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    {!forgotPass && !linkSent && (
+                      <TextField
+                        InputProps={{
+                          disableUnderline: true,
+                          classes: { input: classes.input },
+                        }}
+                        variant="filled"
+                        FormHelperTextProps={{
+                          className: classes.helperTextColor,
+                        }}
+                        fullWidth
+                        size="small"
+                        margin="normal"
+                        name="password"
+                        placeholder="PASSWORD"
+                        type="password"
+                        id="password"
+                        helperText={passwordRequired}
+                        value={loginData.password}
+                        onChange={(e) => onChange(e)}
+                      />
+                    )}
+                  </Grid>
+                </Grid>
+                <Button
+                  className={classes.buttonStyle}
+                  variant={"contained"}
+                  fullWidth
+                  disableElevation
+                  color={"primary"}
+                  type="submit"
+                >
+                  {forgotPass ? "SEND RESET LINK" : "LOGIN"}
+                </Button>
+
+                {!linkSent && (
+                  <Grid
+                    className={classes.buttonStyle}
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                  >
+                    <Link
+                      className={classes.Link}
+                      onClick={() => handleLinkClick()}
+                    >
+                      {forgotPass ? "Login" : "Forgot password"}
+                    </Link>
+                  </Grid>
+                )}
+              </form>
+            </ThemeProvider>
+          </Card>
+        </Grid>
+      </Grid>
+    </>
   );
 }

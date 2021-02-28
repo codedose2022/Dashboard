@@ -10,10 +10,11 @@ import {
   FormControlLabel,
   Grid,
   Radio,
-  Tooltip,
-  Snackbar,
+
+  Snackbar, Tooltip,
+
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -51,7 +52,7 @@ export default function Polls() {
   const [deleteModel, setDeleteModel] = useState({ index: {} });
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [displaySnackbarText, setDisplaySnackbarText] = useState('');
+  const [displaySnackbarText, setDisplaySnackbarText] = useState("");
   let polls = _.get(state, "polls.polls", []);
 
   const handleChange = (event, pollId, optionId) => {
@@ -91,6 +92,7 @@ export default function Polls() {
   };
 
   const addPolls = () => {
+    setError("");
     setAddModel(true);
   };
 
@@ -124,18 +126,18 @@ export default function Polls() {
   };
   return (
     <div>
-      <Container className={classes.cardGrid} maxWidth='md'>
-        {error && <Alert severity='error'> {error} </Alert>}
-        <Grid container justify='flex-end'>
+      <Container className={classes.cardGrid} maxWidth="md">
+        {error && <Alert severity="error"> {error} </Alert>}
+        <Grid container justify="flex-end">
           {isEventsMember && (
             <Button
-              id='Add-polls-button'
-              key='Add-polls-button_'
+              id="Add-polls-button"
+              key="Add-polls-button_"
               className={classes.buttonStyle}
-              color='primary'
-              justify='flex-end'
+              color="primary"
+              justify="flex-end"
               variant={isSmallScreen ? "text" : "contained"}
-              size='small'
+              size="small"
               onClick={() => addPolls()}
               startIcon={<AddIcon />}
             >
@@ -158,9 +160,9 @@ export default function Polls() {
         >
           <Alert
             style={{ width: "300px", color: "white", background: "#1b5e20" }}
-            severity='success'
+            severity="success"
           >
-           {displaySnackbarText}
+            {displaySnackbarText}
           </Alert>
         </Snackbar>
         <Grid container spacing={2}>
@@ -168,7 +170,7 @@ export default function Polls() {
             <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={12}>
               <Card className={classes.root} elevation={10}>
                 <CardHeader
-                  style={{ paddingBottom: "5px" ,color: "#1b5e20" }}
+                  style={{ paddingBottom: "5px", color: "#1b5e20" }}
                   title={poll.title.toUpperCase()}
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
@@ -176,11 +178,11 @@ export default function Polls() {
                   titleTypographyProps={{ variant: "h6" }}
                   subheaderTypographyProps={{ className: classes.headingSize }}
                   action={
-                    <Box p={2} display='flex' alignItems='center'>
-                      <Tooltip title='Time Left' aria-label='timeLeft'>
+                    <Box p={2} display="flex" alignItems="center">
+                      <Tooltip title="Time Left" aria-label="timeLeft">
                         <ScheduleIcon
                           style={{ fontSize: "1rem", color: "grey" }}
-                          size='small'
+                          size="small"
                         />
                       </Tooltip>
                       &nbsp;
@@ -206,8 +208,8 @@ export default function Polls() {
                 >
                   <Typography
                     className={classes.qStyles}
-                    variant='subtitle1'
-                    component='p'
+                    variant="subtitle1"
+                    component="p"
                   >
                     {poll.question}
                   </Typography>
@@ -236,7 +238,7 @@ export default function Polls() {
                             />
                           )}
                         </div>
-                        <FormControl component='fieldset'>
+                        <FormControl component="fieldset">
                           <FormControlLabel
                             style={
                               new Date(poll.deadline).getTime() <=
@@ -255,8 +257,8 @@ export default function Polls() {
                                   selectedPollId === `${poll._id}`
                             }
                             value={p.option}
-                            control={<Radio color='primary' />}
-                            name='option'
+                            control={<Radio color="primary" />}
+                            name="option"
                             label={
                               <Typography style={{ fontSize: "0.9rem" }}>
                                 {p.option + " (" + p.votes + ")"}
@@ -274,7 +276,7 @@ export default function Polls() {
                   >
                     <div>
                       {poll.employeeId.includes(employee_Id) ? (
-                        <Typography variant='subtitle2'>
+                        <Typography variant="subtitle2">
                           You have voted for this poll.
                         </Typography>
                       ) : (
@@ -282,7 +284,7 @@ export default function Polls() {
                       )}
                       {new Date(poll.deadline).getTime() <=
                         new Date().getTime() && (
-                        <Typography variant='subtitle2'>
+                        <Typography variant="subtitle2">
                           This poll is expired.
                         </Typography>
                       )}
@@ -304,11 +306,11 @@ export default function Polls() {
                           }
                           key={`submitButton${poll._id}`}
                           onClick={() => handleSubmit(poll._id)}
-                          size='small'
-                          color='primary'
-                          variant='contained'
+                          size="small"
+                          color="primary"
+                          variant="contained"
                         >
-                          <DoneIcon color='primary' size='small' />
+                          <DoneIcon color="primary" size="small" />
                         </IconButton>
                       )}
                       {isEventsMember && (
@@ -317,14 +319,18 @@ export default function Polls() {
                           key={`iconDeleteButton${poll._id}`}
                           onClick={() => deletePolls(pollIndex)}
                         >
-                          <DeleteIcon color='primary' size='small' />
+                          <DeleteIcon color="primary" size="small" />
                         </IconButton>
                       )}
                     </div>
                   </div>
                   {_.get(deleteModel, `index.${pollIndex}`, false) && (
-                    <DeletePolls setDeleteModel={setDeleteModel} poll={poll} setShowSnackbar={setShowSnackbar}
-                    setDisplaySnackbarText={setDisplaySnackbarText}/>
+                    <DeletePolls
+                      setDeleteModel={setDeleteModel}
+                      poll={poll}
+                      setShowSnackbar={setShowSnackbar}
+                      setDisplaySnackbarText={setDisplaySnackbarText}
+                    />
                   )}
                 </CardActions>
               </Card>

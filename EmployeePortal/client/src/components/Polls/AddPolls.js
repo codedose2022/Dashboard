@@ -6,9 +6,10 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  TextField,
+  TextField, Typography
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Alert from "@material-ui/lab/Alert";
 import _ from "lodash";
@@ -73,7 +74,6 @@ export default function AddPolls(props) {
       }
     });
     if (!isFieldEmpty) {
-     // let poll = { title, question, options, deadline };
       const formData = new FormData();
       formData.append("title", title);
       formData.append("question", question);
@@ -87,7 +87,8 @@ export default function AddPolls(props) {
           const responseMessages = _.get(response, "data", "");
           if (
             responseMessages.messages.status === "34" ||
-            responseMessages.messages.status === "35"
+            responseMessages.messages.status === "35" ||
+            responseMessages.messages.status === "36"
           ) {
             setError(responseMessages.messages.message);
           }
@@ -95,7 +96,7 @@ export default function AddPolls(props) {
             handleClose();
             dispatch({ type: "GET_POLLS", payload: responseMessages.polls });
             props.setShowSnackbar(true);
-            props.setDisplaySnackbarText('Posted successfully' );
+            props.setDisplaySnackbarText("Posted successfully");
           }
         });
       } catch (error) {
@@ -105,14 +106,26 @@ export default function AddPolls(props) {
   };
   return (
     <div>
-      <Dialog open={open} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        aria-labelledby="form-dialog-title"
+        style={{ marginTop: "3rem" }}
+      >
         {error && <Alert severity="error"> {error} </Alert>}
-        <DialogTitle
-          style={{ alignSelf: "center", color: "darkgreen" }}
-          id="form-dialog-title"
-        >
-          {" "}
-          ADD NEW POLL
+        <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
+          <div className={classes.modalHeader}>
+            <Typography variant="h6" component="h6">
+              ADD NEW POLL
+            </Typography>
+            <IconButton
+              aria-label="close"
+              size="small"
+              onClick={handleClose}
+              className={classes.closeBtn}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
@@ -171,34 +184,38 @@ export default function AddPolls(props) {
               />
             </Grid>
             {options.map((option, index) => (
-              <div key={index}>
-                <TextField
-                  style={{ margin: "10px" }}
-                  required
-                  id="option"
-                  name="option"
-                  label=" Option"
-                  value={option.option}
-                  type="text"
-                  FormHelperTextProps={{
-                    className: classes.helperTextColor,
-                  }}
-                  helperText={flag && validateRequired(option.option)}
-                  onChange={(e) => handleChangeInput(index, e)}
-                />
-                <input
-                  accept="image/*"
-                  style={{
-                    margin: "10px",
-                    paddingTop: "28px",
-                    marginRight: "50px",
-                  }}
-                  name="image"
-                  id = {index}
-                  type="file"
-                  onChange={(e) => handleChangeInputPhoto(index, e)}
-                />
-              </div>
+              <Grid container spacing={3} key={index}>
+                <Grid item lg={5}>
+                  <TextField
+                    style={{ margin: "10px" }}
+                    required
+                    id="option"
+                    name="option"
+                    label=" Option"
+                    value={option.option}
+                    type="text"
+                    FormHelperTextProps={{
+                      className: classes.helperTextColor,
+                    }}
+                    helperText={flag && validateRequired(option.option)}
+                    onChange={(e) => handleChangeInput(index, e)}
+                  />
+                </Grid>
+                <Grid item xs={5}>
+                  <input
+                    accept="image/x-png,image/jpeg,image/png,image/jpg,image/jfif"
+                    style={{
+                      margin: "10px",
+                      paddingTop: "28px",
+                      marginRight: "50px",
+                    }}
+                    name="image"
+                    id={index}
+                    type="file"
+                    onChange={(e) => handleChangeInputPhoto(index, e)}
+                  />
+                </Grid>
+              </Grid>
             ))}
             <IconButton
               disabled={options.length < 3}
@@ -212,14 +229,6 @@ export default function AddPolls(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={handleClose}
-            size="small"
-            variant="contained"
-            color="primary"
-          >
-            Cancel
-          </Button>
           <Button
             onClick={handleAdd}
             size="small"

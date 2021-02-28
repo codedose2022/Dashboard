@@ -3,73 +3,69 @@ import employeeDetails from "../models/employeeSchema.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import crypto from 'crypto';
+import crypto from "crypto";
 import { sendEmail } from "../mail.js";
 
 dotenv.config();
 
 const router = express.Router();
 const INVALID_PASSWORD = "12";
-const INVALID_EMAIL = '10';
-const LOGIN_SUCCESSFUL = '11';
-const SEND_LINK_SUCCESS = '13';
-const PASSWORD_UPDATE_SUCCESS = '14';
-const INVALID_LINK = '15'
+const INVALID_EMAIL = "10";
+const LOGIN_SUCCESSFUL = "11";
+const SEND_LINK_SUCCESS = "13";
+const PASSWORD_UPDATE_SUCCESS = "14";
+const INVALID_LINK = "15";
 
-
-export const login = async (req,res) => {   
-  const {email,password} = req.body;
+export const login = async (req, res) => {
+  const { email, password } = req.body;
   let response;
-  let responseData = { 
-      userData:{
-          firstName :'',
-          lastName:'',
-          id:'',
-          division:'',
-          emailId : '',
-          selectedFile : ''
-      }, 
-      token  :''  
-  }
+  let responseData = {
+    userData: {
+      firstName: "",
+      lastName: "",
+      id: "",
+      division: "",
+      emailId: "",
+      selectedFile: "",
+    },
+    token: "",
+  };
   let responseMessages = {
-      messages:{
-          status:'',
-          message:''
-      },
-  }
+    messages: {
+      status: "",
+      message: "",
+    },
+  };
   try {
-      const user = await employeeDetails.findOne({"email":email})
-          if(!user){
-              responseMessages.messages.message= 'No account with this email has been registered';
-              responseMessages.messages.status = INVALID_EMAIL;
-              return res.status(200).json(responseMessages);
-          } 
-          const isMatch = await bcryptjs.compare(password,user.password);
-          const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
-          if(!isMatch){
-              responseMessages.messages.message= 'Invalid Credentials';
-              responseMessages.messages.status = INVALID_PASSWORD;
-              return res.status(200).json(responseMessages);
-          }
-              responseData.userData.firstName = user.firstName;
-              responseData.userData.lastName = user.lastName;
-              responseData.userData.id = user._id;
-              responseData.userData.division =user.division;
-              responseData.userData.emailId = user.email;
-              responseData.userData.selectedFile = user.selectedFile;
-              responseMessages.messages.message= 'Login Success';
-              responseMessages.messages.status = LOGIN_SUCCESSFUL;
-              responseData.token = token;
-              response = Object.assign(responseData, responseMessages);
-              return res.status(200).json(response);   
-      }
-     
- catch (error) {
-  return res.status(404).json({ message: error.message });
- }
-}
-
-
+    const user = await employeeDetails.findOne({ email: email });
+    if (!user) {
+      responseMessages.messages.message =
+        "No account with this email has been registered";
+      responseMessages.messages.status = INVALID_EMAIL;
+      return res.status(200).json(responseMessages);
+    }
+    const isMatch = await bcryptjs.compare(password, user.password);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    if (!isMatch) {
+      responseMessages.messages.message = "Invalid Credentials";
+      responseMessages.messages.status = INVALID_PASSWORD;
+      return res.status(200).json(responseMessages);
+    }
+    responseData.userData.firstName = user.firstName;
+    responseData.userData.lastName = user.lastName;
+    responseData.userData.id = user._id;
+    responseData.userData.division = user.division;
+    responseData.userData.emailId = user.email;
+    responseData.userData.selectedFile = user.selectedFile;
+    responseMessages.messages.message = "Login Success";
+    responseMessages.messages.status = LOGIN_SUCCESSFUL;
+    responseData.token = token;
+    response = Object.assign(responseData, responseMessages);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
 
 export const changePassword = async (req, res) => {
   const { email, password, newPassword, confirmPassword } = req.body;
@@ -151,45 +147,41 @@ export const getUserData = async (req, res) => {
   }
 };
 
-
 export const sendResetLink = async (req, res) => {
-
   let responseMessages = {
     messages: {
       status: "",
       message: "",
     },
-  }
-  try{
-    const user = await employeeDetails.findOne({"email":req.body.email});
-    if(!user){
-      responseMessages.messages.message= 'No account with this email has been registered';
+  };
+  try {
+    const user = await employeeDetails.findOne({ email: req.body.email });
+    if (!user) {
+      responseMessages.messages.message =
+        "No account with this email has been registered";
       responseMessages.messages.status = INVALID_EMAIL;
       return res.status(200).json(responseMessages);
-  } 
-  else{
+    } else {
+      crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+          console.log(err);
+        }
+        const token = buffer.toString("hex");
+        user.resetToken = token;
+        user.expireToken = Date.now() + 1800000;
+        user.save().then((result) => {
+          sendEmail(req.body.email, user.firstName, "ForgetPassword", token);
+        });
 
-  crypto.randomBytes(32,(err,buffer)=>{
-      if(err){
-        console.log(err);
-      }
-      const token = buffer.toString("hex");
-      user.resetToken = token;
-      user.expireToken = Date.now() + 1800000;
-      user.save().then((result)=>{
-        sendEmail(req.body.email, user.firstName, "ForgetPassword", token)
-      })
-      
-      responseMessages.messages.message= 'Password reset link sent successfully.         Please check your email.';
-      responseMessages.messages.status = SEND_LINK_SUCCESS;
-      return res.status(200).json(responseMessages);
-  })
-}
-}
-catch(error)
-{
-  console.log(error.message);
-}
+        responseMessages.messages.message =
+          "Password reset link sent successfully.         Please check your email.";
+        responseMessages.messages.status = SEND_LINK_SUCCESS;
+        return res.status(200).json(responseMessages);
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const resetPassword = async (req, res) => {
@@ -200,38 +192,42 @@ export const resetPassword = async (req, res) => {
       status: "",
       message: "",
     },
-  }
-  const {key,newPassword, confirmPassword} = req.body;
+  };
+  const { key, newPassword, confirmPassword } = req.body;
 
-  try{
-    const user = await employeeDetails.findOne({"resetToken":key,expireToken:{$gt:Date.now()}});
-    if(!user){
-      responseMessages.messages.message= 'Password reset link is either invalid or expired.';
+  try {
+    const user = await employeeDetails.findOne({
+      resetToken: key,
+      expireToken: { $gt: Date.now() },
+    });
+    if (!user) {
+      responseMessages.messages.message =
+        "Password reset link is either invalid or expired.";
       responseMessages.messages.status = INVALID_LINK;
       return res.status(200).json(responseMessages);
-  } 
-  else{
-    salt = await bcryptjs.genSalt();
-    passwordHash = await bcryptjs.hash(confirmPassword, salt);
-    await employeeDetails.updateOne(
-      {
-        email: user.email,
-      },
-      {
-        $set: { password: passwordHash ,resetToken:undefined, expireToken:undefined},
-      }
-    );
+    } else {
+      salt = await bcryptjs.genSalt();
+      passwordHash = await bcryptjs.hash(confirmPassword, salt);
+      await employeeDetails.updateOne(
+        {
+          email: user.email,
+        },
+        {
+          $set: {
+            password: passwordHash,
+            resetToken: undefined,
+            expireToken: undefined,
+          },
+        }
+      );
 
-    responseMessages.messages.message = "Password has been updated.";
-    responseMessages.messages.status = PASSWORD_UPDATE_SUCCESS;
-    return res.status(200).json(responseMessages);
-
-}
-}
-catch(error)
-{
-  console.log(error.message);
-}
+      responseMessages.messages.message = "Password has been updated.";
+      responseMessages.messages.status = PASSWORD_UPDATE_SUCCESS;
+      return res.status(200).json(responseMessages);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export default router;

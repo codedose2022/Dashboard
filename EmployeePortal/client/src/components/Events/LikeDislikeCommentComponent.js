@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { IconButton } from "@material-ui/core/";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
-
-import { useDispatch } from "react-redux";
-import _ from "lodash";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import * as api from "../../api";
+import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { getEvents } from "../../actions/events";
+import * as api from "../../api";
 
 export default function LikeDislikeCommentComponent(props) {
   const dispatch = useDispatch();
@@ -100,17 +99,17 @@ export default function LikeDislikeCommentComponent(props) {
     <span>
       <IconButton onClick={() => onLike()}>
         {LikeAction === "liked" ? (
-          <ThumbUpIcon fontSize='small' color='primary' />
+          <ThumbUpIcon fontSize="small" color="primary" />
         ) : (
-          <ThumbUpAltOutlinedIcon fontSize='small' />
+          <ThumbUpAltOutlinedIcon fontSize="small" />
         )}
         <span style={{ fontSize: "1rem" }}>{Likes}</span>
       </IconButton>
       <IconButton onClick={() => onDisLike()}>
         {DislikeAction === "disliked" ? (
-          <ThumbDownIcon fontSize='small' color='primary' />
+          <ThumbDownIcon fontSize="small" color="primary" />
         ) : (
-          <ThumbDownOutlinedIcon fontSize='small' />
+          <ThumbDownOutlinedIcon fontSize="small" />
         )}
         <span style={{ fontSize: "1rem" }}>{Dislikes}</span>
       </IconButton>

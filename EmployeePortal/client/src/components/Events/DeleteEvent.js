@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Button,
-} from "@material-ui/core";
-
-import * as api from "../../api";
-import { useDispatch } from "react-redux";
-import _ from "lodash";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import _ from "lodash";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { getEvents } from "../../actions/events";
+import * as api from "../../api";
 
 export default function DeleteEvent(props) {
-  
   let token = localStorage.getItem("auth-token");
 
   const [open, setOpen] = useState(true);
@@ -33,8 +26,8 @@ export default function DeleteEvent(props) {
       if (responseData.messages.status === "21") {
         handleCancel();
         dispatch(getEvents(token, props.userData.division));
-        props.setShowSnackbar(true)
-        props.setDisplaySnackbarText('Post deleted successfully' )
+        props.setShowSnackbar(true);
+        props.setDisplaySnackbarText("Post deleted successfully");
       }
     } catch (error) {
       setError("something went wrong, please try again.");
@@ -45,12 +38,12 @@ export default function DeleteEvent(props) {
     <Dialog
       open={open}
       onClose={handleCancel}
-      aria-labelledby='form-dialog-title'
+      aria-labelledby="form-dialog-title"
       disableBackdropClick
     >
-       {error && <Alert severity='error'> {error} </Alert>}
+      {error && <Alert severity="error"> {error} </Alert>}
       <DialogTitle
-        id='form-dialog-title-delete'
+        id="form-dialog-title-delete"
         style={{ alignSelf: "center" }}
       >
         Are you sure you want to delete the event?
@@ -58,18 +51,18 @@ export default function DeleteEvent(props) {
 
       <DialogActions>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleCancel}
-          color='primary'
+          color="primary"
         >
           cancel
         </Button>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleDelete}
-          color='primary'
+          color="primary"
           autoFocus
         >
           Delete

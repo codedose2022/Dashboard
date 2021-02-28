@@ -90,10 +90,10 @@ export default function AddEmployee(props) {
     }
     if ("employeeCode" in fieldValues) {
       temp.employeeCode = fieldValues.employeeCode
-      ? /^[a-zA-Z0-9]+$/.test(fieldValues.employeeCode)
-      ? ""
-      : "Please enter valid details."
-    : "This field is required.";
+        ? /^[a-zA-Z0-9]+$/.test(fieldValues.employeeCode)
+          ? ""
+          : "Please enter valid details."
+        : "This field is required.";
     }
     if ("deskPhone" in fieldValues) {
       temp.deskPhone = fieldValues.deskPhone
@@ -256,6 +256,7 @@ export default function AddEmployee(props) {
                       value="disableProfile"
                       control={
                         <Switch
+                          //disabled={props.employee.division==='SA'}
                           checked={disableProfile.disableInd}
                           onChange={handleChange}
                           color="primary"

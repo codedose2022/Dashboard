@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import TabsComponent from "./TabsComponent";
-import useStyles from "../CommonStyles";
-import { useSelector } from "react-redux";
 import _ from "lodash";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import * as helper from "../../helper";
 import { isTokenValid } from "../../api/index";
-import { useDispatch } from "react-redux";
+import * as helper from "../../helper";
 import IdleTimerContainer from "../IdleTimerContainer";
+import TabsComponent from "./TabsComponent";
 
 export default function Dashboard() {
-  const classes = useStyles();
+ 
   const dispatch = useDispatch();
   const history = useHistory();
   const [tokenData, setTokenData] = useState("");
@@ -44,7 +42,7 @@ export default function Dashboard() {
         ></IdleTimerContainer>
       )}
       {tokenData && <TabsComponent isEventsMember={isEventsMember} />}
-      <div className={classes.topPadding} />
+      
     </div>
   );
 }

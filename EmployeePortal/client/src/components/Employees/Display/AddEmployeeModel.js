@@ -5,7 +5,8 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  useMediaQuery,
+  Typography,
+  useMediaQuery
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -39,16 +40,26 @@ function AddEmployeeModel() {
         >
           Add new employee
         </Button>
-        <Dialog fullScreen open={open} onClose={handleClose}>
-          <DialogTitle id="form-dialog-title">
-            ADD EMPLOYEE
-            <IconButton
-              aria-label="close"
-              style={{ position: "absolute", right: "10px", top: "2px" }}
-              onClick={handleClose}
-            >
-              <CloseIcon />
-            </IconButton>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          maxWidth="lg"
+          style={{ marginTop: "3rem" }}
+        >
+          <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
+            <div className={classes.modalHeader}>
+              <Typography variant="h6" component="h6">
+                ADD EMPLOYEE
+              </Typography>
+              <IconButton
+                aria-label="close"
+                size="small"
+                onClick={handleClose}
+                className={classes.closeBtn}
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
           </DialogTitle>
           <DialogContent>
             <AddEmployee handleClose={handleClose} />

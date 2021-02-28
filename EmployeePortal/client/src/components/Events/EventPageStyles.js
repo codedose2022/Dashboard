@@ -13,9 +13,7 @@ export default makeStyles((theme) => ({
     fontSize: "0.59rem",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(23.5),
-     
     },
-    
   },
 
   paper: {
@@ -50,7 +48,6 @@ export default makeStyles((theme) => ({
       marginLeft: "15px",
       marginRight: "15px",
     },
-   
   },
   box: {
     fontSize: "0.9rem",
@@ -65,7 +62,7 @@ export default makeStyles((theme) => ({
     fontFamily:
       "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
   },
-  iconVertical: { background: "none", paddingRight: "30px", color: "black" },
+  iconVertical: { background: "none", color: "black" },
 
   img: {
     maxWidth: "-webkit-fill-available",
@@ -103,7 +100,7 @@ export default makeStyles((theme) => ({
 
   textAreaStyle: {
     [theme.breakpoints.down("xs")]: {
-      width: "200px",
+      width: "100px",
     },
     [theme.breakpoints.between("xs", "sm")]: {
       width: "250px",
@@ -127,9 +124,9 @@ export default makeStyles((theme) => ({
     padding: "0px",
   },
   fontSizeSmall: {
-    color : '#524f4fcc',
+    color: "#524f4fcc",
     fontFamily:
-    "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+      "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
     fontSize: "small",
   },
   fontSizeSmaller: {
@@ -149,36 +146,56 @@ export default makeStyles((theme) => ({
   readMoreLink: {
     textDecoration: "none",
     color: "#8080808c",
-    cursor : 'pointer'
+    cursor: "pointer",
   },
-  input : {
-    fontSize : '.8rem'
+  input: {
+    fontSize: ".8rem",
   },
   cardGrid: {
     [theme.breakpoints.down("md")]: {
-      paddingTop: theme.spacing(6)
+      paddingTop: theme.spacing(6),
     },
     [theme.breakpoints.up("md")]: {
-      paddingTop: theme.spacing(8)
+      paddingTop: theme.spacing(8),
     },
   },
-  iconStyles : {
-    fontSize: 18 
+  iconStyles: {
+    fontSize: 18,
   },
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
   },
-  imgRequired : {
-       
-        color: '#d50000',
-        margin: '0px',
-        fontSize: '0.75rem',
-        marginTop: '3px',
-        textAlign: 'left',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontWeight: '400',
-        lineHeight: '1.66',
-        letterSpacing: '0.03333em'
-  }
+  imgRequired: {
+    color: "#d50000",
+    margin: "0px",
+    fontSize: "0.75rem",
+    marginTop: "3px",
+    textAlign: "left",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontWeight: "400",
+    lineHeight: "1.66",
+    letterSpacing: "0.03333em",
+  },
+  cardBtnPanelTop: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 1rem",
+  },
+  fsModal: {
+    top: "3rem !important",
+  },
+  modalHeader: {
+    boxShadow: "0 1px 5px 0px #00000054",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: ".5rem 1rem",
+    background: "#eeeeee",
+  },
+  closeBtn: {
+    "&:hover": {
+      color: "#d50000",
+    },
+  },
 }));

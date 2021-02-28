@@ -1,12 +1,22 @@
 import {
-  AppBar,
-  Box,
   Button,
-  CssBaseline,
-  Link,
+
+
+
+
+
+
+  Card, Container, CssBaseline,
+
+
+
+
+
+
+  Grid, Link,
   TextField,
-  Toolbar,
-  Typography,
+
+  Typography
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
@@ -60,89 +70,91 @@ export default function ResetPassword() {
   };
 
   return (
-    <div>
-      <Box boxShadow={3} className={classes.root}>
-        <AppBar position="static" className={classes.appbar} elevation={0}>
-          <Toolbar>
+    <Grid container>
+      <Grid item lg={4} md={5} sm={10} className={classes.absoluteCard}>
+        <Card className={classes.loginCard}>
+          <Container className={classes.loginHeader}>
             <img src={Mersatlogo} alt="Mersatlogo" className={classes.logo} />
-            <Typography className={classes.title} variant="body2">
-              EMPLOYEE PORTAL RESET PASSWORD
+            <Typography className={classes.title} variant="h6">
+              RESET PASSWORD
             </Typography>
-          </Toolbar>
-        </AppBar>
-        <CssBaseline />
-        {error && <Alert severity="error"> {error} </Alert>}
-        <form
-          autoComplete="off"
-          className={classes.form}
-          onSubmit={handleSubmit}
-        >
-          <TextField
-            InputProps={{
-              disableUnderline: true,
-              classes: { input: classes.input },
-            }}
-            FormHelperTextProps={{
-              className: classes.helperTextColor,
-            }}
-            variant="filled"
-            margin="normal"
-            fullWidth
-            id="new password"
-            placeholder="NEW PASSWORD"
-            name="new password"
-            size="small"
-            type="password"
-            value={resetPasswordData.newPassword}
-            onChange={(e) =>
-              setResetPasswordData({
-                ...resetPasswordData,
-                newPassword: e.target.value,
-              })
-            }
-          />
-          <TextField
-            InputProps={{
-              disableUnderline: true,
-              classes: { input: classes.input },
-            }}
-            FormHelperTextProps={{
-              className: classes.helperTextColor,
-            }}
-            variant="filled"
-            margin="normal"
-            fullWidth
-            id="confirm password"
-            placeholder="CONFIRM PASSWORD"
-            name="confirm password"
-            size="small"
-            value={resetPasswordData.confirmPassword}
-            onChange={(e) =>
-              setResetPasswordData({
-                ...resetPasswordData,
-                confirmPassword: e.target.value,
-              })
-            }
-          />
-          <Button
-            className={classes.buttonStyle}
-            variant={"contained"}
-            fullWidth
-            disableElevation
-            style={{ background: "#1b5e20", color: "white" }}
-            type="submit"
+          </Container>
+          <CssBaseline />
+          {error && <Alert severity="error"> {error} </Alert>}
+          <form
+            autoComplete="off"
+            className={classes.form}
+            onSubmit={handleSubmit}
           >
-            SUBMIT
-          </Button>
-          <Link
-            className={classes.buttonStyle}
-            style={{ color: "#1b5e20" }}
-            onClick={cancel}
-          >
-            CANCEL
-          </Link>
-        </form>
-      </Box>
-    </div>
+            <Grid container>
+              <Grid item xs={12}>
+                <TextField
+                  InputProps={{
+                    disableUnderline: true,
+                    classes: { input: classes.input },
+                  }}
+                  FormHelperTextProps={{
+                    className: classes.helperTextColor,
+                  }}
+                  variant="filled"
+                  margin="normal"
+                  fullWidth
+                  id="new password"
+                  placeholder="NEW PASSWORD"
+                  name="new password"
+                  size="small"
+                  type="password"
+                  value={resetPasswordData.newPassword}
+                  onChange={(e) =>
+                    setResetPasswordData({
+                      ...resetPasswordData,
+                      newPassword: e.target.value,
+                    })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  InputProps={{
+                    disableUnderline: true,
+                    classes: { input: classes.input },
+                  }}
+                  FormHelperTextProps={{
+                    className: classes.helperTextColor,
+                  }}
+                  variant="filled"
+                  margin="normal"
+                  fullWidth
+                  id="confirm password"
+                  placeholder="CONFIRM PASSWORD"
+                  name="confirm password"
+                  size="small"
+                  value={resetPasswordData.confirmPassword}
+                  onChange={(e) =>
+                    setResetPasswordData({
+                      ...resetPasswordData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Button
+              className={classes.buttonStyle}
+              variant={"contained"}
+              fullWidth
+              disableElevation
+              style={{ background: "#1b5e20", color: "white" }}
+              type="submit"
+            >
+              SUBMIT
+            </Button>
+            <Link className={classes.cancelLink} onClick={cancel}>
+              CANCEL
+            </Link>
+          </form>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }

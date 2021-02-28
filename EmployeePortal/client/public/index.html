@@ -4,6 +4,35 @@
     <meta charset="utf-8" />
     <title>Mersat | Employee Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        overflow-y: hidden;
+        margin: 0 !important;
+      }
+      #root {
+        overflow-y: auto;
+        max-height: 100vh;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #eeeeee;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #b3b2b2;
+      }
+
+      /* Handle on hover */
+      /* ::-webkit-scrollbar-thumb:hover {
+        background: #eeeeee;
+      } */
+    </style>
+  </head>
   <body>
     <div id="root"></div>
   </body>

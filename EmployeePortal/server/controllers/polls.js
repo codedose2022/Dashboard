@@ -1,6 +1,6 @@
 import express from "express";
 import Polls from "../models/pollsSchema.js";
-import fs from 'fs';
+import fs from "fs";
 const router = express.Router();
 
 const POLLS_CREATION_SUCCESS = "30";
@@ -9,6 +9,7 @@ const VOTE_SUCCESS = "32";
 const VOTE_DUPLICATE = "33";
 const MIN_TWO_OPTION_REQ = "34";
 const OPTION_DUPLICATE = "35";
+const DEADLINE_ERROR = "36";
 
 export const getPolls = async (req, res) => {
   try {
@@ -31,7 +32,6 @@ export const createPolls = async (req, res) => {
   const title = req.body.title;
   const deadline = req.body.deadline;
   const options = JSON.parse(req.body.options);
-
   options.map((option, optionIndex) => {
     req.files.map((file, fileIndex) => {
       if (optionIndex === fileIndex) {
@@ -59,6 +59,12 @@ export const createPolls = async (req, res) => {
       var option_duplicate = valueArr.some(function (item, idx) {
         return valueArr.indexOf(item) != idx;
       });
+      if (poll.deadline < new Date()) {
+        responseMessages.messages.message =
+          "Please select time for poll deadline after current time.";
+        responseMessages.messages.status = DEADLINE_ERROR;
+        return res.status(200).json(responseMessages);
+      }
       if (option_duplicate) {
         responseMessages.messages.message = "The poll cannot have same options";
         responseMessages.messages.status = OPTION_DUPLICATE;
@@ -87,11 +93,11 @@ export const deletePolls = async (req, res) => {
   };
   try {
     await Polls.findByIdAndRemove(req.body._id);
-      req.body.options.map(option =>{
-        if(option.image!==''){
-          fs.unlinkSync('images/'+ option.image)
-        }
-      })
+    req.body.options.map((option) => {
+      if (option.image !== "") {
+        fs.unlinkSync("images/" + option.image);
+      }
+    });
     responseMessages.messages.message = "Poll Deleted Successfully.";
     responseMessages.messages.status = POLLS_DELETION_SUCCESS;
     const polls = await Polls.find().sort({ createdAt: -1 });

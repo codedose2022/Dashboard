@@ -3,7 +3,7 @@ const events = (state = [], action) => {
     case "GET_EVENTS":
       return {
         ...state,
-        events:action.payload,
+        events: action.payload,
       };
     case "ADD_EVENTS":
       return {

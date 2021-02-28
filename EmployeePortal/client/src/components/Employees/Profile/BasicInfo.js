@@ -6,32 +6,26 @@ import Textfield from "./Textfield";
 function BasicInfo(props) {
   return (
     <Grid item xs={12}>
-     
-        <Grid container spacing={1}>
-          <Heading text="Basic Info" />
-        </Grid>
-        <Grid container spacing={1}>
-          <Textfield
-            id="firstName"
-            label="First Name"
-            employee={props.employee}
-          />
+      <Grid container spacing={1}>
+        <Heading text="Basic Info" />
+      </Grid>
+      <Grid container spacing={1}>
+        <Textfield
+          id="firstName"
+          label="First Name"
+          employee={props.employee}
+        />
 
-          <Textfield
-            id="lastName"
-            label="Last Name"
-            employee={props.employee}
-          />
+        <Textfield id="lastName" label="Last Name" employee={props.employee} />
 
-          <Textfield id="email" label="Email" employee={props.employee} />
+        <Textfield id="email" label="Email" employee={props.employee} />
 
-          <Textfield
-            id="employeeCode"
-            label="Employee Code"
-            employee={props.employee}
-          />
-        </Grid>
-      
+        <Textfield
+          id="employeeCode"
+          label="Employee Code"
+          employee={props.employee}
+        />
+      </Grid>
     </Grid>
   );
 }

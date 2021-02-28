@@ -4,7 +4,7 @@ import {
   createMuiTheme,
   Tab,
   Tabs,
-  ThemeProvider,
+  ThemeProvider
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../components/Dashboard/Navbar";
 import ListEmployees from "../Employees/Display/ListEmployees";
 import EventsPage from "../Events/EventsPage";
+import Gallery from "../Gallery/Gallery";
 import Polls from "../Polls/Polls";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,13 +84,13 @@ export default function TabsComponent(props) {
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
+        <Navbar />
         <AppBar
           position="fixed"
           color="default"
-          style={{ backgroundColor: "#ffffff" }}
+          style={{ backgroundColor: "#ffffff", top: "50px" }}
           elevation={0}
         >
-          <Navbar />
           <Tabs
             value={value}
             onChange={handleChange}
@@ -126,7 +127,7 @@ export default function TabsComponent(props) {
           <Polls />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          gallery
+          <Gallery />
         </TabPanel>
         <TabPanel value={value} index={3}>
           <ListEmployees />

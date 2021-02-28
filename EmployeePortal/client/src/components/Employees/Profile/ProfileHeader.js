@@ -1,9 +1,7 @@
 import {
-  Avatar,
-  Container,
+  Card,
   createMuiTheme,
   Grid,
-  MuiThemeProvider,
   responsiveFontSizes,
   Typography,
 } from "@material-ui/core";
@@ -15,56 +13,42 @@ function ProfileHeader(props) {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
   return (
-    <Grid item xs={12} container>
-      <Grid item xs={12}>
-        <Container className={classes.container}>
-         
-          <Avatar
-            alt={props.profileData.selectedFile}
-            src={props.profileData.selectedFile?`http://localhost:5000/${props.profileData.selectedFile}`:""}
-            className={classes.image}
-          />
-         
-          <MuiThemeProvider theme={theme}>
-            <Grid>
-              <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  <Typography variant="h6" className={classes.typography}>
-                    {props.profileData.firstName +
-                      " " +
-                      props.profileData.lastName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant="subtitle1"
-                    className={classes.typography1}
-                  >
-                    {props.profileData.employeeCode}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant="subtitle1"
-                    className={classes.typography1}
-                  >
-                    {props.profileData.designation}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant="subtitle1"
-                    className={classes.typography1}
-                  >
-                    {props.profileData.department}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-          </MuiThemeProvider>
-        </Container>
-      </Grid>
-    </Grid>
+    <>
+      <Card>
+        <Grid container className={classes.profileCard}>
+          <Grid item lg={6}>
+            <img
+              alt={props.profileData.selectedFile}
+              src={
+                props.profileData.selectedFile
+                  ? `http://localhost:5000/${props.profileData.selectedFile}`
+                  : ""
+              }
+              className={classes.image}
+            />
+          </Grid>
+          <Grid item lg={6}>
+            <Typography variant="h6" className={classes.typography}>
+              {props.profileData.firstName + " " + props.profileData.lastName}
+            </Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              className={classes.typography1}
+            >
+              {props.profileData.employeeCode}
+            </Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              className={classes.typography1}
+            >
+              {props.profileData.designation} | {props.profileData.department}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Card>
+    </>
   );
 }
 

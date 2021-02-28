@@ -27,9 +27,11 @@ export default function CommentList(props) {
             view all {props.commentsList.length} comments
           </div>
         </Link>
-      ) : ''}
-      {showComments && 
-        props.commentsList && 
+      ) : (
+        ""
+      )}
+      {showComments &&
+        props.commentsList &&
         props.commentsList.map((comment) => {
           let postedDate = moment(comment.createdAt).format("Do MMMM YYYY");
           let postedTime = moment(comment.createdAt).format("HH:mm");
@@ -39,11 +41,15 @@ export default function CommentList(props) {
                 key={`${comment._id}listItem`}
                 className={classes.paddingZero}
               >
-                <ListItemAvatar style = {{minWidth : '30px'}}>
+                <ListItemAvatar style={{ minWidth: "30px" }}>
                   <Tooltip
                     title={`${comment.employeeFirstName} ${comment.employeeLastName}`}
                   >
-                    <Avatar className = {classes.small} src={`http://localhost:5000/${comment.selectedFile}`} color = 'action'/>
+                    <Avatar
+                      className={classes.small}
+                      src={`http://localhost:5000/${comment.selectedFile}`}
+                      color="action"
+                    />
                   </Tooltip>
                 </ListItemAvatar>
                 <ListItemText
@@ -60,7 +66,6 @@ export default function CommentList(props) {
             </List>
           );
         })}
-
     </div>
   );
 }

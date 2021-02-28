@@ -1,26 +1,26 @@
-import * as api from "../api";
 import _ from "lodash";
+import * as api from "../api";
 import { getEvents } from "./events";
-import {getPolls} from './polls';
+import { getPolls } from "./polls";
 
-export const login = (loginData,callback) => async (dispatch) => {
+export const login = (loginData, callback) => async (dispatch) => {
   try {
     const { data } = await api.login(loginData);
     const loginStatus = _.get(data, "messages.status", "");
-   
+
     if (loginStatus === "11") {
       dispatch({ type: "LOGIN", payload: data });
       let token = localStorage.getItem("auth-token");
-      if(token === ''){
-        token = _.get(data,'token','');
-        localStorage.setItem("auth-token",token)
+      if (token === "") {
+        token = _.get(data, "token", "");
+        localStorage.setItem("auth-token", token);
       }
       dispatch({ type: "LOGIN_STATUS", payload: "loggedIn" });
       dispatch(getEmployeesDetails(token));
       dispatch(getEvents(token, _.get(data, "userData.division", "")));
       dispatch(getPolls(token));
-    } else{
-      callback(_.get(data, "messages.message", ""))
+    } else {
+      callback(_.get(data, "messages.message", ""));
     }
   } catch (error) {
     console.log(error.message);

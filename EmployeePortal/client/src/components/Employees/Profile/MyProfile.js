@@ -21,14 +21,13 @@ export default function MyProfile(props) {
     <div>
       {!props.employee && <Navbar />}
       {profileData ? (
-        <div>
+        <div style={{ padding: "2rem" }}>
           {!props.employee && (
-            <Grid item style={{textAlign:'end',mgiarginRight:'5px'}}>
+            <Grid item style={{ textAlign: "end", mgiarginRight: "5px" }}>
               <Link style={{ textDecoration: "none" }} to="/">
                 <h6 className={classes.linkStyle}>GO TO DASHBOARD</h6>
               </Link>
             </Grid>
-           
           )}
           <Container
             style={{ padding: "0px" }}
@@ -36,10 +35,8 @@ export default function MyProfile(props) {
             fullwidth="true"
             maxWidth="lg"
           >
-            <Paper className={classes.firstPaper} elevation={5}>
-              <ProfileHeader profileData={profileData} />
-            </Paper>
             <Paper className={classes.paper} elevation={5}>
+              <ProfileHeader profileData={profileData} />
               <BasicInfo employee={props.employee} />
               <WorkDetails employee={props.employee} />
               <PersonalDetails employee={props.employee} />

@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as api from "../../api";
-import Alert from "@material-ui/lab/Alert";
 
 export default function DeletePolls(props) {
   let token = localStorage.getItem("auth-token");
@@ -24,7 +24,7 @@ export default function DeletePolls(props) {
         handleCancel();
         dispatch({ type: "GET_POLLS", payload: responseMessages.polls });
         props.setShowSnackbar(true);
-        props.setDisplaySnackbarText('Post deleted successfully' );
+        props.setDisplaySnackbarText("Post deleted successfully");
       }
     } catch (error) {
       setError("something went wrong, please try again.");
@@ -34,12 +34,12 @@ export default function DeletePolls(props) {
   return (
     <Dialog
       open={open}
-      aria-labelledby='form-dialog-title'
+      aria-labelledby="form-dialog-title"
       disableBackdropClick
     >
-       {error && <Alert severity='error'> {error} </Alert>}
+      {error && <Alert severity="error"> {error} </Alert>}
       <DialogTitle
-        id='form-dialog-title-delete'
+        id="form-dialog-title-delete"
         style={{ alignSelf: "center" }}
       >
         Are you sure you want to delete the poll?
@@ -47,18 +47,18 @@ export default function DeletePolls(props) {
 
       <DialogActions>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleCancel}
-          color='primary'
+          color="primary"
         >
           cancel
         </Button>
         <Button
-          size='small'
-          variant='contained'
+          size="small"
+          variant="contained"
           onClick={handleDelete}
-          color='primary'
+          color="primary"
           autoFocus
         >
           Delete

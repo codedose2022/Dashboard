@@ -1,20 +1,20 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import LoginPage from "./components/Login/LoginPage";
-import Dashboard from "./components/Dashboard/Dashboard";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch,
-  Redirect,
 } from "react-router-dom";
-import MyProfile from "./components/Employees/Profile/MyProfile";
-import _ from "lodash";
-import UserContext from "./context/UserContext";
-import { isTokenValid } from "./api/index";
-import ChangePassword from "./components/Login/ChangePassword";
-import ResetPassword from "./components/Login/ResetPassword";
-import { useDispatch, useSelector } from "react-redux";
 import { setDetails } from "./actions/employees";
+import { isTokenValid } from "./api/index";
+import Dashboard from "./components/Dashboard/Dashboard";
+import MyProfile from "./components/Employees/Profile/MyProfile";
+import ChangePassword from "./components/Login/ChangePassword";
+import LoginPage from "./components/Login/LoginPage";
+import ResetPassword from "./components/Login/ResetPassword";
+import UserContext from "./context/UserContext";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,23 +69,23 @@ const App = () => {
   return (
     <Router>
       <UserContext.Provider value={{ employeeData, setEmployeeData }}>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Dashboard />
         </Route>
-        <Route exact path='/reset/:key'>
+        <Route exact path="/reset/:key">
           <ResetPassword />
         </Route>
-        <Route exact path='/login' component={LoginPage}></Route>
+        <Route exact path="/login" component={LoginPage}></Route>
         <main>
           <Switch>
-            <PrivateRoute exact path='/profile'>
+            <PrivateRoute exact path="/profile">
               <MyProfile />
             </PrivateRoute>
-            <PrivateRoute exact path='/changePassword'>
+            <PrivateRoute exact path="/changePassword">
               <ChangePassword />
             </PrivateRoute>
-            <PrivateRoute exact path='/:anything'>
-             Oops! 404 - page not found
+            <PrivateRoute exact path="/:anything">
+              Oops! 404 - page not found
             </PrivateRoute>
           </Switch>
         </main>

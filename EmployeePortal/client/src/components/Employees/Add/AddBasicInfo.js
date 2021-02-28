@@ -88,13 +88,13 @@ function AddBasicInfo(props) {
           required
           disabled={props.disableProfile.disableInd}
           value={props.addEmployee.nationality}
-          whitelist={["IN","AE","PH"]}
+          whitelist={["IN", "AE", "PH"]}
           onChange={(e) =>
             props.setAddEmployee({ ...props.addEmployee, nationality: e })
           }
           className={classes.country}
         />
-        <div style={{color:'red'}}>{props.errors.nationality}</div>
+        <div style={{ color: "red" }}>{props.errors.nationality}</div>
       </Grid>
     </Grid>
   );

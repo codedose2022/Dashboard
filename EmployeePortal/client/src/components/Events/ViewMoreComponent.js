@@ -12,11 +12,13 @@ export default function ViewMoreComponent(props) {
           <>
             {props.text.substring(0, 300)}
             <button
-            style={{background: 'none',
-              border: 'none',
-              padding: '0px',
-              fontFamily: 'arial, sans-serif',
-              cursor: 'pointer'}}
+              style={{
+                background: "none",
+                border: "none",
+                padding: "0px",
+                fontFamily: "arial, sans-serif",
+                cursor: "pointer",
+              }}
               className={classes.readMoreLink}
               id={`${props.id}readMoreLink`}
               key={`${props.id}readMoreLink`}
@@ -29,11 +31,13 @@ export default function ViewMoreComponent(props) {
           <>
             {props.text}
             <button
-               style={{background: 'none',
-               border: 'none',
-               padding: '0px',
-               fontFamily: 'arial, sans-serif',
-               cursor: 'pointer'}}
+              style={{
+                background: "none",
+                border: "none",
+                padding: "0px",
+                fontFamily: "arial, sans-serif",
+                cursor: "pointer",
+              }}
               id={`${props.id}readMore`}
               key={`${props.id}readMore`}
               className={classes.readMoreLink}

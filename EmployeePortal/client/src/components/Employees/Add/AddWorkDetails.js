@@ -2,11 +2,14 @@ import {
   FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
+
+
+
+
+  InputAdornment, InputLabel,
   MenuItem,
   Select,
-  TextField,
-  InputAdornment
+  TextField
 } from "@material-ui/core";
 import React from "react";
 import { departments } from "../Constants/departmentList";
@@ -172,12 +175,16 @@ function AddWorkDetails(props) {
           variant="outlined"
           size="small"
           InputProps={{
-            startAdornment: <InputAdornment position="start">+971</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">+971</InputAdornment>
+            ),
           }}
           error={props.errors.workMobile ? true : false}
           helperText={props.errors.workMobile}
           disabled={props.disableProfile.disableInd}
-          value={props.addEmployee.workMobile?props.addEmployee.workMobile:""}
+          value={
+            props.addEmployee.workMobile ? props.addEmployee.workMobile : ""
+          }
           onChange={(e) => onChangeFields(e)}
         />
       </Grid>

@@ -5,7 +5,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import _ from "lodash";
 import React, { useContext } from "react";
@@ -63,10 +63,10 @@ export default function Navbar() {
   };
 
   return (
-    <div>
+    <>
       <AppBar
-        position="relative"
-        style={{ background: "#388e3c" }}
+        position="fixed"
+        style={{ background: "#388e3c", zIndex: "9999" }}
         className={classes.appbar}
       >
         <Toolbar>
@@ -81,6 +81,7 @@ export default function Navbar() {
               aria-haspopup="true"
               onClick={handleClick}
               color="inherit"
+              className={classes.userProfileBtn}
             >
               <Avatar
                 alt={employeeName}
@@ -126,6 +127,6 @@ export default function Navbar() {
           </MenuItem>
         </Menu>
       </AppBar>
-    </div>
+    </>
   );
 }

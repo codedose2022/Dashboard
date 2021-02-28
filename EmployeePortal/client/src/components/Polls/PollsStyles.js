@@ -83,5 +83,20 @@ export default makeStyles((theme) => ({
     color: "#524f4fcc",
     fontFamily:
       "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+  },
+  fsModal:{
+    top:'3rem !important',
+  },
+  modalHeader:{
+    boxShadow: '0 1px 5px 0px #00000054',
+    display:'flex',
+    justifyContent:'space-between',
+    padding: '.5rem 1rem',
+    background: '#eeeeee',
+  },
+  closeBtn:{
+    '&:hover':{
+      color: '#d50000'
+    }
   }
 }))

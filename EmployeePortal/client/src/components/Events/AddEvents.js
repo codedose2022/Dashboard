@@ -1,9 +1,16 @@
 import {
-  Button, Dialog,
+  Button,
+  Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle, Grid, TextareaAutosize, TextField
+  DialogTitle,
+  Grid,
+  TextareaAutosize,
+  TextField,
+  Typography,
+  IconButton,
 } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import Alert from "@material-ui/lab/Alert";
 import _ from "lodash";
 import moment from "moment";
@@ -13,7 +20,6 @@ import { getEvents } from "../../actions/events";
 import * as api from "../../api";
 import { validateRequired } from "../../helper";
 import useStyles from "./EventPageStyles";
-
 
 export default function AddEvents(props) {
   const classes = useStyles();
@@ -30,11 +36,10 @@ export default function AddEvents(props) {
   const [img, setImg] = useState(props.event ? props.event.img : "");
   const [flag, setShowRequired] = useState(false);
   const [error, setError] = useState("");
-  const [imageRequired, setImageRequired] = useState('')
-  const [filename, setFilename] = useState(props.event ? props.event.img : "")
-  
+  const [imageRequired, setImageRequired] = useState("");
+  const [filename, setFilename] = useState(props.event ? props.event.img : "");
 
-  const today = moment();
+  const today = moment().add(1, "d");
   const todayDate = today.format("YYYY-MM-DD").toString();
 
   const handleCancel = () => {
@@ -43,13 +48,11 @@ export default function AddEvents(props) {
   };
 
   const handleAdd = async (e) => {
-    e.preventDefault(); 
-    console.log(img)
-    if(img ==='') setImageRequired('Please add an image') ;
+    e.preventDefault();
+    if (img === "") setImageRequired("Please add an image");
     setShowRequired(true);
-    const isFieldEmpty = [title, date, venue, time, img,desc].includes("");
+    const isFieldEmpty = [title, date, venue, time, img, desc].includes("");
     if (!isFieldEmpty) {
-      //let event = { title, date, venue, desc, img, time };
       const formData = new FormData();
       formData.append("title", title);
       formData.append("date", date);
@@ -66,7 +69,7 @@ export default function AddEvents(props) {
               handleCancel();
               dispatch(getEvents(token, props.userData.division));
               props.setShowSnackbar(true);
-              props.setDisplaySnackbarText('Posted successfully' );
+              props.setDisplaySnackbarText("Posted successfully");
             }
           })
           .catch((error) => {
@@ -83,8 +86,8 @@ export default function AddEvents(props) {
 
   const handleEdit = async () => {
     setShowRequired(true);
-    if(img ==='') setImageRequired('Please add an image') ;
-    const isFieldEmpty = [title, date, time, desc, venue,img].includes("");
+    if (img === "") setImageRequired("Please add an image");
+    const isFieldEmpty = [title, date, time, desc, venue, img].includes("");
     if (!isFieldEmpty) {
       let event = {
         title,
@@ -103,7 +106,7 @@ export default function AddEvents(props) {
       formData.append("desc", desc);
       formData.append("time", time);
       formData.append("_id", event._id);
-      formData.append("status", 'pending');
+      formData.append("status", "pending");
       formData.append("img", img);
       try {
         const response = await api.editEvent(token, formData);
@@ -111,8 +114,8 @@ export default function AddEvents(props) {
         if (responseData.messages.status === "21") {
           handleCancel();
           dispatch(getEvents(token, props.userData.division));
-          props.setShowSnackbar(true)
-          props.setDisplaySnackbarText('Edited successfully' )
+          props.setShowSnackbar(true);
+          props.setDisplaySnackbarText("Edited successfully");
         }
       } catch (error) {
         setError("something went wrong, please try again.");
@@ -121,10 +124,13 @@ export default function AddEvents(props) {
   };
 
   const setImage = (e) => {
-    setImageRequired('');
-    let filename = e.target.files[0] === undefined ? 'No image chosen' : e.target.files[0].name
-    setFilename(filename)
-    let pic = e.target.files[0] === undefined ? '' : e.target.files[0];
+    setImageRequired("");
+    let filename =
+      e.target.files[0] === undefined
+        ? "No image chosen"
+        : e.target.files[0].name;
+    setFilename(filename);
+    let pic = e.target.files[0] === undefined ? "" : e.target.files[0];
     setImg(pic);
   };
 
@@ -138,12 +144,23 @@ export default function AddEvents(props) {
       onClose={handleClose}
       aria-labelledby="form-dialog-title-add-events"
       disableBackdropClick
+      style={{ marginTop: "3rem" }}
     >
-      <DialogTitle
-        id="form-dialog-title-Addevents"
-        style={{ alignSelf: "center" }}
-      >
-        {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}
+      <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
+        <div className={classes.modalHeader}>
+          <Typography variant="h6" component="h6">
+            {" "}
+            {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}
+          </Typography>
+          <IconButton
+            aria-label="close"
+            size="small"
+            onClick={(e) => handleCancel()}
+            className={classes.closeBtn}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
       </DialogTitle>
       <DialogContent>
         <div className={classes.marginStyle}>
@@ -223,14 +240,18 @@ export default function AddEvents(props) {
                 />
               </Grid>
 
-              <Grid item xs={12}>
-                <div className={classes.fileInputStyle}>
-                  
-                  <input accept="image/*" type="file" style = {{color:'transparent'}} name="img" onChange={(e) => setImage(e)}/>
-                  <p className = {classes.imgRequired} style = {{color : 'black'}}>{filename}</p>
-                  <p className = {classes.imgRequired}>{imageRequired}</p>
-                
-                </div>
+              <Grid item xs={12} className={classes.fileInputStyle}>
+                <input
+                  accept="image/x-png,image/jpeg,image/png,image/jpg,image/jfif"
+                  type="file"
+                  style={{ color: "transparent" }}
+                  name="img"
+                  onChange={(e) => setImage(e)}
+                />
+                <p className={classes.imgRequired} style={{ color: "black" }}>
+                  {filename}
+                </p>
+                <p className={classes.imgRequired}>{imageRequired}</p>
               </Grid>
 
               <Grid className={classes.textEditor}>
@@ -242,20 +263,25 @@ export default function AddEvents(props) {
                   rowsMin={10}
                   placeholder="Description"
                 />
+                {flag && (
+                  <p className={classes.imgRequired}>
+                    {validateRequired(desc)}
+                  </p>
+                )}
               </Grid>
             </Grid>
           </form>
         </div>
       </DialogContent>
       <DialogActions>
-        <Button
+        {/* <Button
           size="small"
           variant="contained"
           onClick={handleCancel}
           color="primary"
         >
           cancel
-        </Button>
+        </Button> */}
         <Button
           size="small"
           variant="contained"

@@ -7,7 +7,7 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow,
+  TableRow
 } from "@material-ui/core";
 import _ from "lodash";
 import React, { useState } from "react";
@@ -51,35 +51,39 @@ export default function ListEmployees() {
       },
     });
   }
-   const displayValue = (value) =>{
-      switch (value) {
-        case 'EE' : return 'Events';
-       
-        case 'SA' : return 'Super Admin';
-        
-        case 'ED' : return 'Editorial';
-        
-        case 'EM' : return 'Employee';
-        
-        default : return value;
-      }
-   }
+  const displayValue = (value) => {
+    switch (value) {
+      case "EE":
+        return "Events";
+
+      case "SA":
+        return "Super Admin";
+
+      case "ED":
+        return "Editorial";
+
+      case "EM":
+        return "Employee";
+
+      default:
+        return value;
+    }
+  };
 
   return (
     <div>
       <AddEmployeeModel />
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
-          <Table
-            stickyHeader
-            aria-label="sticky table"
-           
-          >
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell
-                    style={{ background: "rgb(47 51 49 / 6%)" }}
+                    style={{
+                      background: "rgb(47 51 49 / 6%)",
+                      position: "inherit",
+                    }}
                     key={`${index}_${column.id}`}
                     align="left"
                     className={classes.tableHeadStyle}
@@ -166,7 +170,6 @@ export default function ListEmployees() {
             </TableBody>
           </Table>
           <TablePagination
-        
             rowsPerPageOptions={[10, 100]}
             component="div"
             count={employeeInfo.length}

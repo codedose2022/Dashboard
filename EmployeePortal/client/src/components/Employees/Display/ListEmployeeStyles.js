@@ -39,4 +39,19 @@ export default makeStyles((theme) => ({
   caption: {
     fontSize: "0.7rem",
   },
+  fsModal: {
+    top: "3rem !important",
+  },
+  modalHeader: {
+    boxShadow: "0 1px 5px 0px #00000054",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: ".5rem 1rem",
+    background: "#eeeeee",
+  },
+  closeBtn: {
+    "&:hover": {
+      color: "#d50000",
+    },
+  },
 }));
