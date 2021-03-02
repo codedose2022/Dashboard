@@ -49,7 +49,7 @@ export default function CommentsComponent(props) {
           onChange={(e) => setComments(e.target.value)}
         />
         <IconButton onClick={handleSubmit}>
-          <SendIcon color="primary" className={classes.iconStyles} />
+          <SendIcon color="secondary" className={classes.iconStyles} />
         </IconButton>
       </form>
     </div>

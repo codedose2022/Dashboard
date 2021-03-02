@@ -6,7 +6,7 @@ import {
   Grid,
   IconButton,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -48,7 +48,7 @@ function AddEmployeeModel() {
         >
           <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
             <div className={classes.modalHeader}>
-              <Typography variant="h6" component="h6">
+              <Typography variant="h6" component="h6" color="primary">
                 ADD EMPLOYEE
               </Typography>
               <IconButton

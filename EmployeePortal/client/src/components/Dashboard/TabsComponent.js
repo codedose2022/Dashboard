@@ -6,7 +6,6 @@ import {
   Tabs,
   ThemeProvider
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import _ from "lodash";
@@ -62,10 +61,10 @@ const useStyles = makeStyles((theme) => ({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: green[900],
+      main: "#009688",
     },
     secondary: {
-      main: "#d50000",
+      main: "#f50057",
     },
   },
 });
@@ -87,7 +86,7 @@ export default function TabsComponent(props) {
         <Navbar />
         <AppBar
           position="fixed"
-          color="default"
+          color="primary"
           style={{ backgroundColor: "#ffffff", top: "50px" }}
           elevation={0}
         >

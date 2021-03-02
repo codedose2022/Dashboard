@@ -1,34 +1,33 @@
-import React, { useState, useEffect, useContext } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
   Button,
-  Box,
-  createMuiTheme,
-  ThemeProvider,
-  Link,
-  Grid,
-  TextField,
-  CssBaseline,
-  Container,
   Card,
+  Container,
+  createMuiTheme,
+  CssBaseline,
+  Grid,
+  Link,
+  TextField,
+  ThemeProvider,
+  Typography,
 } from "@material-ui/core";
-import Mersatlogo from "../../images/Mersatlogo.jpg";
-import { green } from "@material-ui/core/colors";
-import useStyles from "./LoginPageStyles";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../actions/employees";
-import _ from "lodash";
-import { useHistory } from "react-router-dom";
-import UserContext from "../../context/UserContext";
 import Alert from "@material-ui/lab/Alert";
+import _ from "lodash";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { login } from "../../actions/employees";
 import * as api from "../../api";
+import UserContext from "../../context/UserContext";
+import Mersatlogo from "../../images/Mersatlogo.jpg";
+import useStyles from "./LoginPageStyles";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: green[900],
+      main: "#009688",
+    },
+    secondary: {
+      main: "#f50057",
     },
   },
 });
@@ -219,7 +218,7 @@ export default function LoginPage() {
                   variant={"contained"}
                   fullWidth
                   disableElevation
-                  color={"primary"}
+                  color="primary"
                   type="submit"
                 >
                   {forgotPass ? "SEND RESET LINK" : "LOGIN"}

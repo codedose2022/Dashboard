@@ -107,7 +107,7 @@ export default function LikeDislikeCommentComponent(props) {
       </IconButton>
       <IconButton onClick={() => onDisLike()}>
         {DislikeAction === "disliked" ? (
-          <ThumbDownIcon fontSize="small" color="primary" />
+          <ThumbDownIcon fontSize="small" color="secondary" />
         ) : (
           <ThumbDownOutlinedIcon fontSize="small" />
         )}

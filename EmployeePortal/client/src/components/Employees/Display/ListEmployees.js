@@ -118,7 +118,6 @@ export default function ListEmployees() {
                                   key={`${employeeIndex}_viewlink`}
                                   id={`${employeeIndex}_viewlink`}
                                   href="#"
-                                  style={{ color: "green" }}
                                   onClick={() =>
                                     viewProfile(employee, employeeIndex)
                                   }
@@ -129,7 +128,6 @@ export default function ListEmployees() {
                                 <Link
                                   key={`${employeeIndex}_editlink`}
                                   id={`${employeeIndex}_editlink`}
-                                  style={{ color: "green" }}
                                   href="#"
                                   onClick={() =>
                                     editProfile(employee, employeeIndex)

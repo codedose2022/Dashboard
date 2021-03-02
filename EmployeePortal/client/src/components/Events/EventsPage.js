@@ -6,9 +6,6 @@ import {
   Hidden,
   IconButton,
   Paper,
-
-
-
   Snackbar, Tooltip,
   Typography,
   useMediaQuery
@@ -131,6 +128,7 @@ export default function EventsPage() {
             setDisplaySnackbarText={setDisplaySnackbarText}
           />
         )}
+       
         <Snackbar
           open={showSnackbar}
           autoHideDuration={2000}
@@ -138,12 +136,13 @@ export default function EventsPage() {
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
           <Alert
-            style={{ width: "300px", color: "white", background: "#1b5e20" }}
+            style={{ width: "300px",color: "white", background: "#009688"  }}
             severity="success"
           >
             {displaySnackbarText}
           </Alert>
         </Snackbar>
+        
       </Grid>
       {events.map((event, eventIndex) => {
         return (
@@ -167,7 +166,7 @@ export default function EventsPage() {
                       }
                       style={
                         event.status === "Approved"
-                          ? { background: "#1b5e20", color: "white" }
+                          ? { background: "#009688", color: "white" }
                           : { background: "#D9512C", color: "white" }
                       }
                     />
@@ -183,7 +182,7 @@ export default function EventsPage() {
                           className={classes.iconVertical}
                           onClick={() => setEditButton(eventIndex)}
                         >
-                          <EditIcon color="primary" size="small" />
+                          <EditIcon color="secondary" size="small" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Delete">
@@ -193,7 +192,7 @@ export default function EventsPage() {
                           className={classes.iconVertical}
                           onClick={() => setDeleteButton(eventIndex)}
                         >
-                          <DeleteIcon color="primary" size="small" />
+                          <DeleteIcon color="secondary" size="small" />
                         </IconButton>
                       </Tooltip>
                     </>

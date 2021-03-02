@@ -1,21 +1,11 @@
 import {
   Button,
-
-
-
-
-
-
-  Card, Container, CssBaseline,
-
-
-
-
-
-
-  Grid, Link,
+  Card,
+  Container,
+  CssBaseline,
+  Grid,
+  Link,
   TextField,
-
   Typography
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -144,12 +134,16 @@ export default function ResetPassword() {
               variant={"contained"}
               fullWidth
               disableElevation
-              style={{ background: "#1b5e20", color: "white" }}
+              style={{ color: "white", background: "#009688" }}
               type="submit"
             >
               SUBMIT
             </Button>
-            <Link className={classes.cancelLink} onClick={cancel}>
+            <Link
+              style={{ color: "#009688" }}
+              className={classes.cancelLink}
+              onClick={cancel}
+            >
               CANCEL
             </Link>
           </form>

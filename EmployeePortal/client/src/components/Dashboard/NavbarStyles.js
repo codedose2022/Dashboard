@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
   appbar: {
     maxWidth: "100%",
@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       maxHeight: "50px",
     },
+    background: "#009688",
   },
   logo: {
     [theme.breakpoints.up("sm")]: {

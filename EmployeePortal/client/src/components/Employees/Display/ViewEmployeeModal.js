@@ -2,7 +2,7 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
@@ -45,7 +45,7 @@ export default function ViewEmployeeModel(props) {
       >
         <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
           <div className={classes.modalHeader}>
-            <Typography variant="h6" component="h6">
+            <Typography variant="h6" component="h6" color="primary">
               VIEW EMPLOYEE
             </Typography>
             <IconButton
@@ -59,7 +59,7 @@ export default function ViewEmployeeModel(props) {
           </div>
         </DialogTitle>
 
-        <DialogContent>
+        <DialogContent style={{ padding: "0px" }}>
           <MyProfile employee={props.employee} />
         </DialogContent>
       </Dialog>

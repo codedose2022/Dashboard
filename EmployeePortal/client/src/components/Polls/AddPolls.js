@@ -6,7 +6,8 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  TextField, Typography
+  TextField,
+  Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -114,7 +115,7 @@ export default function AddPolls(props) {
         {error && <Alert severity="error"> {error} </Alert>}
         <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
           <div className={classes.modalHeader}>
-            <Typography variant="h6" component="h6">
+            <Typography variant="h6" component="h6" color="primary">
               ADD NEW POLL
             </Typography>
             <IconButton
@@ -184,7 +185,7 @@ export default function AddPolls(props) {
               />
             </Grid>
             {options.map((option, index) => (
-              <Grid container spacing={3} key={index}>
+              <Grid container key={index}>
                 <Grid item lg={5}>
                   <TextField
                     style={{ margin: "10px" }}
@@ -207,7 +208,7 @@ export default function AddPolls(props) {
                     style={{
                       margin: "10px",
                       paddingTop: "28px",
-                      marginRight: "50px",
+                      marginRight: "10px",
                     }}
                     name="image"
                     id={index}

@@ -29,7 +29,7 @@ export default function EditEmployeeModel(props) {
       >
         <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
           <div className={classes.modalHeader}>
-            <Typography variant="h6" component="h6">
+            <Typography variant="h6" component="h6" color="primary">
               EDIT EMPLOYEE
             </Typography>
             <IconButton

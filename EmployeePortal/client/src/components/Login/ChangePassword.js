@@ -3,12 +3,13 @@ import {
   Card,
   Container,
   Grid,
+  Link,
   TextField,
   Typography
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import React, { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as api from "../../api/index";
 import UserContext from "../../context/UserContext";
 import Mersatlogo from "../../images/Mersatlogo.jpg";
@@ -171,7 +172,7 @@ export default function ChangePassword() {
                     variant={"contained"}
                     fullWidth
                     disableElevation
-                    style={{ background: "#1b5e20", color: "white" }}
+                    style={{ color: "white", background: "#009688" }}
                     type="submit"
                   >
                     RESET PASSWORD
@@ -180,7 +181,7 @@ export default function ChangePassword() {
                 <Grid item xs={12}>
                   <Link
                     className={classes.cancelLink}
-                    fullWidth
+                    style={{ color: "#009688" }}
                     onClick={cancel}
                   >
                     Cancel

@@ -10,11 +10,10 @@ import {
   FormControlLabel,
   Grid,
   Radio,
-
-  Snackbar, Tooltip,
-
+  Snackbar,
+  Tooltip,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -159,7 +158,7 @@ export default function Polls() {
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
           <Alert
-            style={{ width: "300px", color: "white", background: "#1b5e20" }}
+            style={{ width: "300px", color: "white", background: "#009688" }}
             severity="success"
           >
             {displaySnackbarText}
@@ -170,7 +169,7 @@ export default function Polls() {
             <Grid item key={`poll${poll._id}`} xs={12} sm={12} md={12}>
               <Card className={classes.root} elevation={10}>
                 <CardHeader
-                  style={{ paddingBottom: "5px", color: "#1b5e20" }}
+                  style={{ paddingBottom: "5px", color: "teal" }}
                   title={poll.title.toUpperCase()}
                   subheader={
                     "Posted on " + moment(poll.createdAt).format("Do MMMM YYYY")
@@ -310,7 +309,7 @@ export default function Polls() {
                           color="primary"
                           variant="contained"
                         >
-                          <DoneIcon color="primary" size="small" />
+                          <DoneIcon color="secondary" size="small" />
                         </IconButton>
                       )}
                       {isEventsMember && (
@@ -319,7 +318,7 @@ export default function Polls() {
                           key={`iconDeleteButton${poll._id}`}
                           onClick={() => deletePolls(pollIndex)}
                         >
-                          <DeleteIcon color="primary" size="small" />
+                          <DeleteIcon color="secondary" size="small" />
                         </IconButton>
                       )}
                     </div>

@@ -5,10 +5,12 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  TextareaAutosize,
+
+
+
+  IconButton, TextareaAutosize,
   TextField,
-  Typography,
-  IconButton,
+  Typography
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Alert from "@material-ui/lab/Alert";
@@ -148,7 +150,7 @@ export default function AddEvents(props) {
     >
       <DialogTitle id="form-dialog-title" style={{ padding: 0 }}>
         <div className={classes.modalHeader}>
-          <Typography variant="h6" component="h6">
+          <Typography variant="h6" component="h6" color="primary">
             {" "}
             {props.event ? "EDIT EVENT" : "ADD NEW EVENT"}
           </Typography>
@@ -274,14 +276,6 @@ export default function AddEvents(props) {
         </div>
       </DialogContent>
       <DialogActions>
-        {/* <Button
-          size="small"
-          variant="contained"
-          onClick={handleCancel}
-          color="primary"
-        >
-          cancel
-        </Button> */}
         <Button
           size="small"
           variant="contained"

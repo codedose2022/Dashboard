@@ -5,7 +5,7 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import _ from "lodash";
 import React, { useContext } from "react";
@@ -66,7 +66,7 @@ export default function Navbar() {
     <>
       <AppBar
         position="fixed"
-        style={{ background: "#388e3c", zIndex: "9999" }}
+        style={{ zIndex: "9999" }}
         className={classes.appbar}
       >
         <Toolbar>

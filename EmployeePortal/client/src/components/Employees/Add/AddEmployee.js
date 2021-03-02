@@ -1,13 +1,10 @@
 import {
   Button,
-  createMuiTheme,
   FormControlLabel,
   FormGroup,
   Grid,
-  Switch,
-  ThemeProvider,
+  Switch
 } from "@material-ui/core";
-import { green, grey } from "@material-ui/core/colors";
 import Alert from "@material-ui/lab/Alert";
 import moment from "moment";
 import React, { useState } from "react";
@@ -25,16 +22,6 @@ export default function AddEmployee(props) {
   let token = localStorage.getItem("auth-token");
   const dispatch = useDispatch();
   const classes = useStyles();
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: green[900],
-      },
-      secondary: {
-        main: grey[500],
-      },
-    },
-  });
   const [errors, setErrors] = useState("");
   const [status, setStatus] = useState("");
   const [addEmployee, setAddEmployee] = useState({
@@ -247,105 +234,104 @@ export default function AddEmployee(props) {
       >
         <div className={classes.root}>
           {status && <Alert severity="error"> {status} </Alert>}
-          <ThemeProvider theme={theme}>
-            <div className={classes.paper}>
-              {props.employee && (
-                <Grid container justify="flex-end">
-                  <FormGroup row>
-                    <FormControlLabel
-                      value="disableProfile"
-                      control={
-                        <Switch
-                          //disabled={props.employee.division==='SA'}
-                          checked={disableProfile.disableInd}
-                          onChange={handleChange}
-                          color="primary"
-                          name="disableInd"
-                          inputProps={{ "aria-label": "primary checkbox" }}
-                        />
-                      }
-                      label="Disable"
-                      labelPlacement="start"
-                    />
-                  </FormGroup>
-                </Grid>
-              )}
 
-              <Grid>
-                <AddBasicInfo
-                  errors={errors}
-                  disableProfile={disableProfile}
-                  setAddEmployee={setAddEmployee}
-                  addEmployee={addEmployee}
-                  validate={validate}
-                />
-
-                <AddWorkDetails
-                  errors={errors}
-                  disableProfile={disableProfile}
-                  setAddEmployee={setAddEmployee}
-                  addEmployee={addEmployee}
-                  validate={validate}
-                />
-                <AddPersonalDetails
-                  errors={errors}
-                  disableProfile={disableProfile}
-                  setAddEmployee={setAddEmployee}
-                  addEmployee={addEmployee}
-                  validate={validate}
-                />
-
-                <AddDependenceDetails
-                  dependence={dependence}
-                  disableProfile={disableProfile}
-                  errors={errors}
-                  setDependence={setDependence}
-                />
-
-                <AddProfilePhoto
-                  errors={errors}
-                  disableProfile={disableProfile}
-                  selectedFile={addEmployee.selectedFile}
-                  setAddEmployee={setAddEmployee}
-                  addEmployee={addEmployee}
-                  validate={validate}
-                />
+          <div className={classes.paper}>
+            {props.employee && (
+              <Grid container justify="flex-end">
+                <FormGroup row>
+                  <FormControlLabel
+                    value="disableProfile"
+                    control={
+                      <Switch
+                        //disabled={props.employee.division==='SA'}
+                        checked={disableProfile.disableInd}
+                        onChange={handleChange}
+                        color="primary"
+                        name="disableInd"
+                        inputProps={{ "aria-label": "primary checkbox" }}
+                      />
+                    }
+                    label="Disable"
+                    labelPlacement="start"
+                  />
+                </FormGroup>
               </Grid>
-            </div>
+            )}
+
             <Grid>
-              <Grid container spacing={6}>
-                <Grid item xs={12} sm={12} md={8} lg={8} xl={8}></Grid>
-                <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
-                  {!props.employee && (
-                    <Button
-                      className={classes.buttonStyle}
-                      variant={"contained"}
-                      fullWidth
-                      size="small"
-                      disableElevation
-                      color={"secondary"}
-                      onClick={clear}
-                    >
-                      Reset
-                    </Button>
-                  )}
-                </Grid>
-                <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
+              <AddBasicInfo
+                errors={errors}
+                disableProfile={disableProfile}
+                setAddEmployee={setAddEmployee}
+                addEmployee={addEmployee}
+                validate={validate}
+              />
+
+              <AddWorkDetails
+                errors={errors}
+                disableProfile={disableProfile}
+                setAddEmployee={setAddEmployee}
+                addEmployee={addEmployee}
+                validate={validate}
+              />
+              <AddPersonalDetails
+                errors={errors}
+                disableProfile={disableProfile}
+                setAddEmployee={setAddEmployee}
+                addEmployee={addEmployee}
+                validate={validate}
+              />
+
+              <AddDependenceDetails
+                dependence={dependence}
+                disableProfile={disableProfile}
+                errors={errors}
+                setDependence={setDependence}
+              />
+
+              <AddProfilePhoto
+                errors={errors}
+                disableProfile={disableProfile}
+                selectedFile={addEmployee.selectedFile}
+                setAddEmployee={setAddEmployee}
+                addEmployee={addEmployee}
+                validate={validate}
+              />
+            </Grid>
+          </div>
+          <Grid>
+            <Grid container spacing={6}>
+              <Grid item xs={12} sm={12} md={8} lg={8} xl={8}></Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
+                {!props.employee && (
                   <Button
                     className={classes.buttonStyle}
                     variant={"contained"}
                     fullWidth
                     size="small"
                     disableElevation
-                    color={"primary"}
-                    type="submit"
+                    color="primary"
+                    onClick={clear}
                   >
-                    {props.employee ? "UPDATE" : "ADD"}
+                    Reset
                   </Button>
-                </Grid>
+                )}
+              </Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2} xl={2}>
+                <Button
+                  className={classes.buttonStyle}
+                  variant={"contained"}
+                  fullWidth
+                  size="small"
+                  disableElevation
+                  color="primary"
+                  type="submit"
+                >
+                  {props.employee ? "UPDATE" : "ADD"}
+                </Button>
               </Grid>
             </Grid>
-          </ThemeProvider>
+          </Grid>
         </div>
       </form>
     </div>
