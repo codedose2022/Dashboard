@@ -8,6 +8,7 @@ import Employees from "./routes/employee.js";
 import Events from "./routes/events.js";
 import likesDislikes from "./routes/likeDislike.js";
 import Polls from "./routes/polls.js";
+import Gallery from "./routes/gallery.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use("/Events", Events);
 app.use("/likesDislikes", likesDislikes);
 app.use("/comments", comments);
 app.use("/polls", Polls);
+app.use("/gallery",Gallery);
 
 const PORT = process.env.PORT || 5000;
 mongoose
