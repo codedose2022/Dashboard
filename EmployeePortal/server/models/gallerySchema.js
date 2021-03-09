@@ -8,6 +8,9 @@ const gallerySchema = mongoose.Schema(
     },
     albumFolder: {
         type: String,
+    },
+    thumbnail : {
+      type : String
     }
   },
   { timestamps: true }
